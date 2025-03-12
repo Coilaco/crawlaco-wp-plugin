@@ -79,7 +79,7 @@ class Crawlaco_API_Keys {
             $app_pass = WP_Application_Passwords::create_new_application_password(
                 $current_user->ID,
                 array(
-                    'name' => 'Crawlaco Integration',
+                    'name' => 'Crawlaco Integration (Don\'t revoke this)',
                     'app_id' => 'crawlaco'
                 )
             );
@@ -134,7 +134,7 @@ class Crawlaco_API_Keys {
             $current_user = wp_get_current_user();
 
             // Create WooCommerce API key
-            $description = 'Crawlaco Integration';
+            $description = 'Crawlaco Integration (Don\'t revoke this)';
             $permissions = 'read_write';
             $user_id = $current_user->ID;
 

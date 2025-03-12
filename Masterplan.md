@@ -26,6 +26,52 @@ The **Crawlaco WordPress Plugin** acts as a bridge between a user’s WordPress/
   - Save the step state (e.g., mark Step 1 as completed in the database or local storage).
   - Redirect the user to **Step 2**.
 
+### Step 2: Send API Key Metadata
+- Generates and sends **WordPress API Key** and **WooCommerce API Key** (if WooCommerce is installed) to the Crawlaco backend.
+- Stores API keys securely in the database.
+- Displays success or error messages with a retry option.
+- **On Success**:
+  - Save the step state (e.g., mark Step 2 as completed in the database or local storage).
+  - Redirect the user to **Step 3**.
+
+### Step 3: Fetch Essential Data
+- **Objective**: Enable data fetching and synchronization between the user’s WordPress/WooCommerce site and the Crawlaco backend.
+- **Tasks**:
+  1. **Initiate Data Fetching**:
+     - Send a `POST` request to `/websites/plugin/fetch-all/` to initiate the data fetching process.
+     - The backend responds with a `202 status` and a `taskId`.
+  2. **Poll Task Status**:
+     - Use the `taskId` to poll the task status every **3 seconds** by sending a `GET` request to `/common/tasks/{taskId}/`.
+     - The response contains a `status` key with three possible values:
+       - `success`: The task is complete.
+       - `failed`: The task failed.
+       - `pending`: The task is still in progress.
+  3. **Handle Task Status**:
+     - **If the status is `success`**:
+       - Save the step state (e.g., mark Step 3 as completed in the database or local storage).
+       - Redirect the user to **Step 4**.
+     - **If the status is `failed`**:
+       - Display an error message to the user (e.g., “Data fetching failed. Please try again.”).
+       - Provide a **retry button** to restart the data fetching process.
+     - **If the status is `pending`**:
+       - Continue polling the task status.
+       - If the status remains `pending` after **10 polling attempts (30 seconds)**, treat it as a failure:
+         - Display an error message to the user (e.g., “Data fetching timed out. Please try again.”).
+         - Provide a **retry button** to restart the data fetching process.
+  4. **Display Loading Indicator**:
+     - Show a **loading spinner** or message (e.g., “Fetching data…”) while polling the task status.
+     - Ensure the user interface remains responsive during this process.
+  5. **Log Errors**:
+     - Log any errors (e.g., failed requests or timeouts) using WordPress’s default logger for debugging purposes.
+- **Outcome**: At the end of this phase, the plugin should:
+  - Successfully fetch essential data from the Crawlaco backend.
+  - Handle task statuses (`success`, `failed`, `pending`) appropriately.
+  - Display loading indicators and error messages to the user.
+  - Redirect the user to the next step upon success.
+- **On Success**:
+  - Save the step state (e.g., mark Step 3 as completed in the database or local storage).
+  - Redirect the user to **Step 4**.
+
 ### Step 4: Map Product Attributes
 - **Objective**: Allow users to map product attributes (Size, Color, Brand) between their WooCommerce store and the Crawlaco backend.
 - **Tasks**:
@@ -90,234 +136,58 @@ The **Crawlaco WordPress Plugin** acts as a bridge between a user’s WordPress/
   - Save the step state (e.g., mark Step 4 as completed in the database or local storage).
   - Redirect the user to the **Final Step**.
 
-### Final Step: Completion
-- Sends a `PATCH` request to mark the setup as complete.
-- Displays a thank-you message and a **“Login to Crawlaco Dashboard”** button.
-- **On Success**:
-  - Save the step state (e.g., mark the setup as complete in the database or local storage).
-  - Display the final success message and options.
-
----
-
-## 4. High-Level Technical Stack Recommendations
-### Backend
-- **WordPress REST API**: For handling plugin-specific endpoints and interactions.
-- **WooCommerce REST API**: For managing product-related data (if WooCommerce is installed).
-
-### Frontend
-- **React.js** or **Vue.js**: For a dynamic and responsive admin interface.
-- **RTL Support**: Ensure compatibility with Persian language and RTL layouts.
-
-### Database
-- **WordPress Database**: Store API keys, plugin settings, and logs securely.
-
-### Security
-- **HTTPS**: Ensure all API requests are encrypted.
-- **API Key Encryption**: Encrypt API keys before storing them in the database.
-
----
-
-## 5. Conceptual Data Model
-### Key Data Entities:
-- **WebsiteKey**: Stores the unique key for connecting to Crawlaco.
-- **API Keys**: Stores WordPress and WooCommerce API keys.
-- **Mapped Attributes**: Stores user-selected attribute mappings (Size, Color, Brand).
-- **Task Status**: Stores task IDs and statuses for polling.
-
----
-
-## 6. User Interface Design Principles
-- **RTL and Persian Language**: Ensure all text and layouts are RTL-compliant and in Persian.
-- **Modern Design**: Use a clean, contemporary design with a **white, blue, and purple** color scheme.
-- **Multi-Step Form**: Guide users through the setup process with a step-by-step wizard.
-- **Admin Menu**: Add a **Crawlaco menu** with submenus for Settings, Status, and Login to Crawlaco Dashboard.
-
----
-
-## 7. Security Considerations
-- **HTTPS**: Use HTTPS for all API requests to ensure secure communication.
-- **API Key Encryption**: Encrypt API keys before storing them in the database.
-- **Error Logging**: Use WordPress’s default logger for error logging.
-
----
-
-## 8. Development Phases or Milestones
-### Phase 1: Core Setup
-- **Objective**: Implement the basic plugin structure, WebsiteKey validation, and a user interface for the setup process.
+### Phase 5: Plugin Pages and Menu Integration
+- **Objective**: Implement the plugin’s home page, settings page, and other required pages, and integrate them into the WordPress admin dashboard menu.
 - **Tasks**:
-  - Create the plugin skeleton with activation and deactivation hooks.
-  - Add a **Crawlaco menu button** to the WordPress admin dashboard.
-  - Create a **simple page** in the WordPress admin dashboard to display the plugin forms (e.g., the multi-step setup wizard).
-  - Implement the **GET** request to `/websites/plugin/websites/` for WebsiteKey validation.
-  - Add a settings page for entering the WebsiteKey.
-  - Display success/error messages based on the validation response.
-- **Outcome**: At the end of this phase, the plugin should be installable, and users should be able to:
-  - See the **Crawlaco plugin button** in the WordPress admin menu.
-  - Access a simple page to view and interact with the plugin forms.
-  - Validate their WebsiteKey and proceed to the next step.
-- **On Success**:
-  - Save the step state (e.g., mark Step 1 as completed in the database or local storage).
-  - Redirect the user to **Step 2**.
-
-### Phase 2: API Key Management
-- **Objective**: Automate the generation and management of API keys for WordPress and WooCommerce (if installed).
-- **Tasks**:
-  1. **Check for WooCommerce**:
-     - Use WordPress’s built-in functions (e.g., `is_plugin_active()`) to check if WooCommerce is installed and active.
-     - If WooCommerce is **not installed or inactive**, skip the generation of WooCommerce API keys.
-  2. **Generate API Keys**:
-     - Generate **WordPress API Key** for the current user.
-     - If WooCommerce is active, generate **WooCommerce API Key** for the current user.
-     - Ensure the API keys are generated **in the background** to avoid blocking the user interface.
-  3. **Send API Keys to Crawlaco Backend**:
-     - Send the generated API keys to the Crawlaco backend via a `POST` request to `/websites/plugin/meta-data/`.
-     - The request body should include:
-       ```json
-       [
+  1. **Create Plugin Pages**:
+     - **Home Page**:
+       - Display a message if the user has not completed the activation process (e.g., “Please complete the setup process to activate Crawlaco.”).
+       - Fetch and display general website information from the `/websites/plugin/websites/` endpoint using a **GET** request.
+       - The response format is:
+         ```json
          {
-           "key": "WP_SECRET_KEY",
-           "value": "<WordPress API Key>",
-           "is_password": true
-         },
-         {
-           "key": "WP_USERNAME",
-           "value": "<Username of the current user>",
-           "is_password": true
-         },
-         {
-           "key": "WC_CONSUMER_KEY",
-           "value": "<WooCommerce API Key>",
-           "is_password": true
-         },
-         {
-           "key": "WC_CONSUMER_SECRET",
-           "value": "<WooCommerce API Secret>",
-           "is_password": true
+           "id": 0,
+           "address": "string",
+           "name": "string",
+           "wallet": {
+             "balance": 0
+           },
+           "is_active": true
          }
-       ]
-       ```
-     - If WooCommerce is not installed, exclude the WooCommerce-related keys from the request.
-  4. **Display Loading Indicator**:
-     - Show a **loading spinner** or message (e.g., “Generating API keys…”) while the API keys are being generated and sent.
-     - Ensure the user interface remains responsive during this process.
-  5. **Handle Success/Failure**:
-     - If the API keys are successfully generated and sent, display a success message (e.g., “API keys generated successfully!”).
-     - If the process fails, display an error message (e.g., “Failed to generate API keys. Please try again.”) and provide a **retry button**.
-  6. **Store API Keys Securely**:
-     - Encrypt and store the API keys in the WordPress database for future use.
-     - Ensure the keys are only accessible to authorized users.
+         ```
+       - Display the following information on the home page:
+         - Website ID (`id`).
+         - Website Address (`address`).
+         - Website Name (`name`).
+         - Wallet Balance (`wallet.balance`).
+         - Activation Status (`is_active`).
+     - **Settings Page**:
+       - Display the attributes mapped in **Step 4** (Size, Color, Brand).
+       - Allow the user to modify the mapped attributes if needed.
+       - Save the updated mappings by sending a `POST` request to `/websites/plugin/meta-data/` (same as in Step 4).
+  2. **Integrate Pages into WordPress Admin Menu**:
+     - Add a **Crawlaco menu** to the WordPress admin dashboard with the following submenus:
+       - **Home**: Links to the plugin’s home page.
+       - **Settings**: Links to the settings page.
+       - **Login to Crawlaco Dashboard**: Redirects users to the Crawlaco dashboard.
+     - Ensure the menu is only visible to users with the appropriate permissions (e.g., administrators).
+  3. **Handle Incomplete Setup**:
+     - If the user has not completed the setup process, display a warning message on the home page and redirect them to the setup wizard.
+  4. **Fetch and Display Data**:
+     - Use AJAX or similar methods to fetch data from the `/websites/plugin/websites/` endpoint and display it dynamically on the home page.
+     - Ensure the data is refreshed periodically or on user request.
+  5. **User Feedback**:
+     - Provide success/error messages when the user updates settings or performs actions on the status page.
+     - Log errors using WordPress’s default logger for debugging purposes.
 - **Outcome**: At the end of this phase, the plugin should:
-  - Generate and send **WordPress API Key** for the current user.
-  - Generate and send **WooCommerce API Key** (if WooCommerce is installed and active).
-  - Show a **loading indicator** during the process.
-  - Display success or error messages based on the outcome.
-- **On Success**:
-  - Save the step state (e.g., mark Step 2 as completed in the database or local storage).
-  - Redirect the user to **Step 3**.
+  - Have fully functional **home**, **settings**, and **status** pages.
+  - Integrate these pages into the WordPress admin dashboard menu.
+  - Display general website information on the home page.
+  - Allow users to modify mapped attributes on the settings page.
+  - Provide status and error information on the status page.
+  - Handle incomplete setups gracefully.
 
-### Phase 3: Data Synchronization
-- **Objective**: Enable data fetching and synchronization between the user’s WordPress/WooCommerce site and the Crawlaco backend.
-- **Tasks**:
-  1. **Initiate Data Fetching**:
-     - Send a `POST` request to `/websites/plugin/fetch-all/` to initiate the data fetching process.
-     - The backend responds with a `202 status` and a `taskId`.
-  2. **Poll Task Status**:
-     - Use the `taskId` to poll the task status every **3 seconds** by sending a `GET` request to `/common/tasks/{taskId}/`.
-     - The response contains a `status` key with three possible values:
-       - `success`: The task is complete.
-       - `failed`: The task failed.
-       - `pending`: The task is still in progress.
-  3. **Handle Task Status**:
-     - **If the status is `success`**:
-       - Save the step state (e.g., mark Step 3 as completed in the database or local storage).
-       - Redirect the user to **Step 4**.
-     - **If the status is `failed`**:
-       - Display an error message to the user (e.g., “Data fetching failed. Please try again.”).
-       - Provide a **retry button** to restart the data fetching process.
-     - **If the status is `pending`**:
-       - Continue polling the task status.
-       - If the status remains `pending` after **10 polling attempts (30 seconds)**, treat it as a failure:
-         - Display an error message to the user (e.g., “Data fetching timed out. Please try again.”).
-         - Provide a **retry button** to restart the data fetching process.
-  4. **Display Loading Indicator**:
-     - Show a **loading spinner** or message (e.g., “Fetching data…”) while polling the task status.
-     - Ensure the user interface remains responsive during this process.
-  5. **Log Errors**:
-     - Log any errors (e.g., failed requests or timeouts) using WordPress’s default logger for debugging purposes.
-- **Outcome**: At the end of this phase, the plugin should:
-  - Successfully fetch essential data from the Crawlaco backend.
-  - Handle task statuses (`success`, `failed`, `pending`) appropriately.
-  - Display loading indicators and error messages to the user.
-  - Redirect the user to the next step upon success.
-- **On Success**:
-  - Save the step state (e.g., mark Step 3 as completed in the database or local storage).
-  - Redirect the user to **Step 4**.
-
-### Phase 4: Map Product Attributes
-- **Objective**: Allow users to map product attributes (Size, Color, Brand) between their WooCommerce store and the Crawlaco backend.
-- **Tasks**:
-  1. **Check for WooCommerce**:
-     - Use WordPress’s built-in functions (e.g., `is_plugin_active()`) to check if WooCommerce is installed and active.
-     - If WooCommerce is **not installed or inactive**, skip this step and inform the user that WooCommerce is not installed. Display a **Finish** button to complete the setup.
-  2. **Display Attribute Mapping Table**:
-     - Show a table with the following structure:
-       - **Left Side**: A dropdown list of all available product attributes (excluding terms) on the user’s WooCommerce store.
-       - **Right Side**: The three required attributes (`Size`, `Color`, `Brand`) that the user needs to map.
-     - **Dropdown Behavior**:
-       - The dropdown should display the **names** of the product attributes (e.g., “pa_size”, “pa_color”).
-       - The user can select an attribute from the dropdown for each required attribute (Size, Color, Brand) or leave it empty if no mapping is needed.
-     - **User Instructions**:
-       - Include a brief explanation at the top of the table (e.g., “Map your WooCommerce product attributes to help Crawlaco understand your data structure”).
-  3. **Submit Mapped Attributes**:
-     - When the user clicks the **Submit** button, send the mapped attributes to the Crawlaco backend via a `POST` request to `/websites/plugin/meta-data/`.
-     - The request body should include:
-       ```json
-       [
-         {
-           "key": "SIZE_ATTR_ID",
-           "value": "<ID of the selected size attribute>"
-         },
-         {
-           "key": "COLOR_ATTR_ID",
-           "value": "<ID of the selected color attribute>"
-         },
-         {
-           "key": "BRAND_ATTR_ID",
-           "value": "<ID of the selected brand attribute>"
-         }
-       ]
-       ```
-     - **Note**: If the user leaves an attribute unmapped, exclude it from the request.
-  4. **Handle Success/Failure**:
-     - **If the request is successful**:
-       - Save the step state (e.g., mark Step 4 as completed in the database or local storage).
-       - Redirect the user to the **Final Step**.
-     - **If the request fails**:
-       - Display an error message (e.g., “Failed to save attribute mappings. Please try again.”).
-       - Provide a **retry button** to restart the process.
-  5. **Finalize Setup**:
-     - Send a `PATCH` request to `/websites/plugin/websites/` with the following body:
-       ```json
-       {
-         "step": "done",
-         "is_active": true
-       }
-       ```
-     - **Remove the Warning Notification**:
-       - Once the setup is complete, remove the warning notification that was displayed at the top of the WordPress dashboard.
-  6. **Display Completion Message**:
-     - Show a thank-you message (e.g., “Thank you for activating Crawlaco! You can now use all the features of the dashboard.”).
-     - Display a **“Login to Crawlaco Dashboard”** button to redirect users to the Crawlaco dashboard.
-- **Outcome**: At the end of this phase, the plugin should:
-  - Allow users to map product attributes (Size, Color, Brand) to their WooCommerce store.
-  - Send the mapped attributes to the Crawlaco backend.
-  - Mark the plugin as active and remove the warning notification.
-  - Display a completion message and options for the user.
-- **On Success**:
-  - Save the step state (e.g., mark Step 4 as completed in the database or local storage).
-  - Redirect the user to the **Final Step**.
-
-### Phase 5: Polish and Testing
+### Phase 6: Polish and Testing
 - **Objective**: Ensure the plugin is stable, user-friendly, and ready for deployment.
 - **Tasks**:
   - Add RTL and Persian language support.
@@ -325,7 +195,7 @@ The **Crawlaco WordPress Plugin** acts as a bridge between a user’s WordPress/
   - Optimize performance and fix any bugs.
 - **Outcome**: At the end of this phase, the plugin should be fully functional, polished, and ready for deployment.
 
-### Phase 6: Deployment
+### Phase 7: Deployment
 - **Objective**: Publish the plugin and provide support.
 - **Tasks**:
   - Publish the plugin to the WordPress repository.
