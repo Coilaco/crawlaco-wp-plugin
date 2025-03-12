@@ -216,3 +216,52 @@ html[dir="rtl"] .form-table th {
     height: 20px;
     padding: 7px 0 0;
 }
+
+/* Attribute Mapping */
+.crawlaco-setup-step select {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    border: 1px solid var(--crawlaco-border);
+    border-radius: 4px;
+    margin: 5px 0;
+    background-color: var(--crawlaco-white);
+}
+
+.crawlaco-setup-step select:focus {
+    border-color: var(--crawlaco-blue);
+    box-shadow: 0 0 0 1px var(--crawlaco-blue);
+    outline: none;
+}
+
+.crawlaco-setup-step select:disabled {
+    background-color: var(--crawlaco-light-gray);
+    cursor: not-allowed;
+}
+
+.crawlaco-setup-step .notice {
+    margin: 20px 0;
+    padding: 15px;
+    border-left: 4px solid #ffb900;
+    background: #fff8e5;
+}
+
+.crawlaco-setup-step .notice p {
+    margin: 0.5em 0;
+    padding: 2px;
+}
+
+.crawlaco-setup-step .notice .button {
+    margin-top: 10px;
+}
+
+/* RTL Support for Attribute Mapping */
+html[dir="rtl"] .crawlaco-setup-step .notice {
+    border-left: none;
+    border-right: 4px solid #ffb900;
+    text-align: right;
+}
+
+html[dir="rtl"] .crawlaco-setup-step select {
+    text-align: right;
+}

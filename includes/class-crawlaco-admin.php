@@ -70,6 +70,10 @@ class Crawlaco_Admin {
         register_setting('crawlaco_settings', 'crawlaco_setup_step');
         register_setting('crawlaco_settings', 'crawlaco_wp_api_key');
         register_setting('crawlaco_settings', 'crawlaco_wc_api_keys');
+        // Add attribute mapping settings
+        register_setting('crawlaco_settings', 'crawlaco_size_attr_id');
+        register_setting('crawlaco_settings', 'crawlaco_color_attr_id');
+        register_setting('crawlaco_settings', 'crawlaco_brand_attr_id');
     }
 
     /**
@@ -114,6 +118,13 @@ class Crawlaco_Admin {
                 'fetching_success' => __('Data fetched successfully!', 'crawlaco'),
                 'start_sync' => __('Start Data Sync', 'crawlaco'),
                 'retry_sync' => __('Retry', 'crawlaco'),
+                // Add new strings for attribute mapping
+                'saving_attributes' => __('Saving attribute mappings...', 'crawlaco'),
+                'attributes_saved' => __('Attribute mappings saved successfully!', 'crawlaco'),
+                'attributes_failed' => __('Failed to save attribute mappings.', 'crawlaco'),
+                'finalizing_setup' => __('Finalizing setup...', 'crawlaco'),
+                'setup_complete' => __('Setup completed successfully! Redirecting to dashboard...', 'crawlaco'),
+                'setup_failed' => __('Failed to complete setup.', 'crawlaco'),
             ),
         ));
     }
@@ -324,6 +335,108 @@ class Crawlaco_Admin {
                     <?php _e('Retry', 'crawlaco'); ?>
                 </button>
             </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Render step four (Attribute Mapping)
+     */
+    private function render_step_four() {
+        // Check if WooCommerce is installed and active
+        $has_woocommerce = in_array(
+            'woocommerce/woocommerce.php',
+            apply_filters('active_plugins', get_option('active_plugins'))
+        );
+
+        // Get saved attribute mappings
+        $size_attr_id = get_option('crawlaco_size_attr_id', '');
+        $color_attr_id = get_option('crawlaco_color_attr_id', '');
+        $brand_attr_id = get_option('crawlaco_brand_attr_id', '');
+        ?>
+        <div class="crawlaco-setup-step active">
+            <h2><?php _e('Step 4: Map Product Attributes', 'crawlaco'); ?></h2>
+            
+            <?php if (!$has_woocommerce): ?>
+                <div class="notice notice-warning">
+                    <p>
+                        <?php _e('WooCommerce is not installed or inactive. You can skip this step.', 'crawlaco'); ?>
+                    </p>
+                    <p>
+                        <button type="button" class="button button-primary" id="crawlaco-finish-setup">
+                            <?php _e('Finish Setup', 'crawlaco'); ?>
+                        </button>
+                    </p>
+                </div>
+            <?php else: ?>
+                <p class="description">
+                    <?php _e('Map your WooCommerce product attributes to help Crawlaco understand your data structure:', 'crawlaco'); ?>
+                </p>
+
+                <form id="crawlaco-attribute-mapping-form" method="post">
+                    <table class="form-table">
+                        <?php
+                        // Get all product attributes
+                        $attribute_taxonomies = wc_get_attribute_taxonomies();
+                        ?>
+                        <tr>
+                            <th scope="row">
+                                <label for="crawlaco_size_attr_id"><?php _e('Size Attribute', 'crawlaco'); ?></label>
+                            </th>
+                            <td>
+                                <select name="crawlaco_size_attr_id" id="crawlaco_size_attr_id">
+                                    <option value=""><?php _e('-- Select Size Attribute --', 'crawlaco'); ?></option>
+                                    <?php foreach ($attribute_taxonomies as $attribute): ?>
+                                        <option value="<?php echo esc_attr($attribute->attribute_id); ?>"
+                                                <?php selected($size_attr_id, $attribute->attribute_id); ?>>
+                                            <?php echo esc_html($attribute->attribute_label); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="crawlaco_color_attr_id"><?php _e('Color Attribute', 'crawlaco'); ?></label>
+                            </th>
+                            <td>
+                                <select name="crawlaco_color_attr_id" id="crawlaco_color_attr_id">
+                                    <option value=""><?php _e('-- Select Color Attribute --', 'crawlaco'); ?></option>
+                                    <?php foreach ($attribute_taxonomies as $attribute): ?>
+                                        <option value="<?php echo esc_attr($attribute->attribute_id); ?>"
+                                                <?php selected($color_attr_id, $attribute->attribute_id); ?>>
+                                            <?php echo esc_html($attribute->attribute_label); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <label for="crawlaco_brand_attr_id"><?php _e('Brand Attribute', 'crawlaco'); ?></label>
+                            </th>
+                            <td>
+                                <select name="crawlaco_brand_attr_id" id="crawlaco_brand_attr_id">
+                                    <option value=""><?php _e('-- Select Brand Attribute --', 'crawlaco'); ?></option>
+                                    <?php foreach ($attribute_taxonomies as $attribute): ?>
+                                        <option value="<?php echo esc_attr($attribute->attribute_id); ?>"
+                                                <?php selected($brand_attr_id, $attribute->attribute_id); ?>>
+                                            <?php echo esc_html($attribute->attribute_label); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="crawlaco-submit-wrapper">
+                        <div class="crawlaco-message"></div>
+                        <button type="submit" class="button button-primary" id="save-attribute-mapping">
+                            <?php _e('Save Attribute Mapping', 'crawlaco'); ?>
+                        </button>
+                    </div>
+                </form>
+            <?php endif; ?>
         </div>
         <?php
     }

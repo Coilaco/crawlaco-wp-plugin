@@ -285,4 +285,103 @@ jQuery(document).ready(function ($) {
     // Bind event handlers
     $('#start-data-sync').on('click', startDataSync);
     $('#retry-data-sync').on('click', startDataSync);
+
+    // Handle attribute mapping form submission
+    $('#crawlaco-attribute-mapping-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const $form = $(this);
+        const $submitButton = $('#save-attribute-mapping');
+        const $message = $('.crawlaco-message');
+
+        // Get attribute mappings
+        const sizeAttrId = $('#crawlaco_size_attr_id').val();
+        const colorAttrId = $('#crawlaco_color_attr_id').val();
+        const brandAttrId = $('#crawlaco_brand_attr_id').val();
+
+        // Disable form and show loading state
+        $submitButton.prop('disabled', true);
+
+        // Send AJAX request
+        $.ajax({
+            url: crawlacoAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'save_attribute_mapping',
+                size_attr_id: sizeAttrId,
+                color_attr_id: colorAttrId,
+                brand_attr_id: brandAttrId,
+                nonce: crawlacoAdmin.nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    $message
+                        .removeClass('error')
+                        .addClass('success')
+                        .html(response.data.message);
+
+                    // Send request to finalize setup
+                    finalizeSetup();
+                } else {
+                    $message
+                        .removeClass('success')
+                        .addClass('error')
+                        .html(crawlacoAdmin.strings.error + ' ' + response.data.message);
+
+                    $submitButton.prop('disabled', false);
+                }
+            },
+            error: function () {
+                $message
+                    .removeClass('success')
+                    .addClass('error')
+                    .html(crawlacoAdmin.strings.error + ' ' + 'Failed to connect to the server. Please try again.');
+
+                $submitButton.prop('disabled', false);
+            }
+        });
+    });
+
+    // Handle setup finalization when WooCommerce is not installed
+    $('#crawlaco-finish-setup').on('click', function (e) {
+        e.preventDefault();
+        finalizeSetup();
+    });
+
+    function finalizeSetup() {
+        const $message = $('.crawlaco-message');
+
+        $.ajax({
+            url: crawlacoAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'finalize_setup',
+                nonce: crawlacoAdmin.nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    $message
+                        .removeClass('error')
+                        .addClass('success')
+                        .html(response.data.message);
+
+                    // Redirect to Crawlaco dashboard after a short delay
+                    setTimeout(function () {
+                        window.location.href = response.data.redirect;
+                    }, 1000);
+                } else {
+                    $message
+                        .removeClass('success')
+                        .addClass('error')
+                        .html(crawlacoAdmin.strings.error + ' ' + response.data.message);
+                }
+            },
+            error: function () {
+                $message
+                    .removeClass('success')
+                    .addClass('error')
+                    .html(crawlacoAdmin.strings.error + ' ' + 'Failed to connect to the server. Please try again.');
+            }
+        });
+    }
 }); 

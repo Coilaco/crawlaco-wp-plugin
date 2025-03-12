@@ -26,56 +26,66 @@ The **Crawlaco WordPress Plugin** acts as a bridge between a user’s WordPress/
   - Save the step state (e.g., mark Step 1 as completed in the database or local storage).
   - Redirect the user to **Step 2**.
 
-### Step 2: Send API Key Metadata
-- Generates and sends **WordPress API Key** and **WooCommerce API Key** (if WooCommerce is installed) to the Crawlaco backend.
-- Stores API keys securely in the database.
-- Displays success or error messages with a retry option.
-- **On Success**:
-  - Save the step state (e.g., mark Step 2 as completed in the database or local storage).
-  - Redirect the user to **Step 3**.
-
-### Step 3: Fetch Essential Data
-- **Objective**: Enable data fetching and synchronization between the user’s WordPress/WooCommerce site and the Crawlaco backend.
-- **Tasks**:
-  1. **Initiate Data Fetching**:
-     - Send a `POST` request to `/websites/plugin/fetch-all/` to initiate the data fetching process.
-     - The backend responds with a `202 status` and a `taskId`.
-  2. **Poll Task Status**:
-     - Use the `taskId` to poll the task status every **3 seconds** by sending a `GET` request to `/common/tasks/{taskId}/`.
-     - The response contains a `status` key with three possible values:
-       - `success`: The task is complete.
-       - `failed`: The task failed.
-       - `pending`: The task is still in progress.
-  3. **Handle Task Status**:
-     - **If the status is `success`**:
-       - Save the step state (e.g., mark Step 3 as completed in the database or local storage).
-       - Redirect the user to **Step 4**.
-     - **If the status is `failed`**:
-       - Display an error message to the user (e.g., “Data fetching failed. Please try again.”).
-       - Provide a **retry button** to restart the data fetching process.
-     - **If the status is `pending`**:
-       - Continue polling the task status.
-       - If the status remains `pending` after **10 polling attempts (30 seconds)**, treat it as a failure:
-         - Display an error message to the user (e.g., “Data fetching timed out. Please try again.”).
-         - Provide a **retry button** to restart the data fetching process.
-  4. **Display Loading Indicator**:
-     - Show a **loading spinner** or message (e.g., “Fetching data…”) while polling the task status.
-     - Ensure the user interface remains responsive during this process.
-  5. **Log Errors**:
-     - Log any errors (e.g., failed requests or timeouts) using WordPress’s default logger for debugging purposes.
-- **Outcome**: At the end of this phase, the plugin should:
-  - Successfully fetch essential data from the Crawlaco backend.
-  - Handle task statuses (`success`, `failed`, `pending`) appropriately.
-  - Display loading indicators and error messages to the user.
-  - Redirect the user to the next step upon success.
-- **On Success**:
-  - Save the step state (e.g., mark Step 3 as completed in the database or local storage).
-  - Redirect the user to **Step 4**.
-
 ### Step 4: Map Product Attributes
-- Displays a table for mapping **Size**, **Color**, and **Brand** attributes.
-- Sends mapped attributes to `/websites/plugin/meta-data/`.
-- Handles WooCommerce detection and skips the step if WooCommerce is not installed.
+- **Objective**: Allow users to map product attributes (Size, Color, Brand) between their WooCommerce store and the Crawlaco backend.
+- **Tasks**:
+  1. **Check for WooCommerce**:
+     - Use WordPress’s built-in functions (e.g., `is_plugin_active()`) to check if WooCommerce is installed and active.
+     - If WooCommerce is **not installed or inactive**, skip this step and inform the user that WooCommerce is not installed. Display a **Finish** button to complete the setup.
+  2. **Display Attribute Mapping Table**:
+     - Show a table with the following structure:
+       - **Left Side**: A dropdown list of all available product attributes (excluding terms) on the user’s WooCommerce store.
+       - **Right Side**: The three required attributes (`Size`, `Color`, `Brand`) that the user needs to map.
+     - **Dropdown Behavior**:
+       - The dropdown should display the **names** of the product attributes (e.g., “pa_size”, “pa_color”).
+       - The user can select an attribute from the dropdown for each required attribute (Size, Color, Brand) or leave it empty if no mapping is needed.
+     - **User Instructions**:
+       - Include a brief explanation at the top of the table (e.g., “Map your WooCommerce product attributes to help Crawlaco understand your data structure”).
+  3. **Submit Mapped Attributes**:
+     - When the user clicks the **Submit** button, send the mapped attributes to the Crawlaco backend via a `POST` request to `/websites/plugin/meta-data/`.
+     - The request body should include:
+       ```json
+       [
+         {
+           "key": "SIZE_ATTR_ID",
+           "value": "<ID of the selected size attribute>"
+         },
+         {
+           "key": "COLOR_ATTR_ID",
+           "value": "<ID of the selected color attribute>"
+         },
+         {
+           "key": "BRAND_ATTR_ID",
+           "value": "<ID of the selected brand attribute>"
+         }
+       ]
+       ```
+     - **Note**: If the user leaves an attribute unmapped, exclude it from the request.
+  4. **Handle Success/Failure**:
+     - **If the request is successful**:
+       - Save the step state (e.g., mark Step 4 as completed in the database or local storage).
+       - Redirect the user to the **Final Step**.
+     - **If the request fails**:
+       - Display an error message (e.g., “Failed to save attribute mappings. Please try again.”).
+       - Provide a **retry button** to restart the process.
+  5. **Finalize Setup**:
+     - Send a `PATCH` request to `/websites/plugin/websites/` with the following body:
+       ```json
+       {
+         "step": "done",
+         "is_active": true
+       }
+       ```
+     - **Remove the Warning Notification**:
+       - Once the setup is complete, remove the warning notification that was displayed at the top of the WordPress dashboard.
+  6. **Display Completion Message**:
+     - Show a thank-you message (e.g., “Thank you for activating Crawlaco! You can now use all the features of the dashboard.”).
+     - Display a **“Login to Crawlaco Dashboard”** button to redirect users to the Crawlaco dashboard.
+- **Outcome**: At the end of this phase, the plugin should:
+  - Allow users to map product attributes (Size, Color, Brand) to their WooCommerce store.
+  - Send the mapped attributes to the Crawlaco backend.
+  - Mark the plugin as active and remove the warning notification.
+  - Display a completion message and options for the user.
 - **On Success**:
   - Save the step state (e.g., mark Step 4 as completed in the database or local storage).
   - Redirect the user to the **Final Step**.
@@ -244,9 +254,65 @@ The **Crawlaco WordPress Plugin** acts as a bridge between a user’s WordPress/
   - Redirect the user to **Step 4**.
 
 ### Phase 4: Map Product Attributes
-- Displays a table for mapping **Size**, **Color**, and **Brand** attributes.
-- Sends mapped attributes to `/websites/plugin/meta-data/`.
-- Handles WooCommerce detection and skips the step if WooCommerce is not installed.
+- **Objective**: Allow users to map product attributes (Size, Color, Brand) between their WooCommerce store and the Crawlaco backend.
+- **Tasks**:
+  1. **Check for WooCommerce**:
+     - Use WordPress’s built-in functions (e.g., `is_plugin_active()`) to check if WooCommerce is installed and active.
+     - If WooCommerce is **not installed or inactive**, skip this step and inform the user that WooCommerce is not installed. Display a **Finish** button to complete the setup.
+  2. **Display Attribute Mapping Table**:
+     - Show a table with the following structure:
+       - **Left Side**: A dropdown list of all available product attributes (excluding terms) on the user’s WooCommerce store.
+       - **Right Side**: The three required attributes (`Size`, `Color`, `Brand`) that the user needs to map.
+     - **Dropdown Behavior**:
+       - The dropdown should display the **names** of the product attributes (e.g., “pa_size”, “pa_color”).
+       - The user can select an attribute from the dropdown for each required attribute (Size, Color, Brand) or leave it empty if no mapping is needed.
+     - **User Instructions**:
+       - Include a brief explanation at the top of the table (e.g., “Map your WooCommerce product attributes to help Crawlaco understand your data structure”).
+  3. **Submit Mapped Attributes**:
+     - When the user clicks the **Submit** button, send the mapped attributes to the Crawlaco backend via a `POST` request to `/websites/plugin/meta-data/`.
+     - The request body should include:
+       ```json
+       [
+         {
+           "key": "SIZE_ATTR_ID",
+           "value": "<ID of the selected size attribute>"
+         },
+         {
+           "key": "COLOR_ATTR_ID",
+           "value": "<ID of the selected color attribute>"
+         },
+         {
+           "key": "BRAND_ATTR_ID",
+           "value": "<ID of the selected brand attribute>"
+         }
+       ]
+       ```
+     - **Note**: If the user leaves an attribute unmapped, exclude it from the request.
+  4. **Handle Success/Failure**:
+     - **If the request is successful**:
+       - Save the step state (e.g., mark Step 4 as completed in the database or local storage).
+       - Redirect the user to the **Final Step**.
+     - **If the request fails**:
+       - Display an error message (e.g., “Failed to save attribute mappings. Please try again.”).
+       - Provide a **retry button** to restart the process.
+  5. **Finalize Setup**:
+     - Send a `PATCH` request to `/websites/plugin/websites/` with the following body:
+       ```json
+       {
+         "step": "done",
+         "is_active": true
+       }
+       ```
+     - **Remove the Warning Notification**:
+       - Once the setup is complete, remove the warning notification that was displayed at the top of the WordPress dashboard.
+  6. **Display Completion Message**:
+     - Show a thank-you message (e.g., “Thank you for activating Crawlaco! You can now use all the features of the dashboard.”).
+     - Display a **“Login to Crawlaco Dashboard”** button to redirect users to the Crawlaco dashboard.
+- **Outcome**: At the end of this phase, the plugin should:
+  - Allow users to map product attributes (Size, Color, Brand) to their WooCommerce store.
+  - Send the mapped attributes to the Crawlaco backend.
+  - Mark the plugin as active and remove the warning notification.
+  - Display a completion message and options for the user.
 - **On Success**:
   - Save the step state (e.g., mark Step 4 as completed in the database or local storage).
   - Redirect the user to the **Final Step**.

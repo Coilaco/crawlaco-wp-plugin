@@ -7,8 +7,8 @@ class Crawlaco_API {
      * API Base URL
      */
     // TODO: Change to the production URL
-    private $api_base_url = 'http://127.0.0.1:9001';
-    // private $api_base_url = 'https://api.crawlaco.com';
+    // private $api_base_url = 'http://127.0.0.1:9001';
+    private $api_base_url = 'https://api.crawlaco.com';
 
     /**
      * Constructor
@@ -21,6 +21,8 @@ class Crawlaco_API {
         add_action('wp_ajax_validate_website_key', array($this, 'ajax_validate_website_key'));
         add_action('wp_ajax_initiate_data_fetch', array($this, 'ajax_initiate_data_fetch'));
         add_action('wp_ajax_check_task_status', array($this, 'ajax_check_task_status'));
+        add_action('wp_ajax_save_attribute_mapping', array($this, 'ajax_save_attribute_mapping'));
+        add_action('wp_ajax_finalize_setup', array($this, 'ajax_finalize_setup'));
     }
 
     /**
@@ -371,5 +373,145 @@ class Crawlaco_API {
             'status' => $response_data['status'],
             'message' => isset($response_data['message']) ? $response_data['message'] : ''
         );
+    }
+
+    /**
+     * Save attribute mapping via AJAX
+     */
+    public function ajax_save_attribute_mapping() {
+        check_ajax_referer('crawlaco-admin-nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array(
+                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+            ));
+        }
+
+        $size_attr_id = isset($_POST['size_attr_id']) ? sanitize_text_field($_POST['size_attr_id']) : '';
+        $color_attr_id = isset($_POST['color_attr_id']) ? sanitize_text_field($_POST['color_attr_id']) : '';
+        $brand_attr_id = isset($_POST['brand_attr_id']) ? sanitize_text_field($_POST['brand_attr_id']) : '';
+
+        // Save attribute mappings to WordPress options
+        update_option('crawlaco_size_attr_id', $size_attr_id);
+        update_option('crawlaco_color_attr_id', $color_attr_id);
+        update_option('crawlaco_brand_attr_id', $brand_attr_id);
+
+        // Prepare meta data for API
+        $meta_data = array();
+        
+        if (!empty($size_attr_id)) {
+            $meta_data[] = array(
+                'key' => 'SIZE_ATTR_ID',
+                'value' => $size_attr_id
+            );
+        }
+        
+        if (!empty($color_attr_id)) {
+            $meta_data[] = array(
+                'key' => 'COLOR_ATTR_ID',
+                'value' => $color_attr_id
+            );
+        }
+        
+        if (!empty($brand_attr_id)) {
+            $meta_data[] = array(
+                'key' => 'BRAND_ATTR_ID',
+                'value' => $brand_attr_id
+            );
+        }
+
+        // Send attribute mappings to Crawlaco API
+        if (!empty($meta_data)) {
+            $website_key = get_option('crawlaco_website_key');
+            
+            $response = wp_remote_post(
+                $this->api_base_url . '/websites/plugin/meta-data/',
+                array(
+                    'headers' => array(
+                        'host' => 'api.crawlaco.com',
+                        'website-key' => $website_key,
+                        'website-address' => get_site_url(),
+                        'Content-Type' => 'application/json'
+                    ),
+                    'body' => json_encode($meta_data),
+                    'timeout' => 30
+                )
+            );
+
+            if (is_wp_error($response)) {
+                wp_send_json_error(array(
+                    'message' => __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                ));
+            }
+
+            $response_code = wp_remote_retrieve_response_code($response);
+            
+            if ($response_code !== 201) {
+                wp_send_json_error(array(
+                    'message' => __('Failed to save attribute mappings. Please try again.', 'crawlaco')
+                ));
+            }
+        }
+
+        wp_send_json_success(array(
+            'message' => __('Attribute mappings saved successfully!', 'crawlaco')
+        ));
+    }
+
+    /**
+     * Finalize setup via AJAX
+     */
+    public function ajax_finalize_setup() {
+        check_ajax_referer('crawlaco-admin-nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array(
+                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+            ));
+        }
+
+        $website_key = get_option('crawlaco_website_key');
+        
+        // Send PATCH request to mark setup as complete
+        $response = wp_remote_request(
+            $this->api_base_url . '/websites/plugin/websites/',
+            array(
+                'method' => 'PATCH',
+                'headers' => array(
+                    'host' => 'api.crawlaco.com',
+                    'website-key' => $website_key,
+                    'website-address' => get_site_url(),
+                    'Content-Type' => 'application/json'
+                ),
+                'body' => json_encode(array(
+                    'step' => 'done',
+                    'is_active' => true
+                )),
+                'timeout' => 30
+            )
+        );
+
+        if (is_wp_error($response)) {
+            wp_send_json_error(array(
+                'message' => __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+            ));
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        
+        if ($response_code !== 200) {
+            wp_send_json_error(array(
+                'message' => __('Failed to complete setup. Please try again.', 'crawlaco')
+            ));
+        }
+
+        // Mark setup as complete in WordPress
+        update_option('crawlaco_setup_complete', true);
+        update_option('crawlaco_setup_step', 4);
+
+        wp_send_json_success(array(
+            'message' => __('Setup completed successfully!', 'crawlaco'),
+            'redirect' => 'https://dashboard.crawlaco.com'
+        ));
     }
 } 
