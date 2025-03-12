@@ -1,0 +1,176 @@
+.crawlaco-admin {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Setup Progress */
+.crawlaco-setup-progress {
+    margin: 30px 0;
+    padding: 0 10px;
+}
+
+.crawlaco-setup-progress .steps {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+
+.crawlaco-setup-progress .steps::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ccd0d4;
+    z-index: 1;
+}
+
+.crawlaco-setup-progress .steps li {
+    position: relative;
+    padding-top: 35px;
+    flex: 1;
+    text-align: center;
+    color: #646970;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.crawlaco-setup-progress .steps li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ccd0d4;
+    border-radius: 50%;
+    background: #fff;
+    z-index: 2;
+}
+
+.crawlaco-setup-progress .steps li.active {
+    color: #2271b1;
+}
+
+.crawlaco-setup-progress .steps li.active::before {
+    border-color: #2271b1;
+    background: #2271b1;
+}
+
+.crawlaco-setup-progress .steps li.completed::before {
+    border-color: #2271b1;
+    background: #2271b1;
+}
+
+/* Setup Wizard */
+.crawlaco-setup-wizard {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.crawlaco-setup-step {
+    margin-bottom: 20px;
+}
+
+.crawlaco-setup-step h2 {
+    margin-top: 0;
+    color: #1d2327;
+    font-size: 1.3em;
+    margin-bottom: 1em;
+}
+
+.crawlaco-submit-wrapper {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.crawlaco-message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    display: none;
+}
+
+.crawlaco-message.success {
+    display: block;
+    background-color: #f0f6e9;
+    border: 1px solid #7ad03a;
+    color: #3c763d;
+}
+
+.crawlaco-message.error {
+    display: block;
+    background-color: #fbeaea;
+    border: 1px solid #dc3232;
+    color: #dc3232;
+}
+
+/* RTL Support */
+html[dir="rtl"] .crawlaco-admin {
+    text-align: right;
+}
+
+html[dir="rtl"] .crawlaco-setup-progress .steps::before {
+    right: 0;
+    left: 0;
+}
+
+/* Form Styles */
+.crawlaco-admin input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+}
+
+.crawlaco-admin .form-table th {
+    width: 200px;
+}
+
+.crawlaco-admin .description {
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* Button Styles */
+.crawlaco-admin .button-primary {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+}
+
+.crawlaco-admin .button-primary:hover,
+.crawlaco-admin .button-primary:focus {
+    background: #135e96;
+    border-color: #135e96;
+    color: #fff;
+}
+
+/* Settings and Status Pages */
+.crawlaco-settings-content,
+.crawlaco-status-content {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Admin Menu Icon */
+#adminmenu .toplevel_page_crawlaco .wp-menu-image img {
+    width: 20px;
+    height: 20px;
+    padding: 7px 0 0;
+}
