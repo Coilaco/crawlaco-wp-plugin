@@ -143,4 +143,146 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    // Handle data synchronization
+    let taskId = null;
+    let pollInterval = null;
+    let pollAttempts = 0;
+    const MAX_POLL_ATTEMPTS = 10;
+    const POLL_INTERVAL = 3000; // 3 seconds
+
+    function startDataSync() {
+        const $message = $('.crawlaco-message');
+        const $progress = $('.crawlaco-progress');
+        const $startButton = $('#start-data-sync');
+        const $retryButton = $('#retry-data-sync');
+
+        // Reset state
+        pollAttempts = 0;
+        if (pollInterval) {
+            clearInterval(pollInterval);
+        }
+
+        // Disable start button and show progress
+        $startButton.prop('disabled', true);
+        $progress.show();
+        $retryButton.hide();
+
+        // Send AJAX request to initiate data fetch
+        $.ajax({
+            url: crawlacoAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'initiate_data_fetch',
+                nonce: crawlacoAdmin.nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    taskId = response.data.taskId;
+                    $message
+                        .removeClass('error')
+                        .addClass('success')
+                        .html(response.data.message);
+
+                    // Start polling for task status
+                    pollTaskStatus();
+                } else {
+                    handleDataSyncError(response.data.message);
+                }
+            },
+            error: function () {
+                handleDataSyncError('Failed to connect to the server. Please try again.');
+            }
+        });
+    }
+
+    function pollTaskStatus() {
+        if (!taskId) return;
+
+        pollInterval = setInterval(function () {
+            pollAttempts++;
+
+            $.ajax({
+                url: crawlacoAdmin.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'check_task_status',
+                    task_id: taskId,
+                    nonce: crawlacoAdmin.nonce
+                },
+                success: function (response) {
+                    if (response.success) {
+                        const status = response.data.status;
+                        const message = response.data.message;
+
+                        switch (status) {
+                            case 'SUCCESS':
+                                clearInterval(pollInterval);
+                                handleDataSyncSuccess(message);
+                                break;
+                            case 'FAILURE':
+                                clearInterval(pollInterval);
+                                handleDataSyncError(message);
+                                break;
+                            case 'PENDING':
+                                if (pollAttempts >= MAX_POLL_ATTEMPTS) {
+                                    clearInterval(pollInterval);
+                                    handleDataSyncError('Data fetching timed out. Please try again.');
+                                }
+                                break;
+                            default:
+                                pollAttempts++;
+                                break;
+                        }
+                    } else {
+                        handleDataSyncError(response.data.message);
+                    }
+                },
+                error: function () {
+                    handleDataSyncError('Failed to check task status. Please try again.');
+                }
+            });
+        }, POLL_INTERVAL);
+    }
+
+    function handleDataSyncSuccess(message) {
+        const $message = $('.crawlaco-message');
+        const $progress = $('.crawlaco-progress');
+        const $startButton = $('#start-data-sync');
+        const $retryButton = $('#retry-data-sync');
+
+        $message
+            .removeClass('error')
+            .addClass('success')
+            .html(message);
+
+        $progress.hide();
+        $startButton.hide();
+        $retryButton.hide();
+
+        // Redirect to next step after a short delay
+        setTimeout(function () {
+            window.location.reload();
+        }, 1200);
+    }
+
+    function handleDataSyncError(message) {
+        const $message = $('.crawlaco-message');
+        const $progress = $('.crawlaco-progress');
+        const $startButton = $('#start-data-sync');
+        const $retryButton = $('#retry-data-sync');
+
+        $message
+            .removeClass('success')
+            .addClass('error')
+            .html(crawlacoAdmin.strings.error + ' ' + message);
+
+        $progress.hide();
+        $startButton.prop('disabled', false);
+        $retryButton.show();
+    }
+
+    // Bind event handlers
+    $('#start-data-sync').on('click', startDataSync);
+    $('#retry-data-sync').on('click', startDataSync);
 }); 

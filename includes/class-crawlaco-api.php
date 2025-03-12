@@ -19,6 +19,8 @@ class Crawlaco_API {
         
         // Add AJAX handlers
         add_action('wp_ajax_validate_website_key', array($this, 'ajax_validate_website_key'));
+        add_action('wp_ajax_initiate_data_fetch', array($this, 'ajax_initiate_data_fetch'));
+        add_action('wp_ajax_check_task_status', array($this, 'ajax_check_task_status'));
     }
 
     /**
@@ -195,5 +197,179 @@ class Crawlaco_API {
         }
 
         return true;
+    }
+
+    /**
+     * Initiate data fetching via AJAX
+     */
+    public function ajax_initiate_data_fetch() {
+        check_ajax_referer('crawlaco-admin-nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array(
+                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+            ));
+        }
+
+        $response = $this->initiate_data_fetch();
+        
+        if (is_wp_error($response)) {
+            wp_send_json_error(array(
+                'message' => $response->get_error_message()
+            ));
+        }
+
+        wp_send_json_success(array(
+            'message' => __('Data fetching initiated successfully!', 'crawlaco'),
+            'taskId' => $response
+        ));
+    }
+
+    /**
+     * Check task status via AJAX
+     */
+    public function ajax_check_task_status() {
+        check_ajax_referer('crawlaco-admin-nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array(
+                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+            ));
+        }
+
+        $task_id = sanitize_text_field($_POST['task_id']);
+        if (empty($task_id)) {
+            wp_send_json_error(array(
+                'message' => __('Task ID is required.', 'crawlaco')
+            ));
+        }
+
+        $response = $this->check_task_status($task_id);
+        
+        if (is_wp_error($response)) {
+            wp_send_json_error(array(
+                'message' => $response->get_error_message()
+            ));
+        }
+
+        wp_send_json_success($response);
+    }
+
+    /**
+     * Initiate data fetching with Crawlaco API
+     */
+    private function initiate_data_fetch() {
+        $website_key = get_option('crawlaco_website_key');
+        
+        if (empty($website_key)) {
+            return new WP_Error(
+                'missing_key',
+                __('Website key not found. Please complete step 1 first.', 'crawlaco')
+            );
+        }
+
+        $response = wp_remote_post(
+            $this->api_base_url . '/websites/plugin/fetch-all/',
+            array(
+                'headers' => array(
+                    'host' => 'api.crawlaco.com',
+                    'website-key' => $website_key,
+                    'website-address' => get_site_url(),
+                    'Content-Type' => 'application/json'
+                ),
+                'timeout' => 30
+            )
+        );
+
+        if (is_wp_error($response)) {
+            return new WP_Error(
+                'api_error',
+                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+            );
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        $response_body = wp_remote_retrieve_body($response);
+        $response_data = json_decode($response_body, true);
+
+        if ($response_code !== 202) {
+            $error_message = isset($response_data['message']) 
+                ? $response_data['message'] 
+                : __('Failed to initiate data fetching. Please try again.', 'crawlaco');
+            
+            return new WP_Error('init_failed', $error_message);
+        }
+
+        if (!isset($response_data['taskId'])) {
+            return new WP_Error(
+                'invalid_response',
+                __('Invalid response from Crawlaco API. Please try again.', 'crawlaco')
+            );
+        }
+
+        return $response_data['taskId'];
+    }
+
+    /**
+     * Check task status with Crawlaco API
+     */
+    private function check_task_status($task_id) {
+        $website_key = get_option('crawlaco_website_key');
+        
+        if (empty($website_key)) {
+            return new WP_Error(
+                'missing_key',
+                __('Website key not found. Please complete step 1 first.', 'crawlaco')
+            );
+        }
+
+        $response = wp_remote_get(
+            $this->api_base_url . '/common/tasks/' . $task_id . '/',
+            array(
+                'headers' => array(
+                    'host' => 'api.crawlaco.com',
+                    'website-key' => $website_key,
+                    'website-address' => get_site_url(),
+                    'Content-Type' => 'application/json'
+                ),
+                'timeout' => 30
+            )
+        );
+
+        if (is_wp_error($response)) {
+            return new WP_Error(
+                'api_error',
+                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+            );
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        $response_body = wp_remote_retrieve_body($response);
+        $response_data = json_decode($response_body, true);
+
+        if ($response_code !== 200) {
+            $error_message = isset($response_data['message']) 
+                ? $response_data['message'] 
+                : __('Failed to check task status. Please try again.', 'crawlaco');
+            
+            return new WP_Error('status_check_failed', $error_message);
+        }
+
+        if (!isset($response_data['status'])) {
+            return new WP_Error(
+                'invalid_response',
+                __('Invalid response from Crawlaco API. Please try again.', 'crawlaco')
+            );
+        }
+
+        // If task is successful, mark step 3 as complete
+        if ($response_data['status'] === 'SUCCESS') {
+            update_option('crawlaco_setup_step', 4);
+        }
+
+        return array(
+            'status' => $response_data['status'],
+            'message' => isset($response_data['message']) ? $response_data['message'] : ''
+        );
     }
 } 

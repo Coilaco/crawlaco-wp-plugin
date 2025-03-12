@@ -108,6 +108,12 @@ class Crawlaco_Admin {
                 'error' => __('Error:', 'crawlaco'),
                 'validate' => __('Validate Key', 'crawlaco'),
                 'generate' => __('Generate API Keys', 'crawlaco'),
+                'fetching' => __('Fetching data...', 'crawlaco'),
+                'fetching_timeout' => __('Data fetching timed out. Please try again.', 'crawlaco'),
+                'fetching_failed' => __('Data fetching failed. Please try again.', 'crawlaco'),
+                'fetching_success' => __('Data fetched successfully!', 'crawlaco'),
+                'start_sync' => __('Start Data Sync', 'crawlaco'),
+                'retry_sync' => __('Retry', 'crawlaco'),
             ),
         ));
     }
@@ -284,6 +290,39 @@ class Crawlaco_Admin {
                         <?php _e('Proceed to Next Step', 'crawlaco'); ?>
                     </button>
                 <?php endif; ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Render step three (Data Synchronization)
+     */
+    private function render_step_three() {
+        ?>
+        <div class="crawlaco-setup-step active">
+            <h2><?php _e('Step 3: Data Synchronization', 'crawlaco'); ?></h2>
+            <p><?php _e('We will now fetch essential data from your WordPress site to sync with Crawlaco:', 'crawlaco'); ?></p>
+            
+            <div class="crawlaco-data-sync-status">
+                <div class="crawlaco-message"></div>
+                <div class="crawlaco-progress" style="display: none;">
+                    <div class="spinner is-active"></div>
+                    <span class="progress-text"><?php _e('Fetching data...', 'crawlaco'); ?></span>
+                </div>
+                <button type="button" 
+                        class="button button-primary" 
+                        id="start-data-sync"
+                >
+                    <?php _e('Start Data Sync', 'crawlaco'); ?>
+                </button>
+                <button type="button" 
+                        class="button button-secondary" 
+                        id="retry-data-sync"
+                        style="display: none;"
+                >
+                    <?php _e('Retry', 'crawlaco'); ?>
+                </button>
             </div>
         </div>
         <?php
