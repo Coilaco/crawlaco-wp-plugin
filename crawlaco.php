@@ -27,6 +27,7 @@ define('CRAWLACO_MIN_PHP_VERSION', '7.2');
 // Include required files
 require_once CRAWLACO_PLUGIN_DIR . 'includes/class-crawlaco-api.php';
 require_once CRAWLACO_PLUGIN_DIR . 'includes/class-crawlaco-admin.php';
+require_once CRAWLACO_PLUGIN_DIR . 'includes/class-crawlaco-api-keys.php';
 
 /**
  * Plugin activation hook
@@ -55,6 +56,8 @@ function crawlaco_plugin_activation() {
     add_option('crawlaco_setup_complete', false);
     add_option('crawlaco_setup_step', 1);
     add_option('crawlaco_plugin_activated', true);
+    add_option('crawlaco_wp_api_key', '');
+    add_option('crawlaco_wc_api_keys', array());
     
     // Create plugin directories if they don't exist
     $upload_dir = wp_upload_dir();
@@ -89,6 +92,10 @@ function crawlaco_plugin_deactivation() {
     // Remove activation flag
     delete_option('crawlaco_plugin_activated');
     
+    // Clear API keys
+    delete_option('crawlaco_wp_api_key');
+    delete_option('crawlaco_wc_api_keys');
+    
     // Clear permalinks
     flush_rewrite_rules();
 }
@@ -105,6 +112,9 @@ function crawlaco_init() {
     
     // Initialize API class
     new Crawlaco_API();
+    
+    // Initialize API Keys class
+    new Crawlaco_API_Keys();
     
     // Load text domain for translations
     load_plugin_textdomain('crawlaco', false, dirname(plugin_basename(__FILE__)) . '/languages');

@@ -1,171 +1,213 @@
+/* Variables */
+:root {
+    --crawlaco-white: #ffffff;
+    --crawlaco-blue: #1e88e5;
+    --crawlaco-purple: #7b1fa2;
+    --crawlaco-light-gray: #f5f5f5;
+    --crawlaco-border: #e0e0e0;
+    --crawlaco-text: #333333;
+    --crawlaco-success: #4caf50;
+    --crawlaco-error: #f44336;
+}
+
+/* Main Container */
 .crawlaco-admin {
-    max-width: 800px;
-    margin: 20px auto;
+    background: var(--crawlaco-white);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Setup Progress */
 .crawlaco-setup-progress {
     margin: 30px 0;
-    padding: 0 10px;
 }
 
 .crawlaco-setup-progress .steps {
     display: flex;
     justify-content: space-between;
-    margin: 0;
     padding: 0;
+    margin: 0;
     list-style: none;
-    position: relative;
-}
-
-.crawlaco-setup-progress .steps::before {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #ccd0d4;
-    z-index: 1;
 }
 
 .crawlaco-setup-progress .steps li {
-    position: relative;
-    padding-top: 35px;
     flex: 1;
     text-align: center;
-    color: #646970;
-    font-weight: 500;
-    z-index: 2;
-}
-
-.crawlaco-setup-progress .steps li::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 30px;
-    border: 2px solid #ccd0d4;
-    border-radius: 50%;
-    background: #fff;
-    z-index: 2;
+    padding: 15px;
+    background: var(--crawlaco-light-gray);
+    margin: 0 5px;
+    border-radius: 4px;
+    color: var(--crawlaco-text);
+    position: relative;
 }
 
 .crawlaco-setup-progress .steps li.active {
-    color: #2271b1;
+    background: var(--crawlaco-blue);
+    color: var(--crawlaco-white);
 }
 
-.crawlaco-setup-progress .steps li.active::before {
-    border-color: #2271b1;
-    background: #2271b1;
+.crawlaco-setup-progress .steps li:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 2px;
+    background: var(--crawlaco-border);
 }
 
-.crawlaco-setup-progress .steps li.completed::before {
-    border-color: #2271b1;
-    background: #2271b1;
+.crawlaco-setup-progress .steps li:last-child:after {
+    display: none;
 }
 
-/* Setup Wizard */
-.crawlaco-setup-wizard {
-    background: #fff;
-    border: 1px solid #ccd0d4;
-    border-radius: 4px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
+/* Setup Step */
 .crawlaco-setup-step {
-    margin-bottom: 20px;
+    background: var(--crawlaco-white);
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--crawlaco-border);
 }
 
 .crawlaco-setup-step h2 {
-    margin-top: 0;
-    color: #1d2327;
-    font-size: 1.3em;
-    margin-bottom: 1em;
+    color: var(--crawlaco-purple);
+    margin-bottom: 20px;
 }
 
-.crawlaco-submit-wrapper {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+/* Form Elements */
+.crawlaco-setup-step input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--crawlaco-border);
+    border-radius: 4px;
+    margin: 5px 0;
 }
 
+.crawlaco-setup-step .button-primary {
+    background: var(--crawlaco-blue);
+    border-color: var(--crawlaco-blue);
+    color: var(--crawlaco-white);
+    padding: 10px 20px;
+    height: auto;
+    line-height: 1.4;
+}
+
+.crawlaco-setup-step .button-primary:hover {
+    background: var(--crawlaco-purple);
+    border-color: var(--crawlaco-purple);
+}
+
+/* Messages */
 .crawlaco-message {
-    margin-bottom: 15px;
-    padding: 10px 15px;
+    margin: 20px 0;
+    padding: 15px;
     border-radius: 4px;
     display: none;
 }
 
-.crawlaco-message.success {
+.crawlaco-message.error {
+    background: var(--crawlaco-error);
+    color: var(--crawlaco-white);
     display: block;
-    background-color: #f0f6e9;
-    border: 1px solid #7ad03a;
-    color: #3c763d;
 }
 
-.crawlaco-message.error {
+.crawlaco-message.success {
+    background: var(--crawlaco-success);
+    color: var(--crawlaco-white);
     display: block;
-    background-color: #fbeaea;
-    border: 1px solid #dc3232;
-    color: #dc3232;
 }
 
 /* RTL Support */
-html[dir="rtl"] .crawlaco-admin {
+html[dir="rtl"] .crawlaco-setup-progress .steps li:after {
+    right: auto;
+    left: -10px;
+}
+
+html[dir="rtl"] .crawlaco-setup-step {
     text-align: right;
 }
 
-html[dir="rtl"] .crawlaco-setup-progress .steps::before {
-    right: 0;
-    left: 0;
+html[dir="rtl"] .crawlaco-setup-step .button-primary {
+    float: right;
 }
 
-/* Form Styles */
-.crawlaco-admin input[type="text"] {
-    width: 100%;
-    max-width: 400px;
+html[dir="rtl"] .form-table th {
+    text-align: right;
 }
 
-.crawlaco-admin .form-table th {
-    width: 200px;
+/* Loading States */
+.crawlaco-setup-step .button-primary:disabled {
+    background: var(--crawlaco-light-gray);
+    border-color: var(--crawlaco-border);
+    color: var(--crawlaco-text);
+    cursor: not-allowed;
 }
 
-.crawlaco-admin .description {
-    color: #666;
-    font-style: italic;
-    margin-top: 5px;
+/* Responsive Design */
+@media screen and (max-width: 782px) {
+    .crawlaco-setup-progress .steps {
+        flex-direction: column;
+    }
+
+    .crawlaco-setup-progress .steps li {
+        margin: 5px 0;
+    }
+
+    .crawlaco-setup-progress .steps li:after {
+        display: none;
+    }
 }
 
-/* Button Styles */
-.crawlaco-admin .button-primary {
-    background: #2271b1;
-    border-color: #2271b1;
-    color: #fff;
-    text-decoration: none;
-    text-shadow: none;
-}
-
-.crawlaco-admin .button-primary:hover,
-.crawlaco-admin .button-primary:focus {
-    background: #135e96;
-    border-color: #135e96;
-    color: #fff;
-}
-
-/* Settings and Status Pages */
-.crawlaco-settings-content,
-.crawlaco-status-content {
-    background: #fff;
-    border: 1px solid #ccd0d4;
-    border-radius: 4px;
+/* API Keys Status */
+.crawlaco-api-keys-status {
+    margin: 20px 0;
     padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.crawlaco-api-keys-status h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #1d2327;
+    font-size: 1.1em;
+}
+
+.crawlaco-api-keys-status .widefat {
+    border: none;
+    background: transparent;
+}
+
+.crawlaco-api-keys-status .widefat td {
+    padding: 12px 0;
+    border-top: 1px solid #eee;
+}
+
+.crawlaco-api-keys-status .widefat tr:first-child td {
+    border-top: none;
+}
+
+.crawlaco-api-keys-status .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Button spacing */
+.crawlaco-submit-wrapper .button {
+    margin-right: 10px;
+}
+
+.crawlaco-submit-wrapper .button:last-child {
+    margin-right: 0;
+}
+
+#proceed-to-step-three {
+    display: none;
 }
 
 /* Admin Menu Icon */

@@ -68,6 +68,8 @@ class Crawlaco_Admin {
         register_setting('crawlaco_settings', 'crawlaco_website_key');
         register_setting('crawlaco_settings', 'crawlaco_setup_complete');
         register_setting('crawlaco_settings', 'crawlaco_setup_step');
+        register_setting('crawlaco_settings', 'crawlaco_wp_api_key');
+        register_setting('crawlaco_settings', 'crawlaco_wc_api_keys');
     }
 
     /**
@@ -101,9 +103,11 @@ class Crawlaco_Admin {
             'nonce' => wp_create_nonce('crawlaco-admin-nonce'),
             'strings' => array(
                 'validating' => __('Validating...', 'crawlaco'),
+                'generating' => __('Generating API Keys...', 'crawlaco'),
                 'success' => __('Success!', 'crawlaco'),
                 'error' => __('Error:', 'crawlaco'),
                 'validate' => __('Validate Key', 'crawlaco'),
+                'generate' => __('Generate API Keys', 'crawlaco'),
             ),
         ));
     }
@@ -204,6 +208,83 @@ class Crawlaco_Admin {
                     </button>
                 </div>
             </form>
+        </div>
+        <?php
+    }
+
+    /**
+     * Render step two (API Key Generation)
+     */
+    private function render_step_two() {
+        $wp_api_key = get_option('crawlaco_wp_api_key', '');
+        $wc_api_keys = get_option('crawlaco_wc_api_keys', array());
+        $has_woocommerce = in_array(
+            'woocommerce/woocommerce.php',
+            apply_filters('active_plugins', get_option('active_plugins'))
+        );
+        ?>
+        <div class="crawlaco-setup-step active">
+            <h2><?php _e('Step 2: API Key Generation', 'crawlaco'); ?></h2>
+            <p><?php _e('We need to generate API keys to enable communication between your WordPress site and Crawlaco:', 'crawlaco'); ?></p>
+            
+            <div class="crawlaco-api-keys-status">
+                <h3><?php _e('API Keys Status', 'crawlaco'); ?></h3>
+                
+                <table class="widefat">
+                    <tr>
+                        <td><strong><?php _e('WordPress API Key:', 'crawlaco'); ?></strong></td>
+                        <td>
+                            <?php if ($wp_api_key): ?>
+                                <span class="dashicons dashicons-yes-alt" style="color: green;"></span>
+                                <?php _e('Generated', 'crawlaco'); ?>
+                            <?php else: ?>
+                                <span class="dashicons dashicons-no-alt" style="color: red;"></span>
+                                <?php _e('Not Generated', 'crawlaco'); ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php if ($has_woocommerce): ?>
+                    <tr>
+                        <td><strong><?php _e('WooCommerce API Keys:', 'crawlaco'); ?></strong></td>
+                        <td>
+                            <?php if (!empty($wc_api_keys)): ?>
+                                <span class="dashicons dashicons-yes-alt" style="color: green;"></span>
+                                <?php _e('Generated', 'crawlaco'); ?>
+                            <?php else: ?>
+                                <span class="dashicons dashicons-no-alt" style="color: red;"></span>
+                                <?php _e('Not Generated', 'crawlaco'); ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endif; ?>
+                </table>
+            </div>
+
+            <div class="crawlaco-submit-wrapper">
+                <div class="crawlaco-message"></div>
+                <button type="button" 
+                        class="button button-primary" 
+                        id="generate-api-keys"
+                        <?php echo ($wp_api_key && (!$has_woocommerce || !empty($wc_api_keys))) ? 'disabled' : ''; ?>
+                >
+                    <?php 
+                    if ($wp_api_key && (!$has_woocommerce || !empty($wc_api_keys))) {
+                        _e('API Keys Generated', 'crawlaco');
+                    } else {
+                        _e('Generate API Keys', 'crawlaco');
+                    }
+                    ?>
+                </button>
+
+                <?php if ($wp_api_key && (!$has_woocommerce || !empty($wc_api_keys))): ?>
+                    <button type="button" 
+                            class="button button-secondary" 
+                            id="proceed-to-step-three"
+                    >
+                        <?php _e('Proceed to Next Step', 'crawlaco'); ?>
+                    </button>
+                <?php endif; ?>
+            </div>
         </div>
         <?php
     }
