@@ -12,6 +12,27 @@ $current_step = get_option('crawlaco_setup_step', 1);
 $website_key = get_option('crawlaco_website_key', '');
 $setup_complete = get_option('crawlaco_setup_complete', false);
 
+// If setup is complete, show completion message and status page button
+if ($setup_complete) {
+    ?>
+    <div class="wrap crawlaco-admin">
+        <h1><?php _e('Crawlaco Setup Complete', 'crawlaco'); ?></h1>
+        
+        <div class="notice notice-success">
+            <p><?php _e('Great! Your Crawlaco plugin has been successfully set up.', 'crawlaco'); ?></p>
+            <p><?php _e('You can now start using Crawlaco to manage your website data.', 'crawlaco'); ?></p>
+        </div>
+
+        <div class="crawlaco-completion-actions">
+            <a href="<?php echo admin_url('admin.php?page=crawlaco'); ?>" class="button button-primary">
+                <?php _e('Go to Status Page', 'crawlaco'); ?>
+            </a>
+        </div>
+    </div>
+    <?php
+    return;
+}
+
 /**
  * Render step one (Website Key validation)
  */
