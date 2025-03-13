@@ -260,10 +260,20 @@ jQuery(document).ready(function ($) {
         $startButton.hide();
         $retryButton.hide();
 
-        // Redirect to next step after a short delay
-        setTimeout(function () {
-            window.location.reload();
-        }, 1200);
+        // Only redirect if we're in the setup wizard
+        if ($('.crawlaco-setup-wizard').length > 0) {
+            setTimeout(function () {
+                window.location.reload();
+            }, 1200);
+        } else {
+            // In settings page, show success message for 3 seconds
+            setTimeout(function () {
+                $message.fadeOut(function () {
+                    $(this).removeClass('success').html('').show();
+                });
+                $startButton.show();
+            }, 3000);
+        }
     }
 
     function handleDataSyncError(message) {

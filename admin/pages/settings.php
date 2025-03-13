@@ -70,6 +70,34 @@ if (!defined('ABSPATH')) {
             </table>
         </div>
 
+        <div class="crawlaco-card">
+            <h2><?php echo esc_html__('Data Synchronization', 'crawlaco'); ?></h2>
+            <p class="description">
+                <?php echo esc_html__('Fetch and sync your site data with Crawlaco. This will update your product information, categories, and other relevant data.', 'crawlaco'); ?>
+            </p>
+
+            <div class="crawlaco-data-sync-status">
+                <div class="crawlaco-message"></div>
+                <div class="crawlaco-progress" style="display: none;">
+                    <div class="spinner is-active"></div>
+                    <span class="progress-text"><?php echo esc_html__('Fetching data...', 'crawlaco'); ?></span>
+                </div>
+                <button type="button" 
+                        class="button button-primary" 
+                        id="start-data-sync"
+                >
+                    <?php echo esc_html__('Start Data Sync', 'crawlaco'); ?>
+                </button>
+                <button type="button" 
+                        class="button button-secondary" 
+                        id="retry-data-sync"
+                        style="display: none;"
+                >
+                    <?php echo esc_html__('Retry', 'crawlaco'); ?>
+                </button>
+            </div>
+        </div>
+
         <p class="submit">
             <button type="submit" class="button button-primary">
                 <?php echo esc_html__('Save Settings', 'crawlaco'); ?>

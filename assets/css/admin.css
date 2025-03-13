@@ -333,3 +333,41 @@ html[dir="rtl"] .crawlaco-setup-step select {
         grid-template-columns: 1fr;
     }
 }
+
+/* Data Sync Status */
+.crawlaco-data-sync-status {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.crawlaco-data-sync-status .crawlaco-message {
+    margin-bottom: 15px;
+}
+
+.crawlaco-data-sync-status .crawlaco-progress {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.crawlaco-data-sync-status .spinner {
+    float: none;
+    margin: 0;
+}
+
+.crawlaco-data-sync-status .progress-text {
+    color: #666;
+}
+
+.crawlaco-data-sync-status button {
+    margin-right: 10px;
+}
+
+/* RTL Support */
+html[dir="rtl"] .crawlaco-data-sync-status button {
+    margin-right: 0;
+    margin-left: 10px;
+}
