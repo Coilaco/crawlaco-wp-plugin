@@ -384,4 +384,63 @@ jQuery(document).ready(function ($) {
             }
         });
     }
+
+    // Handle settings form submission
+    $('#crawlaco-settings-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const $form = $(this);
+        const $submitButton = $form.find('button[type="submit"]');
+        const originalButtonText = $submitButton.text();
+
+        // Disable submit button and show loading state
+        $submitButton.prop('disabled', true).text('Saving...');
+
+        // Get form data
+        const formData = new FormData($form[0]);
+        formData.append('action', 'crawlaco_update_settings');
+
+        // Send AJAX request
+        $.ajax({
+            url: crawlacoAdmin.ajaxUrl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+                    // Show success message
+                    const $notice = $('<div class="notice notice-success is-dismissible"><p>' + response.data.message + '</p></div>');
+                    $form.before($notice);
+
+                    // Remove notice after 3 seconds
+                    setTimeout(function () {
+                        $notice.fadeOut(function () {
+                            $(this).remove();
+                        });
+                    }, 3000);
+                } else {
+                    // Show error message
+                    const $notice = $('<div class="notice notice-error is-dismissible"><p>' + response.data.message + '</p></div>');
+                    $form.before($notice);
+                }
+            },
+            error: function (xhr, status, error) {
+                // Show error message
+                const $notice = $('<div class="notice notice-error is-dismissible"><p>An error occurred while saving settings. Please try again.</p></div>');
+                $form.before($notice);
+            },
+            complete: function () {
+                // Re-enable submit button and restore original text
+                $submitButton.prop('disabled', false).text(originalButtonText);
+            }
+        });
+    });
+
+    // Handle dismissible notices
+    $(document).on('click', '.notice-dismiss', function () {
+        $(this).parent().fadeOut(function () {
+            $(this).remove();
+        });
+    });
 }); 

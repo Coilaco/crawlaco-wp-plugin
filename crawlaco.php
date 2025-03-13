@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Crawlaco
+ * Plugin Name: Crawlaco | کرالاکو
  * Plugin URI: https://crawlaco.com
- * Description: A bridge between WordPress/WooCommerce and the Crawlaco dashboard for seamless integration and data synchronization.
+ * Description: پلی میان وب‌سایت شما و داشبورد کرالاکو برای مدیریت راحت‌تر وب‌سایت شما.
  * Version: 1.0.0
- * Author: Crawlaco
+ * Author: Crawlaco team
  * Author URI: https://crawlaco.com
  * Text Domain: crawlaco
  * Domain Path: /languages

@@ -1,0 +1,64 @@
+<?php
+/**
+ * Settings Handler
+ *
+ * @package Crawlaco
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+class Crawlaco_Settings_Handler {
+    /**
+     * Initialize the settings handler
+     */
+    public function __construct() {
+        add_action('admin_post_crawlaco_update_settings', array($this, 'handle_settings_update'));
+    }
+
+    /**
+     * Handle settings form submission
+     */
+    public function handle_settings_update() {
+        // Verify nonce
+        if (!isset($_POST['crawlaco_settings_nonce']) || !wp_verify_nonce($_POST['crawlaco_settings_nonce'], 'crawlaco_update_settings')) {
+            wp_send_json_error(array('message' => __('Invalid nonce. Please try again.', 'crawlaco')));
+        }
+
+        // Check user capabilities
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('You do not have sufficient permissions to perform this action.', 'crawlaco')));
+        }
+
+        // Get mapped attributes
+        $mapped_attributes = isset($_POST['mapped_attributes']) ? $_POST['mapped_attributes'] : array();
+
+        // Validate mapped attributes
+        $validated_attributes = array();
+        foreach ($mapped_attributes as $key => $value) {
+            if (!empty($value)) {
+                $validated_attributes[$key] = sanitize_text_field($value);
+            }
+        }
+
+        // Save to WordPress options
+        update_option('crawlaco_mapped_attributes', $validated_attributes);
+
+        error_log('Crawlaco ======####: ' . print_r($validated_attributes, true));
+
+
+        // Send to Crawlaco API
+        $api = new Crawlaco_API();
+        $response = $api->update_meta_data($validated_attributes);
+
+        if (is_wp_error($response)) {
+            wp_send_json_error(array('message' => $response->get_error_message()));
+        }
+
+        wp_send_json_success(array('message' => __('Settings saved successfully.', 'crawlaco')));
+    }
+}
+
+// Initialize the settings handler
+new Crawlaco_Settings_Handler(); 

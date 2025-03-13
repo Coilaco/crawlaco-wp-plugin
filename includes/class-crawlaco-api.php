@@ -7,8 +7,8 @@ class Crawlaco_API {
      * API Base URL
      */
     // TODO: Change to the production URL
-    // private $api_base_url = 'http://127.0.0.1:9001';
-    private $api_base_url = 'https://api.crawlaco.com';
+    private $api_base_url = 'http://127.0.0.1:9001';
+    // private $api_base_url = 'https://api.crawlaco.com';
 
     /**
      * Constructor
@@ -170,6 +170,7 @@ class Crawlaco_API {
             $this->api_base_url . '/websites/plugin/meta-data/',
             array(
                 'headers' => array(
+                    'host' => 'api.crawlaco.com',
                     'website-key' => $website_key,
                     'website-address' => get_site_url(),
                     'Content-Type' => 'application/json'
@@ -513,5 +514,56 @@ class Crawlaco_API {
             'message' => __('Setup completed successfully!', 'crawlaco'),
             'redirect' => 'https://dashboard.crawlaco.com'
         ));
+    }
+
+    /**
+     * Update meta data with Crawlaco API
+     */
+    public function update_meta_data($meta_data, $method = 'POST') {
+        $website_key = get_option('crawlaco_website_key');
+        
+        if (empty($website_key)) {
+            return new WP_Error(
+                'missing_key',
+                __('Website key not found. Please complete step 1 first.', 'crawlaco')
+            );
+        }
+
+        $response = wp_remote_request(
+            $this->api_base_url . '/websites/plugin/meta-data/',
+            array(
+                'method' => $method,
+                'headers' => array(
+                    'host' => 'api.crawlaco.com',
+                    'website-key' => $website_key,
+                    'website-address' => get_site_url(),
+                    'Content-Type' => 'application/json'
+                ),
+                'body' => json_encode($meta_data),
+                'timeout' => 30
+            )
+        );
+
+        if (is_wp_error($response)) {
+            return new WP_Error(
+                'api_error',
+                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+            );
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        $response_body = wp_remote_retrieve_body($response);
+
+        $response_data = json_decode($response_body, true);
+
+        if ($response_code !== 201 && $response_code !== 200) {
+            $error_message = isset($response_data['message']) 
+                ? $response_data['message'] 
+                : __('Failed to update meta data. Please try again.', 'crawlaco');
+            
+            return new WP_Error('update_failed', $error_message);
+        }
+
+        return true;
     }
 } 
