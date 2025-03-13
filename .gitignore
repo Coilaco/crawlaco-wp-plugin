@@ -69,5 +69,6 @@ wp-config.php
 .history
 .ionide
 
+*.mo
 
 # End of https://www.toptal.com/developers/gitignore/api/wordpress
