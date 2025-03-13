@@ -24,11 +24,17 @@ define('CRAWLACO_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CRAWLACO_MIN_WP_VERSION', '5.0');
 define('CRAWLACO_MIN_PHP_VERSION', '7.2');
 define('CRAWLACO_DASHBOARD_URL', 'https://app.crawlaco.com');
+define('CRAWLACO_CUSTOM_FUNCTIONS_FILE', CRAWLACO_PLUGIN_DIR . 'custom-functions.php');
 
 // Include required files
 require_once CRAWLACO_PLUGIN_DIR . 'includes/class-crawlaco-api.php';
 require_once CRAWLACO_PLUGIN_DIR . 'includes/class-crawlaco-admin.php';
 require_once CRAWLACO_PLUGIN_DIR . 'includes/class-crawlaco-api-keys.php';
+
+// Load custom functions if file exists
+if (file_exists(CRAWLACO_CUSTOM_FUNCTIONS_FILE)) {
+    require_once CRAWLACO_CUSTOM_FUNCTIONS_FILE;
+}
 
 /**
  * Plugin activation hook

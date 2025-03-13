@@ -130,7 +130,6 @@ class Crawlaco_Admin {
                 'fetching_success' => __('Data fetched successfully!', 'crawlaco'),
                 'start_sync' => __('Start Data Sync', 'crawlaco'),
                 'retry_sync' => __('Retry', 'crawlaco'),
-                // Add new strings for attribute mapping
                 'saving_attributes' => __('Saving attribute mappings...', 'crawlaco'),
                 'attributes_saved' => __('Attribute mappings saved successfully!', 'crawlaco'),
                 'attributes_failed' => __('Failed to save attribute mappings.', 'crawlaco'),
