@@ -30,18 +30,27 @@ class Crawlaco_Admin {
             __('Crawlaco', 'crawlaco'),
             'manage_options',
             'crawlaco',
-            array($this, 'render_main_page'),
+            array($this, 'render_status_page'),
             'data:image/svg+xml;base64,' . base64_encode('<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#A0A5AA"/>'),
-            30
+            100
         );
 
         // Add submenu items
         add_submenu_page(
             'crawlaco',
+            __('Status', 'crawlaco'),
+            __('Status', 'crawlaco'),
+            'manage_options',
+            'crawlaco',
+            array($this, 'render_status_page')
+        );
+        
+        add_submenu_page(
+            'crawlaco',
             __('Setup Wizard', 'crawlaco'),
             __('Setup Wizard', 'crawlaco'),
             'manage_options',
-            'crawlaco',
+            'crawlaco-setup-wizard',
             array($this, 'render_main_page')
         );
 
@@ -56,17 +65,8 @@ class Crawlaco_Admin {
 
         add_submenu_page(
             'crawlaco',
-            __('Status', 'crawlaco'),
-            __('Status', 'crawlaco'),
-            'manage_options',
-            'crawlaco-status',
-            array($this, 'render_status_page')
-        );
-
-        add_submenu_page(
-            'crawlaco',
             __('Dashboard', 'crawlaco'),
-            __('Login to Crawlaco Dashboard', 'crawlaco'),
+            __('Login to Crawlaco', 'crawlaco'),
             'manage_options',
             'crawlaco-dashboard',
             array($this, 'redirect_to_dashboard')
@@ -498,37 +498,16 @@ class Crawlaco_Admin {
     }
 
     /**
-     * Render status page
+     * Render home page
      */
     public function render_status_page() {
-        // Check if setup is complete
-        $setup_complete = get_option('crawlaco_setup_complete', false);
-        if (!$setup_complete) {
-            ?>
-            <div class="wrap crawlaco-admin">
-                <h1><?php _e('Crawlaco Status', 'crawlaco'); ?></h1>
-                <div class="notice notice-warning">
-                    <p>
-                        <?php _e('Please complete the setup process before accessing the status page.', 'crawlaco'); ?>
-                    </p>
-                    <p>
-                        <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco')); ?>" class="button button-primary">
-                            <?php _e('Go to Setup Wizard', 'crawlaco'); ?>
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <?php
-            return;
-        }
-
         // Get website information
         $website_info = $this->get_website_info();
         if (is_wp_error($website_info)) {
             $error_message = $website_info->get_error_message();
         }
 
-        include CRAWLACO_PLUGIN_DIR . 'admin/pages/home.php';
+        include CRAWLACO_PLUGIN_DIR . 'admin/pages/status.php';
     }
 
     /**

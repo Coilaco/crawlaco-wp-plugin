@@ -140,7 +140,7 @@ The **Crawlaco WordPress Plugin** acts as a bridge between a user’s WordPress/
 - **Objective**: Implement the plugin’s home page, settings page, and other required pages, and integrate them into the WordPress admin dashboard menu.
 - **Tasks**:
   1. **Create Plugin Pages**:
-     - **Home Page**:
+     - **Status Page**:
        - Display a message if the user has not completed the activation process (e.g., “Please complete the setup process to activate Crawlaco.”).
        - Fetch and display general website information from the `/websites/plugin/websites/` endpoint using a **GET** request.
        - The response format is:
@@ -167,7 +167,7 @@ The **Crawlaco WordPress Plugin** acts as a bridge between a user’s WordPress/
        - Save the updated mappings by sending a `POST` request to `/websites/plugin/meta-data/` (same as in Step 4).
   2. **Integrate Pages into WordPress Admin Menu**:
      - Add a **Crawlaco menu** to the WordPress admin dashboard with the following submenus:
-       - **Home**: Links to the plugin’s home page.
+       - **Status**: Links to the plugin’s home page.
        - **Settings**: Links to the settings page.
        - **Login to Crawlaco Dashboard**: Redirects users to the Crawlaco dashboard.
      - Ensure the menu is only visible to users with the appropriate permissions (e.g., administrators).

@@ -23,6 +23,7 @@ define('CRAWLACO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CRAWLACO_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CRAWLACO_MIN_WP_VERSION', '5.0');
 define('CRAWLACO_MIN_PHP_VERSION', '7.2');
+define('CRAWLACO_DASHBOARD_URL', 'https://app.crawlaco.com');
 
 // Include required files
 require_once CRAWLACO_PLUGIN_DIR . 'includes/class-crawlaco-api.php';
