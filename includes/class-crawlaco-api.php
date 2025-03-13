@@ -512,7 +512,7 @@ class Crawlaco_API {
 
         wp_send_json_success(array(
             'message' => __('Setup completed successfully!', 'crawlaco'),
-            'redirect' => 'https://dashboard.crawlaco.com'
+            'redirect' => admin_url('admin.php?page=crawlaco')
         ));
     }
 

@@ -15,18 +15,22 @@ $setup_complete = get_option('crawlaco_setup_complete', false);
 // If setup is complete, show completion message and status page button
 if ($setup_complete) {
     ?>
-    <div class="wrap crawlaco-admin">
-        <h1><?php _e('Crawlaco Setup Complete', 'crawlaco'); ?></h1>
+    <div class="wrap">
+        <h1 class="crawlaco-header"><?php _e('Crawlaco Setup Complete', 'crawlaco'); ?></h1>
         
-        <div class="notice notice-success">
-            <p><?php _e('Great! Your Crawlaco plugin has been successfully set up.', 'crawlaco'); ?></p>
-            <p><?php _e('You can now start using Crawlaco to manage your website data.', 'crawlaco'); ?></p>
-        </div>
+        <?php do_action('crawlaco_admin_notices'); ?>
 
-        <div class="crawlaco-completion-actions">
-            <a href="<?php echo admin_url('admin.php?page=crawlaco'); ?>" class="button button-primary">
-                <?php _e('Go to Status Page', 'crawlaco'); ?>
-            </a>
+        <div class="crawlaco-admin">
+            <div class="notice notice-success">
+                <p><?php _e('Great! Your Crawlaco plugin has been successfully set up.', 'crawlaco'); ?></p>
+                <p><?php _e('You can now start using Crawlaco to manage your website data.', 'crawlaco'); ?></p>
+            </div>
+
+            <div class="crawlaco-completion-actions">
+                <a href="<?php echo admin_url('admin.php?page=crawlaco'); ?>" class="button button-primary">
+                    <?php _e('Go to Status Page', 'crawlaco'); ?>
+                </a>
+            </div>
         </div>
     </div>
     <?php
@@ -208,7 +212,7 @@ function render_step_four() {
     $color_attr_id = get_option('crawlaco_color_attr_id', '');
     $brand_attr_id = get_option('crawlaco_brand_attr_id', '');
     ?>
-    <div class="crawlaco-setup-step active">
+    <div class="crawlaco-setup-step crawlaco-attribute-mapper active">
         <h2><?php _e('Step 4: Map Product Attributes', 'crawlaco'); ?></h2>
         
         <?php if (!$has_woocommerce): ?>
@@ -295,42 +299,46 @@ function render_step_four() {
     <?php
 }
 ?>
-<div class="wrap crawlaco-admin">
-    <h1><?php _e('Crawlaco Setup Wizard', 'crawlaco'); ?></h1>
+<div class="wrap">
+    <h1 class="crawlaco-header"><?php _e('Crawlaco Setup Wizard', 'crawlaco'); ?></h1>
     
-    <div class="crawlaco-setup-progress">
-        <ul class="steps">
-            <li class="<?php echo $current_step >= 1 ? 'active' : ''; ?>">
-                <?php _e('Website Key', 'crawlaco'); ?>
-            </li>
-            <li class="<?php echo $current_step >= 2 ? 'active' : ''; ?>">
-                <?php _e('API Keys', 'crawlaco'); ?>
-            </li>
-            <li class="<?php echo $current_step >= 3 ? 'active' : ''; ?>">
-                <?php _e('Data Sync', 'crawlaco'); ?>
-            </li>
-            <li class="<?php echo $current_step >= 4 ? 'active' : ''; ?>">
-                <?php _e('Attributes', 'crawlaco'); ?>
-            </li>
-        </ul>
-    </div>
-    
-    <div class="crawlaco-setup-wizard">
-        <?php
-        switch ($current_step) {
-            case 1:
-                render_step_one();
-                break;
-            case 2:
-                render_step_two();
-                break;
-            case 3:
-                render_step_three();
-                break;
-            case 4:
-                render_step_four();
-                break;
-        }
-        ?>
+    <?php do_action('crawlaco_admin_notices'); ?>
+
+    <div class="crawlaco-admin">
+        <div class="crawlaco-setup-progress">
+            <ul class="steps">
+                <li class="<?php echo $current_step >= 1 ? 'active' : ''; ?>">
+                    <?php _e('Website Key', 'crawlaco'); ?>
+                </li>
+                <li class="<?php echo $current_step >= 2 ? 'active' : ''; ?>">
+                    <?php _e('API Keys', 'crawlaco'); ?>
+                </li>
+                <li class="<?php echo $current_step >= 3 ? 'active' : ''; ?>">
+                    <?php _e('Data Sync', 'crawlaco'); ?>
+                </li>
+                <li class="<?php echo $current_step >= 4 ? 'active' : ''; ?>">
+                    <?php _e('Attributes', 'crawlaco'); ?>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="crawlaco-setup-wizard">
+            <?php
+            switch ($current_step) {
+                case 1:
+                    render_step_one();
+                    break;
+                case 2:
+                    render_step_two();
+                    break;
+                case 3:
+                    render_step_three();
+                    break;
+                case 4:
+                    render_step_four();
+                    break;
+            }
+            ?>
+        </div>
     </div>
 </div> 

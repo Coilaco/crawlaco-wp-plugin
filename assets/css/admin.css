@@ -38,11 +38,16 @@
     font-size: 13px;
 }
 
+.crawlaco-widefat {
+    border: 1px solid #ededed !important;
+    border-radius: 8px;
+}
+
 /* Main Container */
 .crawlaco-admin {
     background: var(--crawlaco-white);
     padding: 25px;
-    margin: 20px;
+    margin: 40px 0;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
@@ -150,6 +155,12 @@
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(123, 31, 162, 0.2);
 }
+
+/* Crawlaco header */
+.crawlaco-header {
+    margin: 20px 0 !important;
+}
+
 
 /* Messages */
 .crawlaco-message {
@@ -300,10 +311,10 @@ html[dir="rtl"] .form-table th {
 }
 
 /* Attribute Mapping */
-.crawlaco-setup-step select {
+.crawlaco-attribute-mapper select {
     width: 100%;
     max-width: 400px;
-    padding: 10px;
+    padding: 5px 10px;
     border: 2px solid var(--crawlaco-border);
     border-radius: 6px;
     margin: 8px 0;
@@ -311,13 +322,13 @@ html[dir="rtl"] .form-table th {
     transition: all 0.3s ease;
 }
 
-.crawlaco-setup-step select:focus {
+.crawlaco-attribute-mapper select:focus {
     border-color: var(--crawlaco-blue);
     box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
     outline: none;
 }
 
-.crawlaco-setup-step select:disabled {
+.crawlaco-attribute-mapper select:disabled {
     background-color: var(--crawlaco-light-gray);
     cursor: not-allowed;
 }
@@ -386,6 +397,7 @@ html[dir="rtl"] .crawlaco-setup-step select {
     line-height: 1;
     font-weight: 500;
     transition: all 0.3s ease;
+    gap: 8px;
 }
 
 .crawlaco-status.active {

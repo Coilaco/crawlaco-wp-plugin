@@ -156,7 +156,7 @@ class Crawlaco_Admin {
         if (!$setup_complete) {
             ?>
             <div class="wrap crawlaco-admin">
-                <h1><?php _e('Crawlaco Settings', 'crawlaco'); ?></h1>
+                <h1 class="crawlaco-header"><?php _e('Crawlaco Settings', 'crawlaco'); ?></h1>
                 <div class="notice notice-warning">
                     <p>
                         <?php _e('Please complete the setup process before accessing the settings page.', 'crawlaco'); ?>

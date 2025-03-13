@@ -134,18 +134,31 @@ add_action('plugins_loaded', 'crawlaco_init');
 function crawlaco_admin_notice() {
     if (!get_option('crawlaco_setup_complete') && current_user_can('manage_options')) {
         ?>
-        <div class="wrap">
-            <div class="notice notice-warning crawlaco-admin-notice">
-                <p>
-                    <?php _e('Please complete the Crawlaco plugin setup to start using its features.', 'crawlaco'); ?>
-                    <a href="<?php echo admin_url('admin.php?page=crawlaco-setup-wizard'); ?>" class="button button-primary"><?php _e('Complete Setup', 'crawlaco'); ?></a>
-                </p>
-            </div>
+        <div class="notice notice-warning crawlaco-admin-notice">
+            <p>
+                <?php _e('Please complete the Crawlaco plugin setup to start using its features.', 'crawlaco'); ?>
+                <a href="<?php echo admin_url('admin.php?page=crawlaco-setup-wizard'); ?>" class="button button-primary"><?php _e('Complete Setup', 'crawlaco'); ?></a>
+            </p>
         </div>
         <?php
     }
 }
-add_action('admin_notices', 'crawlaco_admin_notice');
+
+/**
+ * Add custom action hook for admin notices
+ */
+// function crawlaco_admin_notices_container() {
+//     do_action('crawlaco_admin_notices');
+// }
+// add_action('admin_notices', 'crawlaco_admin_notices_container', 1);
+
+/**
+ * Register the admin notice to be displayed in the custom location
+ */
+function crawlaco_register_admin_notice() {
+    add_action('crawlaco_admin_notices', 'crawlaco_admin_notice');
+}
+add_action('admin_init', 'crawlaco_register_admin_notice');
 
 /**
  * Add settings link on plugin page
