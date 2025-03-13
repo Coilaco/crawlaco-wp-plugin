@@ -134,11 +134,13 @@ add_action('plugins_loaded', 'crawlaco_init');
 function crawlaco_admin_notice() {
     if (!get_option('crawlaco_setup_complete') && current_user_can('manage_options')) {
         ?>
-        <div class="notice notice-warning">
-            <p>
-                <?php _e('Please complete the Crawlaco plugin setup to start using its features.', 'crawlaco'); ?>
-                <a href="<?php echo admin_url('admin.php?page=crawlaco'); ?>"><?php _e('Complete Setup', 'crawlaco'); ?></a>
-            </p>
+        <div class="wrap">
+            <div class="notice notice-warning crawlaco-admin-notice">
+                <p>
+                    <?php _e('Please complete the Crawlaco plugin setup to start using its features.', 'crawlaco'); ?>
+                    <a href="<?php echo admin_url('admin.php?page=crawlaco-setup-wizard'); ?>" class="button button-primary"><?php _e('Complete Setup', 'crawlaco'); ?></a>
+                </p>
+            </div>
         </div>
         <?php
     }

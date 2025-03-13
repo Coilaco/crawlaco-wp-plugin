@@ -123,7 +123,7 @@ if (!defined('ABSPATH')) {
                             <?php _e('Please complete the initial setup process before accessing these features.', 'crawlaco'); ?>
                         </p>
                         <p>
-                            <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco')); ?>"
+                            <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-setup-wizard')); ?>"
                                 class="button button-primary">
                                 <?php _e('Complete Setup', 'crawlaco'); ?>
                             </a>

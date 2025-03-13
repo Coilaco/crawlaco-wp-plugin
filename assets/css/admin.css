@@ -8,20 +8,51 @@
     --crawlaco-text: #333333;
     --crawlaco-success: #4caf50;
     --crawlaco-error: #f44336;
+    --crawlaco-warning: #ffb900;
+}
+
+/* Admin Notice */
+.crawlaco-admin-notice {
+    margin: 20px 20px 0 20px;
+    padding: 12px 15px;
+    border-left: 4px solid var(--crawlaco-warning);
+    background: #fff8e5;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.crawlaco-admin-notice p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.crawlaco-admin-notice .button {
+    margin-left: auto;
+    padding: 4px 12px;
+    height: auto;
+    line-height: 1.4;
+    font-size: 13px;
 }
 
 /* Main Container */
 .crawlaco-admin {
     background: var(--crawlaco-white);
-    padding: 20px;
+    padding: 25px;
     margin: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Setup Progress */
 .crawlaco-setup-progress {
     margin: 30px 0;
+    background: var(--crawlaco-light-gray);
+    padding: 20px;
+    border-radius: 8px;
 }
 
 .crawlaco-setup-progress .steps {
@@ -30,22 +61,27 @@
     padding: 0;
     margin: 0;
     list-style: none;
+    position: relative;
 }
 
 .crawlaco-setup-progress .steps li {
     flex: 1;
     text-align: center;
     padding: 15px;
-    background: var(--crawlaco-light-gray);
+    background: var(--crawlaco-white);
     margin: 0 5px;
-    border-radius: 4px;
+    border-radius: 6px;
     color: var(--crawlaco-text);
     position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 .crawlaco-setup-progress .steps li.active {
     background: var(--crawlaco-blue);
     color: var(--crawlaco-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(30, 136, 229, 0.2);
 }
 
 .crawlaco-setup-progress .steps li:after {
@@ -56,7 +92,8 @@
     transform: translateY(-50%);
     width: 20px;
     height: 2px;
-    background: var(--crawlaco-border);
+    background: #939393;
+    z-index: 1;
 }
 
 .crawlaco-setup-progress .steps li:last-child:after {
@@ -69,60 +106,90 @@
     padding: 30px;
     border-radius: 8px;
     border: 1px solid var(--crawlaco-border);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .crawlaco-setup-step h2 {
     color: var(--crawlaco-purple);
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    border-bottom: 2px solid var(--crawlaco-light-gray);
+    padding-bottom: 10px;
 }
 
 /* Form Elements */
 .crawlaco-setup-step input[type="text"] {
     width: 100%;
-    padding: 10px;
-    border: 1px solid var(--crawlaco-border);
-    border-radius: 4px;
-    margin: 5px 0;
+    padding: 12px;
+    border: 2px solid var(--crawlaco-border);
+    border-radius: 6px;
+    margin: 8px 0;
+    transition: all 0.3s ease;
+}
+
+.crawlaco-setup-step input[type="text"]:focus {
+    border-color: var(--crawlaco-blue);
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+    outline: none;
 }
 
 .crawlaco-setup-step .button-primary {
     background: var(--crawlaco-blue);
     border-color: var(--crawlaco-blue);
     color: var(--crawlaco-white);
-    padding: 10px 20px;
+    padding: 12px 24px;
     height: auto;
     line-height: 1.4;
+    border-radius: 6px;
+    transition: all 0.3s ease;
 }
 
 .crawlaco-setup-step .button-primary:hover {
     background: var(--crawlaco-purple);
     border-color: var(--crawlaco-purple);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(123, 31, 162, 0.2);
 }
 
 /* Messages */
 .crawlaco-message {
     margin: 20px 0;
     padding: 15px;
-    border-radius: 4px;
+    border-radius: 6px;
     display: none;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .crawlaco-message.error {
     background: var(--crawlaco-error);
     color: var(--crawlaco-white);
     display: block;
+    border-left: 4px solid #d32f2f;
 }
 
 .crawlaco-message.success {
     background: var(--crawlaco-success);
     color: var(--crawlaco-white);
     display: block;
+    border-left: 4px solid #388e3c;
 }
 
 /* RTL Support */
 html[dir="rtl"] .crawlaco-setup-progress .steps li:after {
     right: auto;
-    left: -10px;
+    left: -20px;
 }
 
 html[dir="rtl"] .crawlaco-setup-step {
@@ -143,6 +210,8 @@ html[dir="rtl"] .form-table th {
     border-color: var(--crawlaco-border);
     color: var(--crawlaco-text);
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 /* Responsive Design */
@@ -158,20 +227,26 @@ html[dir="rtl"] .form-table th {
     .crawlaco-setup-progress .steps li:after {
         display: none;
     }
+
+    .crawlaco-admin {
+        margin: 10px;
+        padding: 15px;
+    }
 }
 
 /* API Keys Status */
 .crawlaco-api-keys-status {
     margin: 20px 0;
     padding: 20px;
-    background: #f8f9fa;
-    border-radius: 4px;
+    background: var(--crawlaco-light-gray);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .crawlaco-api-keys-status h3 {
     margin-top: 0;
     margin-bottom: 15px;
-    color: #1d2327;
+    color: var(--crawlaco-text);
     font-size: 1.1em;
 }
 
@@ -182,7 +257,7 @@ html[dir="rtl"] .form-table th {
 
 .crawlaco-api-keys-status .widefat td {
     padding: 12px 0;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--crawlaco-border);
 }
 
 .crawlaco-api-keys-status .widefat tr:first-child td {
@@ -198,6 +273,13 @@ html[dir="rtl"] .form-table th {
 }
 
 /* Button spacing */
+.crawlaco-submit-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
 .crawlaco-submit-wrapper .button {
     margin-right: 10px;
 }
@@ -221,16 +303,17 @@ html[dir="rtl"] .form-table th {
 .crawlaco-setup-step select {
     width: 100%;
     max-width: 400px;
-    padding: 8px;
-    border: 1px solid var(--crawlaco-border);
-    border-radius: 4px;
-    margin: 5px 0;
+    padding: 10px;
+    border: 2px solid var(--crawlaco-border);
+    border-radius: 6px;
+    margin: 8px 0;
     background-color: var(--crawlaco-white);
+    transition: all 0.3s ease;
 }
 
 .crawlaco-setup-step select:focus {
     border-color: var(--crawlaco-blue);
-    box-shadow: 0 0 0 1px var(--crawlaco-blue);
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
     outline: none;
 }
 
@@ -242,8 +325,9 @@ html[dir="rtl"] .form-table th {
 .crawlaco-setup-step .notice {
     margin: 20px 0;
     padding: 15px;
-    border-left: 4px solid #ffb900;
+    border-left: 4px solid var(--crawlaco-warning);
     background: #fff8e5;
+    border-radius: 6px;
 }
 
 .crawlaco-setup-step .notice p {
@@ -258,7 +342,7 @@ html[dir="rtl"] .form-table th {
 /* RTL Support for Attribute Mapping */
 html[dir="rtl"] .crawlaco-setup-step .notice {
     border-left: none;
-    border-right: 4px solid #ffb900;
+    border-right: 4px solid var(--crawlaco-warning);
     text-align: right;
 }
 
@@ -274,27 +358,34 @@ html[dir="rtl"] .crawlaco-setup-step select {
 }
 
 .crawlaco-card {
-    background: #fff;
-    border: 1px solid #ccd0d4;
-    border-radius: 4px;
+    background: var(--crawlaco-white);
+    border: 1px solid var(--crawlaco-border);
+    border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.crawlaco-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .crawlaco-card h2 {
     margin-top: 0;
     padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px solid var(--crawlaco-light-gray);
+    color: var(--crawlaco-purple);
 }
 
 .crawlaco-status {
     display: inline-block;
-    padding: 4px 8px;
-    border-radius: 3px;
+    padding: 6px 12px;
+    border-radius: 4px;
     font-size: 12px;
     line-height: 1;
     font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .crawlaco-status.active {
@@ -315,6 +406,7 @@ html[dir="rtl"] .crawlaco-setup-step select {
 
 .crawlaco-settings-form .description {
     margin-bottom: 15px;
+    color: var(--crawlaco-text);
 }
 
 .crawlaco-settings-form select {
@@ -338,8 +430,9 @@ html[dir="rtl"] .crawlaco-setup-step select {
 .crawlaco-data-sync-status {
     margin: 20px 0;
     padding: 20px;
-    background: #f8f9fa;
-    border-radius: 4px;
+    background: var(--crawlaco-light-gray);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .crawlaco-data-sync-status .crawlaco-message {
@@ -359,7 +452,7 @@ html[dir="rtl"] .crawlaco-setup-step select {
 }
 
 .crawlaco-data-sync-status .progress-text {
-    color: #666;
+    color: var(--crawlaco-text);
 }
 
 .crawlaco-data-sync-status button {
