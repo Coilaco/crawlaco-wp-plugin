@@ -4,12 +4,18 @@
  * Plugin URI: https://crawlaco.com
  * Description: پلی میان وب‌سایت شما و داشبورد کرالاکو برای مدیریت راحت‌تر وب‌سایت شما.
  * Version: 1.0.0
- * Author: Crawlaco team
+ * Requires at least: 5.0
+ * Requires PHP: 7.4
+ * Author: Crawlaco Team
  * Author URI: https://crawlaco.com
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: crawlaco
  * Domain Path: /languages
- * Requires at least: 5.0
- * Requires PHP: 7.2
+ *
+ * @package Crawlaco
+ * @category Plugin
+ * @author Crawlaco Team
  */
 
 // Exit if accessed directly
@@ -22,7 +28,7 @@ define('CRAWLACO_VERSION', '1.0.0');
 define('CRAWLACO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CRAWLACO_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CRAWLACO_MIN_WP_VERSION', '5.0');
-define('CRAWLACO_MIN_PHP_VERSION', '7.2');
+define('CRAWLACO_MIN_PHP_VERSION', '7.4');
 define('CRAWLACO_DASHBOARD_URL', 'https://app.crawlaco.com');
 define('CRAWLACO_CUSTOM_FUNCTIONS_FILE', CRAWLACO_PLUGIN_DIR . 'custom-functions.php');
 
