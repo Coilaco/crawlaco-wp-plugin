@@ -16,30 +16,30 @@ $setup_complete = get_option('crawlaco_setup_complete', false);
 if ($setup_complete) {
     ?>
     <div class="wrap">
-        <h1 class="crawlaco-header"><?php _e('Crawlaco Setup Complete', 'crawlaco'); ?></h1>
+        <h1 class="crawlaco-header"><?php esc_html_e('Crawlaco Setup Complete', 'crawlaco'); ?></h1>
         
         <?php do_action('crawlaco_admin_notices'); ?>
 
         <div class="crawlaco-admin">
             <div class="notice notice-success">
-                <p><?php _e('Great! Your Crawlaco plugin has been successfully set up.', 'crawlaco'); ?></p>
-                <p><?php _e('You can now start using Crawlaco to manage your website data.', 'crawlaco'); ?></p>
+                <p><?php esc_html_e('Great! Your Crawlaco plugin has been successfully set up.', 'crawlaco'); ?></p>
+                <p><?php esc_html_e('You can now start using Crawlaco to manage your website data.', 'crawlaco'); ?></p>
             </div>
 
             <div class="crawlaco-completion-section">
                 <span class="dashicons dashicons-yes-alt" style="color: green;"></span>
-                <h4><?php _e('The setup process has been completed successfully.', 'crawlaco'); ?></h4>
-                <p><?php _e('You can now use Crawlaco\'s features.', 'crawlaco'); ?></p>
+                <h4><?php esc_html_e('The setup process has been completed successfully.', 'crawlaco'); ?></h4>
+                <p><?php esc_html_e('You can now use Crawlaco\'s features.', 'crawlaco'); ?></p>
             </div>
 
             <div class="crawlaco-completion-actions">
-                <a href="<?php echo admin_url('admin.php?page=crawlaco'); ?>" class="button button-primary">
-                    <?php _e('Go to Status Page', 'crawlaco'); ?>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco')); ?>" class="button button-primary">
+                    <?php esc_html_e('Go to Status Page', 'crawlaco'); ?>
                 </a>
                 <a href="<?php echo esc_url(CRAWLACO_DASHBOARD_URL); ?>"
                     class="button button-secondary" target="_blank">
                     <span class="dashicons dashicons-external"></span>
-                    <?php _e('Go to Crawlaco Dashboard', 'crawlaco'); ?>
+                    <?php esc_html_e('Go to Crawlaco Dashboard', 'crawlaco'); ?>
                 </a>
             </div>
         </div>
@@ -56,8 +56,8 @@ function render_step_one() {
     $setup_complete = get_option('crawlaco_setup_complete', false);
     ?>
     <div class="crawlaco-setup-step active">
-        <h2><?php _e('Step 1: Website Key Validation', 'crawlaco'); ?></h2>
-        <p><?php _e('Enter your Website Key generated from the Crawlaco dashboard:', 'crawlaco'); ?></p>
+        <h2><?php esc_html_e('Step 1: Website Key Validation', 'crawlaco'); ?></h2>
+        <p><?php esc_html_e('Enter your Website Key generated from the Crawlaco dashboard:', 'crawlaco'); ?></p>
         
         <form id="crawlaco-website-key-form" method="post" action="options.php">
             <?php settings_fields('crawlaco_settings'); ?>
@@ -65,7 +65,7 @@ function render_step_one() {
             <table class="form-table">
                 <tr>
                     <th scope="row">
-                        <label for="crawlaco_website_key"><?php _e('Website Key', 'crawlaco'); ?></label>
+                        <label for="crawlaco_website_key"><?php esc_html_e('Website Key', 'crawlaco'); ?></label>
                     </th>
                     <td>
                         <input type="text" 
@@ -77,7 +77,7 @@ function render_step_one() {
                         >
                         
                         <p class="description">
-                            <?php _e('You can find your Website Key in your Crawlaco dashboard.', 'crawlaco'); ?>
+                            <?php esc_html_e('You can find your Website Key in your Crawlaco dashboard.', 'crawlaco'); ?>
                         </p>
                     </td>
                 </tr>
@@ -90,7 +90,7 @@ function render_step_one() {
                         id="validate-website-key"
                         <?php echo $setup_complete ? 'disabled' : ''; ?>
                 >
-                    <?php _e('Validate Key', 'crawlaco'); ?>
+                    <?php esc_html_e('Validate Key', 'crawlaco'); ?>
                 </button>
             </div>
         </form>
@@ -110,35 +110,35 @@ function render_step_two() {
     );
     ?>
     <div class="crawlaco-setup-step active">
-        <h2><?php _e('Step 2: API Key Generation', 'crawlaco'); ?></h2>
-        <p><?php _e('We need to generate API keys to enable communication between your WordPress site and Crawlaco:', 'crawlaco'); ?></p>
+        <h2><?php esc_html_e('Step 2: API Key Generation', 'crawlaco'); ?></h2>
+        <p><?php esc_html_e('We need to generate API keys to enable communication between your WordPress site and Crawlaco:', 'crawlaco'); ?></p>
         
         <div class="crawlaco-api-keys-status">
-            <h3><?php _e('API Keys Status', 'crawlaco'); ?></h3>
+            <h3><?php esc_html_e('API Keys Status', 'crawlaco'); ?></h3>
             
             <table class="widefat">
                 <tr>
-                    <td><strong><?php _e('WordPress API Key:', 'crawlaco'); ?></strong></td>
+                    <td><strong><?php esc_html_e('WordPress API Key:', 'crawlaco'); ?></strong></td>
                     <td>
                         <?php if ($wp_api_key): ?>
                             <span class="dashicons dashicons-yes-alt" style="color: green;"></span>
-                            <?php _e('Generated', 'crawlaco'); ?>
+                            <?php esc_html_e('Generated', 'crawlaco'); ?>
                         <?php else: ?>
                             <span class="dashicons dashicons-no-alt" style="color: red;"></span>
-                            <?php _e('Not Generated', 'crawlaco'); ?>
+                            <?php esc_html_e('Not Generated', 'crawlaco'); ?>
                         <?php endif; ?>
                     </td>
                 </tr>
                 <?php if ($has_woocommerce): ?>
                 <tr>
-                    <td><strong><?php _e('WooCommerce API Keys:', 'crawlaco'); ?></strong></td>
+                    <td><strong><?php esc_html_e('WooCommerce API Keys:', 'crawlaco'); ?></strong></td>
                     <td>
                         <?php if (!empty($wc_api_keys)): ?>
                             <span class="dashicons dashicons-yes-alt" style="color: green;"></span>
-                            <?php _e('Generated', 'crawlaco'); ?>
+                            <?php esc_html_e('Generated', 'crawlaco'); ?>
                         <?php else: ?>
                             <span class="dashicons dashicons-no-alt" style="color: red;"></span>
-                            <?php _e('Not Generated', 'crawlaco'); ?>
+                            <?php esc_html_e('Not Generated', 'crawlaco'); ?>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -155,9 +155,9 @@ function render_step_two() {
             >
                 <?php 
                 if ($wp_api_key && (!$has_woocommerce || !empty($wc_api_keys))) {
-                    _e('API Keys Generated', 'crawlaco');
+                    esc_html_e('API Keys Generated', 'crawlaco');
                 } else {
-                    _e('Generate API Keys', 'crawlaco');
+                    esc_html_e('Generate API Keys', 'crawlaco');
                 }
                 ?>
             </button>
@@ -167,7 +167,7 @@ function render_step_two() {
                         class="button button-secondary" 
                         id="proceed-to-step-three"
                 >
-                    <?php _e('Proceed to Next Step', 'crawlaco'); ?>
+                    <?php esc_html_e('Proceed to Next Step', 'crawlaco'); ?>
                 </button>
             <?php endif; ?>
         </div>
@@ -181,27 +181,27 @@ function render_step_two() {
 function render_step_three() {
     ?>
     <div class="crawlaco-setup-step active">
-        <h2><?php _e('Step 3: Data Synchronization', 'crawlaco'); ?></h2>
-        <p><?php _e('We will now fetch essential data from your WordPress site to sync with Crawlaco:', 'crawlaco'); ?></p>
+        <h2><?php esc_html_e('Step 3: Data Synchronization', 'crawlaco'); ?></h2>
+        <p><?php esc_html_e('We will now fetch essential data from your WordPress site to sync with Crawlaco:', 'crawlaco'); ?></p>
         
         <div class="crawlaco-data-sync-status">
             <div class="crawlaco-message"></div>
             <div class="crawlaco-progress" style="display: none;">
                 <div class="spinner is-active"></div>
-                <span class="progress-text"><?php _e('Fetching data...', 'crawlaco'); ?></span>
+                <span class="progress-text"><?php esc_html_e('Fetching data...', 'crawlaco'); ?></span>
             </div>
             <button type="button" 
                     class="button button-primary" 
                     id="start-data-sync"
             >
-                <?php _e('Start Data Sync', 'crawlaco'); ?>
+                <?php esc_html_e('Start Data Sync', 'crawlaco'); ?>
             </button>
             <button type="button" 
                     class="button button-secondary" 
                     id="retry-data-sync"
                     style="display: none;"
             >
-                <?php _e('Retry', 'crawlaco'); ?>
+                <?php esc_html_e('Retry', 'crawlaco'); ?>
             </button>
         </div>
     </div>
@@ -224,22 +224,22 @@ function render_step_four() {
     $brand_attr_id = get_option('crawlaco_brand_attr_id', '');
     ?>
     <div class="crawlaco-setup-step crawlaco-attribute-mapper active">
-        <h2><?php _e('Step 4: Map Product Attributes', 'crawlaco'); ?></h2>
+        <h2><?php esc_html_e('Step 4: Map Product Attributes', 'crawlaco'); ?></h2>
         
         <?php if (!$has_woocommerce): ?>
             <div class="notice notice-warning">
                 <p>
-                    <?php _e('WooCommerce is not installed or inactive. You can skip this step.', 'crawlaco'); ?>
+                    <?php esc_html_e('WooCommerce is not installed or inactive. You can skip this step.', 'crawlaco'); ?>
                 </p>
                 <p>
                     <button type="button" class="button button-primary" id="crawlaco-finish-setup">
-                        <?php _e('Finish Setup', 'crawlaco'); ?>
+                        <?php esc_html_e('Finish Setup', 'crawlaco'); ?>
                     </button>
                 </p>
             </div>
         <?php else: ?>
             <p class="description">
-                <?php _e('Map your WooCommerce product attributes to help Crawlaco understand your data structure:', 'crawlaco'); ?>
+                <?php esc_html_e('Map your WooCommerce product attributes to help Crawlaco understand your data structure:', 'crawlaco'); ?>
             </p>
 
             <form id="crawlaco-attribute-mapping-form" method="post">
@@ -250,11 +250,11 @@ function render_step_four() {
                     ?>
                     <tr>
                         <th scope="row">
-                            <label for="crawlaco_size_attr_id"><?php _e('Size Attribute', 'crawlaco'); ?></label>
+                            <label for="crawlaco_size_attr_id"><?php esc_html_e('Size Attribute', 'crawlaco'); ?></label>
                         </th>
                         <td>
                             <select name="crawlaco_size_attr_id" id="crawlaco_size_attr_id">
-                                <option value=""><?php _e('-- Select Size Attribute --', 'crawlaco'); ?></option>
+                                <option value=""><?php esc_html_e('-- Select Size Attribute --', 'crawlaco'); ?></option>
                                 <?php foreach ($attribute_taxonomies as $attribute): ?>
                                     <option value="<?php echo esc_attr($attribute->attribute_id); ?>"
                                             <?php selected($size_attr_id, $attribute->attribute_id); ?>>
@@ -266,11 +266,11 @@ function render_step_four() {
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="crawlaco_color_attr_id"><?php _e('Color Attribute', 'crawlaco'); ?></label>
+                            <label for="crawlaco_color_attr_id"><?php esc_html_e('Color Attribute', 'crawlaco'); ?></label>
                         </th>
                         <td>
                             <select name="crawlaco_color_attr_id" id="crawlaco_color_attr_id">
-                                <option value=""><?php _e('-- Select Color Attribute --', 'crawlaco'); ?></option>
+                                <option value=""><?php esc_html_e('-- Select Color Attribute --', 'crawlaco'); ?></option>
                                 <?php foreach ($attribute_taxonomies as $attribute): ?>
                                     <option value="<?php echo esc_attr($attribute->attribute_id); ?>"
                                             <?php selected($color_attr_id, $attribute->attribute_id); ?>>
@@ -282,11 +282,11 @@ function render_step_four() {
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="crawlaco_brand_attr_id"><?php _e('Brand Attribute', 'crawlaco'); ?></label>
+                            <label for="crawlaco_brand_attr_id"><?php esc_html_e('Brand Attribute', 'crawlaco'); ?></label>
                         </th>
                         <td>
                             <select name="crawlaco_brand_attr_id" id="crawlaco_brand_attr_id">
-                                <option value=""><?php _e('-- Select Brand Attribute --', 'crawlaco'); ?></option>
+                                <option value=""><?php esc_html_e('-- Select Brand Attribute --', 'crawlaco'); ?></option>
                                 <?php foreach ($attribute_taxonomies as $attribute): ?>
                                     <option value="<?php echo esc_attr($attribute->attribute_id); ?>"
                                             <?php selected($brand_attr_id, $attribute->attribute_id); ?>>
@@ -301,7 +301,7 @@ function render_step_four() {
                 <div class="crawlaco-submit-wrapper">
                     <div class="crawlaco-message"></div>
                     <button type="submit" class="button button-primary" id="save-attribute-mapping">
-                        <?php _e('Save Attribute Mapping', 'crawlaco'); ?>
+                        <?php esc_html_e('Save Attribute Mapping', 'crawlaco'); ?>
                     </button>
                 </div>
             </form>
@@ -311,7 +311,7 @@ function render_step_four() {
 }
 ?>
 <div class="wrap">
-    <h1 class="crawlaco-header"><?php _e('Crawlaco Setup Wizard', 'crawlaco'); ?></h1>
+    <h1 class="crawlaco-header"><?php esc_html_e('Crawlaco Setup Wizard', 'crawlaco'); ?></h1>
     
     <?php do_action('crawlaco_admin_notices'); ?>
 
@@ -319,16 +319,16 @@ function render_step_four() {
         <div class="crawlaco-setup-progress">
             <ul class="steps">
                 <li class="<?php echo $current_step >= 1 ? 'active' : ''; ?>">
-                    <?php _e('Website Key', 'crawlaco'); ?>
+                    <?php esc_html_e('Website Key', 'crawlaco'); ?>
                 </li>
                 <li class="<?php echo $current_step >= 2 ? 'active' : ''; ?>">
-                    <?php _e('API Keys', 'crawlaco'); ?>
+                    <?php esc_html_e('API Keys', 'crawlaco'); ?>
                 </li>
                 <li class="<?php echo $current_step >= 3 ? 'active' : ''; ?>">
-                    <?php _e('Data Sync', 'crawlaco'); ?>
+                    <?php esc_html_e('Data Sync', 'crawlaco'); ?>
                 </li>
                 <li class="<?php echo $current_step >= 4 ? 'active' : ''; ?>">
-                    <?php _e('Attributes', 'crawlaco'); ?>
+                    <?php esc_html_e('Attributes', 'crawlaco'); ?>
                 </li>
             </ul>
         </div>

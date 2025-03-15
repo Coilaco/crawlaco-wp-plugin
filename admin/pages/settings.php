@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="wrap">
-    <h1 class="crawlaco-header"><?php _e('Crawlaco Settings', 'crawlaco'); ?></h1>
+    <h1 class="crawlaco-header"><?php esc_html_e('Crawlaco Settings', 'crawlaco'); ?></h1>
     
     <?php do_action('crawlaco_admin_notices'); ?>
 
@@ -29,9 +29,9 @@ if (!defined('ABSPATH')) {
                     <tbody>
                         <?php
                         $required_attributes = array(
-                            'SIZE_ATTR_ID' => __('Size', 'crawlaco'),
-                            'COLOR_ATTR_ID' => __('Color', 'crawlaco'),
-                            'BRAND_ATTR_ID' => __('Brand', 'crawlaco')
+                            'SIZE_ATTR_ID' => esc_html__('Size', 'crawlaco'),
+                            'COLOR_ATTR_ID' => esc_html__('Color', 'crawlaco'),
+                            'BRAND_ATTR_ID' => esc_html__('Brand', 'crawlaco')
                         );
 
                         foreach ($required_attributes as $attr_key => $attr_label) :

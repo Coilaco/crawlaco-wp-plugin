@@ -1,13 +1,12 @@
 <?php
 /**
  * Plugin Name: Crawlaco | کرالاکو
- * Plugin URI: https://crawlaco.com
+ * Plugin URI: https://crawlaco.com/plugin
  * Description: پلی میان وب‌سایت شما و داشبورد کرالاکو برای مدیریت راحت‌تر وب‌سایت شما.
  * Version: 1.0.0
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author: Crawlaco Team
- * Author URI: https://crawlaco.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: crawlaco
@@ -50,8 +49,9 @@ function crawlaco_plugin_activation() {
     if (version_compare(get_bloginfo('version'), CRAWLACO_MIN_WP_VERSION, '<')) {
         deactivate_plugins(plugin_basename(__FILE__));
         wp_die(sprintf(
-            __('Crawlaco requires WordPress version %s or higher.', 'crawlaco'),
-            CRAWLACO_MIN_WP_VERSION
+            /* translators: %s: minimum WordPress version number */
+            esc_html__('Crawlaco requires WordPress version %s or higher.', 'crawlaco'),
+            esc_attr(CRAWLACO_MIN_WP_VERSION)
         ));
     }
 
@@ -59,8 +59,9 @@ function crawlaco_plugin_activation() {
     if (version_compare(PHP_VERSION, CRAWLACO_MIN_PHP_VERSION, '<')) {
         deactivate_plugins(plugin_basename(__FILE__));
         wp_die(sprintf(
-            __('Crawlaco requires PHP version %s or higher.', 'crawlaco'),
-            CRAWLACO_MIN_PHP_VERSION
+            /* translators: %s: minimum PHP version number */
+            esc_html__('Crawlaco requires PHP version %s or higher.', 'crawlaco'),
+            esc_attr(CRAWLACO_MIN_PHP_VERSION)
         ));
     }
 
@@ -142,8 +143,8 @@ function crawlaco_admin_notice() {
         ?>
         <div class="notice notice-warning crawlaco-admin-notice">
             <p>
-                <?php _e('Please complete the Crawlaco plugin setup to start using its features.', 'crawlaco'); ?>
-                <a href="<?php echo admin_url('admin.php?page=crawlaco-setup-wizard'); ?>" class="button button-primary"><?php _e('Complete Setup', 'crawlaco'); ?></a>
+                <?php esc_html_e('Please complete the Crawlaco plugin setup to start using its features.', 'crawlaco'); ?>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-setup-wizard')); ?>" class="button button-primary"><?php esc_html_e('Complete Setup', 'crawlaco'); ?></a>
             </p>
         </div>
         <?php
@@ -170,7 +171,7 @@ add_action('admin_init', 'crawlaco_register_admin_notice');
  * Add settings link on plugin page
  */
 function crawlaco_plugin_action_links($links) {
-    $settings_link = '<a href="' . admin_url('admin.php?page=crawlaco') . '">' . __('Settings', 'crawlaco') . '</a>';
+    $settings_link = '<a href="' . esc_url(admin_url('admin.php?page=crawlaco')) . '">' . esc_html__('Settings', 'crawlaco') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 }

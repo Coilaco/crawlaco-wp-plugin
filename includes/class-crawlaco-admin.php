@@ -26,8 +26,8 @@ class Crawlaco_Admin {
     public function add_admin_menu() {
         // Add main menu item with custom icon
         add_menu_page(
-            __('Crawlaco', 'crawlaco'),
-            __('Crawlaco', 'crawlaco'),
+            esc_html__('Crawlaco', 'crawlaco'),
+            esc_html__('Crawlaco', 'crawlaco'),
             'manage_options',
             'crawlaco',
             array($this, 'render_status_page'),
@@ -38,8 +38,8 @@ class Crawlaco_Admin {
         // Add submenu items
         add_submenu_page(
             'crawlaco',
-            __('Status', 'crawlaco'),
-            __('Status', 'crawlaco'),
+            esc_html__('Status', 'crawlaco'),
+            esc_html__('Status', 'crawlaco'),
             'manage_options',
             'crawlaco',
             array($this, 'render_status_page')
@@ -47,8 +47,8 @@ class Crawlaco_Admin {
         
         add_submenu_page(
             'crawlaco',
-            __('Setup Wizard', 'crawlaco'),
-            __('Setup Wizard', 'crawlaco'),
+            esc_html__('Setup Wizard', 'crawlaco'),
+            esc_html__('Setup Wizard', 'crawlaco'),
             'manage_options',
             'crawlaco-setup-wizard',
             array($this, 'render_setup_wizard_page')
@@ -56,8 +56,8 @@ class Crawlaco_Admin {
 
         add_submenu_page(
             'crawlaco',
-            __('Settings', 'crawlaco'),
-            __('Settings', 'crawlaco'),
+            esc_html__('Settings', 'crawlaco'),
+            esc_html__('Settings', 'crawlaco'),
             'manage_options',
             'crawlaco-settings',
             array($this, 'render_settings_page')
@@ -65,8 +65,8 @@ class Crawlaco_Admin {
 
         add_submenu_page(
             'crawlaco',
-            __('Dashboard', 'crawlaco'),
-            __('Login to Crawlaco', 'crawlaco'),
+            esc_html__('Dashboard', 'crawlaco'),
+            esc_html__('Login to Crawlaco', 'crawlaco'),
             'manage_options',
             'crawlaco-dashboard',
             array($this, 'redirect_to_dashboard')
@@ -77,15 +77,176 @@ class Crawlaco_Admin {
      * Register plugin settings
      */
     public function register_settings() {
-        register_setting('crawlaco_settings', 'crawlaco_website_key');
-        register_setting('crawlaco_settings', 'crawlaco_setup_complete');
-        register_setting('crawlaco_settings', 'crawlaco_setup_step');
-        register_setting('crawlaco_settings', 'crawlaco_wp_api_key');
-        register_setting('crawlaco_settings', 'crawlaco_wc_api_keys');
-        // Add attribute mapping settings
-        register_setting('crawlaco_settings', 'crawlaco_size_attr_id');
-        register_setting('crawlaco_settings', 'crawlaco_color_attr_id');
-        register_setting('crawlaco_settings', 'crawlaco_brand_attr_id');
+        // Website key setting
+        register_setting(
+            'crawlaco_settings',
+            'crawlaco_website_key',
+            array(
+                'type' => 'string',
+                'description' => 'Crawlaco website key for API authentication',
+                'sanitize_callback' => array($this, 'sanitize_website_key'),
+                'default' => '',
+                'show_in_rest' => false
+            )
+        );
+        
+        // Setup complete flag
+        register_setting(
+            'crawlaco_settings',
+            'crawlaco_setup_complete',
+            array(
+                'type' => 'boolean',
+                'description' => 'Flag indicating if plugin setup is complete',
+                'sanitize_callback' => array($this, 'sanitize_boolean'),
+                'default' => false,
+                'show_in_rest' => false
+            )
+        );
+        
+        // Setup step
+        register_setting(
+            'crawlaco_settings',
+            'crawlaco_setup_step',
+            array(
+                'type' => 'integer',
+                'description' => 'Current setup wizard step',
+                'sanitize_callback' => array($this, 'sanitize_step'),
+                'default' => 1,
+                'show_in_rest' => false
+            )
+        );
+        
+        // WordPress API key
+        register_setting(
+            'crawlaco_settings',
+            'crawlaco_wp_api_key',
+            array(
+                'type' => 'string',
+                'description' => 'WordPress API key for Crawlaco integration',
+                'sanitize_callback' => array($this, 'sanitize_api_key'),
+                'default' => '',
+                'show_in_rest' => false
+            )
+        );
+        
+        // WooCommerce API keys
+        register_setting(
+            'crawlaco_settings',
+            'crawlaco_wc_api_keys',
+            array(
+                'type' => 'array',
+                'description' => 'WooCommerce API keys for Crawlaco integration',
+                'sanitize_callback' => array($this, 'sanitize_wc_api_keys'),
+                'default' => array(),
+                'show_in_rest' => false
+            )
+        );
+        
+        // Attribute mapping settings
+        register_setting(
+            'crawlaco_settings',
+            'crawlaco_size_attr_id',
+            array(
+                'type' => 'integer',
+                'description' => 'Size attribute ID for product mapping',
+                'sanitize_callback' => array($this, 'sanitize_attribute_id'),
+                'default' => 0,
+                'show_in_rest' => false
+            )
+        );
+        
+        register_setting(
+            'crawlaco_settings',
+            'crawlaco_color_attr_id',
+            array(
+                'type' => 'integer',
+                'description' => 'Color attribute ID for product mapping',
+                'sanitize_callback' => array($this, 'sanitize_attribute_id'),
+                'default' => 0,
+                'show_in_rest' => false
+            )
+        );
+        
+        register_setting(
+            'crawlaco_settings',
+            'crawlaco_brand_attr_id',
+            array(
+                'type' => 'integer',
+                'description' => 'Brand attribute ID for product mapping',
+                'sanitize_callback' => array($this, 'sanitize_attribute_id'),
+                'default' => 0,
+                'show_in_rest' => false
+            )
+        );
+    }
+
+    /**
+     * Sanitize website key
+     *
+     * @param string $key Website key to sanitize
+     * @return string Sanitized website key
+     */
+    public function sanitize_website_key($key) {
+        return sanitize_text_field($key);
+    }
+
+    /**
+     * Sanitize boolean values
+     *
+     * @param mixed $value Value to sanitize
+     * @return bool Sanitized boolean value
+     */
+    public function sanitize_boolean($value) {
+        return (bool) $value;
+    }
+
+    /**
+     * Sanitize setup step
+     *
+     * @param mixed $step Step value to sanitize
+     * @return int Sanitized step value (1-5)
+     */
+    public function sanitize_step($step) {
+        $step = absint($step);
+        return min(max($step, 1), 5);
+    }
+
+    /**
+     * Sanitize API key
+     *
+     * @param string $key API key to sanitize
+     * @return string Sanitized API key
+     */
+    public function sanitize_api_key($key) {
+        return sanitize_text_field($key);
+    }
+
+    /**
+     * Sanitize WooCommerce API keys array
+     *
+     * @param array $keys Array of API keys
+     * @return array Sanitized array of API keys
+     */
+    public function sanitize_wc_api_keys($keys) {
+        if (!is_array($keys)) {
+            return array();
+        }
+        
+        $sanitized = array();
+        foreach ($keys as $key => $value) {
+            $sanitized[sanitize_text_field($key)] = sanitize_text_field($value);
+        }
+        return $sanitized;
+    }
+
+    /**
+     * Sanitize attribute ID
+     *
+     * @param mixed $id Attribute ID to sanitize
+     * @return int Sanitized attribute ID
+     */
+    public function sanitize_attribute_id($id) {
+        return absint($id);
     }
 
     /**
@@ -117,27 +278,27 @@ class Crawlaco_Admin {
 
         // Localize script
         wp_localize_script('crawlaco-admin', 'crawlacoAdmin', array(
-            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'ajaxUrl' => esc_url(admin_url('admin-ajax.php')),
             'nonce' => wp_create_nonce('crawlaco-admin-nonce'),
             'strings' => array(
-                'validating' => __('Validating...', 'crawlaco'),
-                'generating' => __('Generating API Keys...', 'crawlaco'),
-                'success' => __('Success!', 'crawlaco'),
-                'error' => __('Error:', 'crawlaco'),
-                'validate' => __('Validate Key', 'crawlaco'),
-                'generate' => __('Generate API Keys', 'crawlaco'),
-                'fetching' => __('Fetching data...', 'crawlaco'),
-                'fetching_timeout' => __('Data fetching timed out. Please try again.', 'crawlaco'),
-                'fetching_failed' => __('Data fetching failed. Please try again.', 'crawlaco'),
-                'fetching_success' => __('Data fetched successfully!', 'crawlaco'),
-                'start_sync' => __('Start Data Sync', 'crawlaco'),
-                'retry_sync' => __('Retry', 'crawlaco'),
-                'saving_attributes' => __('Saving attribute mappings...', 'crawlaco'),
-                'attributes_saved' => __('Attribute mappings saved successfully!', 'crawlaco'),
-                'attributes_failed' => __('Failed to save attribute mappings.', 'crawlaco'),
-                'finalizing_setup' => __('Finalizing setup...', 'crawlaco'),
-                'setup_complete' => __('Setup completed successfully! Redirecting to dashboard...', 'crawlaco'),
-                'setup_failed' => __('Failed to complete setup.', 'crawlaco'),
+                'validating' => esc_html__('Validating...', 'crawlaco'),
+                'generating' => esc_html__('Generating API Keys...', 'crawlaco'),
+                'success' => esc_html__('Success!', 'crawlaco'),
+                'error' => esc_html__('Error:', 'crawlaco'),
+                'validate' => esc_html__('Validate Key', 'crawlaco'),
+                'generate' => esc_html__('Generate API Keys', 'crawlaco'),
+                'fetching' => esc_html__('Fetching data...', 'crawlaco'),
+                'fetching_timeout' => esc_html__('Data fetching timed out. Please try again.', 'crawlaco'),
+                'fetching_failed' => esc_html__('Data fetching failed. Please try again.', 'crawlaco'),
+                'fetching_success' => esc_html__('Data fetched successfully!', 'crawlaco'),
+                'start_sync' => esc_html__('Start Data Sync', 'crawlaco'),
+                'retry_sync' => esc_html__('Retry', 'crawlaco'),
+                'saving_attributes' => esc_html__('Saving attribute mappings...', 'crawlaco'),
+                'attributes_saved' => esc_html__('Attribute mappings saved successfully!', 'crawlaco'),
+                'attributes_failed' => esc_html__('Failed to save attribute mappings.', 'crawlaco'),
+                'finalizing_setup' => esc_html__('Finalizing setup...', 'crawlaco'),
+                'setup_complete' => esc_html__('Setup completed successfully! Redirecting to dashboard...', 'crawlaco'),
+                'setup_failed' => esc_html__('Failed to complete setup.', 'crawlaco'),
             ),
         ));
     }
@@ -157,17 +318,34 @@ class Crawlaco_Admin {
         $setup_complete = get_option('crawlaco_setup_complete', false);
         if (!$setup_complete) {
             ?>
-            <div class="wrap crawlaco-admin">
-                <h1 class="crawlaco-header"><?php _e('Crawlaco Settings', 'crawlaco'); ?></h1>
-                <div class="notice notice-warning">
-                    <p>
-                        <?php _e('Please complete the setup process before accessing the settings page.', 'crawlaco'); ?>
-                    </p>
-                    <p>
-                        <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco')); ?>" class="button button-primary">
-                            <?php _e('Go to Setup Wizard', 'crawlaco'); ?>
-                        </a>
-                    </p>
+            <div class="wrap">
+                <h1 class="crawlaco-header"><?php esc_html_e('Crawlaco Settings', 'crawlaco'); ?></h1>
+              
+                <div class="crawlaco-admin">
+                    <div class="notice notice-warning">
+                        <p>
+                            <?php _e('Please complete the setup process before accessing the settings page.', 'crawlaco'); ?>
+                        </p>
+                        <p>
+                            <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-setup-wizard')); ?>" class="button button-primary">
+                                <?php esc_html_e('Go to Setup Wizard', 'crawlaco'); ?>
+                            </a>
+                        </p>
+                    </div>
+
+
+                    <div class="crawlaco-completion-section">
+                        <span class="dashicons dashicons-warning" style="color: #DBA617;"></span>
+                        <h4><?php esc_html_e('Setup is not complete', 'crawlaco'); ?></h4>
+                        <p><?php esc_html_e('Please complete the setup process before accessing the settings page.', 'crawlaco'); ?></p>
+                    </div>
+
+                    <div class="crawlaco-completion-actions">
+                            <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-setup-wizard')); ?>" 
+                            class="button button-primary">
+                                <?php esc_html_e('Go to Setup Wizard', 'crawlaco'); ?>
+                            </a>
+                    </div>
                 </div>
             </div>
             <?php
@@ -226,23 +404,18 @@ class Crawlaco_Admin {
      * Handle settings form submission
      */
     public function handle_settings_update() {
-        // Debug logging
-        error_log('Crawlaco Settings Update - POST data: ' . print_r($_POST, true));
-        
         // Verify nonce
         if (!isset($_POST['crawlaco_settings_nonce'])) {
-            error_log('Crawlaco Settings Update - Nonce field not found in POST data');
-            wp_send_json_error(array('message' => __('Security check failed. Please try again.', 'crawlaco')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed. Please try again.', 'crawlaco')));
         }
 
         if (!wp_verify_nonce($_POST['crawlaco_settings_nonce'], 'crawlaco_update_settings')) {
-            error_log('Crawlaco Settings Update - Nonce verification failed');
-            wp_send_json_error(array('message' => __('Security check failed. Please try again.', 'crawlaco')));
+            wp_send_json_error(array('message' => esc_html__('Security check failed. Please try again.', 'crawlaco')));
         }
 
         // Check user capabilities
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('You do not have sufficient permissions to perform this action.', 'crawlaco')));
+            wp_send_json_error(array('message' => esc_html__('You do not have sufficient permissions to perform this action.', 'crawlaco')));
         }
 
         // Get mapped attributes
@@ -270,6 +443,6 @@ class Crawlaco_Admin {
             wp_send_json_error(array('message' => $response->get_error_message()));
         }
 
-        wp_send_json_success(array('message' => __('Settings saved successfully.', 'crawlaco')));
+        wp_send_json_success(array('message' => esc_html__('Settings saved successfully.', 'crawlaco')));
     }
 } 

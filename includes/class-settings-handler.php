@@ -23,12 +23,12 @@ class Crawlaco_Settings_Handler {
     public function handle_settings_update() {
         // Verify nonce
         if (!isset($_POST['crawlaco_settings_nonce']) || !wp_verify_nonce($_POST['crawlaco_settings_nonce'], 'crawlaco_update_settings')) {
-            wp_send_json_error(array('message' => __('Invalid nonce. Please try again.', 'crawlaco')));
+            wp_send_json_error(array('message' => esc_html__('Invalid nonce. Please try again.', 'crawlaco')));
         }
 
         // Check user capabilities
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('You do not have sufficient permissions to perform this action.', 'crawlaco')));
+            wp_send_json_error(array('message' => esc_html__('You do not have sufficient permissions to perform this action.', 'crawlaco')));
         }
 
         // Get mapped attributes
@@ -45,9 +45,6 @@ class Crawlaco_Settings_Handler {
         // Save to WordPress options
         update_option('crawlaco_mapped_attributes', $validated_attributes);
 
-        error_log('Crawlaco ======####: ' . print_r($validated_attributes, true));
-
-
         // Send to Crawlaco API
         $api = new Crawlaco_API();
         $response = $api->update_meta_data($validated_attributes);
@@ -56,7 +53,7 @@ class Crawlaco_Settings_Handler {
             wp_send_json_error(array('message' => $response->get_error_message()));
         }
 
-        wp_send_json_success(array('message' => __('Settings saved successfully.', 'crawlaco')));
+        wp_send_json_success(array('message' => esc_html__('Settings saved successfully.', 'crawlaco')));
     }
 }
 

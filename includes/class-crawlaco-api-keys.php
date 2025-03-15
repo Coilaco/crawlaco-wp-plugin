@@ -18,7 +18,7 @@ class Crawlaco_API_Keys {
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array(
-                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+                'message' => esc_html__('You do not have permission to perform this action.', 'crawlaco')
             ));
         }
 
@@ -59,8 +59,8 @@ class Crawlaco_API_Keys {
         update_option('crawlaco_setup_step', 3);
 
         wp_send_json_success(array(
-            'message' => __('API keys generated and sent successfully!', 'crawlaco'),
-            'redirect' => admin_url('admin.php?page=crawlaco')
+            'message' => esc_html__('API keys generated and sent successfully!', 'crawlaco'),
+            'redirect' => esc_url(admin_url('admin.php?page=crawlaco'))
         ));
     }
 
@@ -87,7 +87,7 @@ class Crawlaco_API_Keys {
             if (is_wp_error($app_pass)) {
                 return new WP_Error(
                     'app_pass_error',
-                    __('Failed to generate WordPress API key.', 'crawlaco')
+                    esc_html__('Failed to generate WordPress API key.', 'crawlaco')
                 );
             }
 
@@ -100,7 +100,7 @@ class Crawlaco_API_Keys {
         } catch (Exception $e) {
             return new WP_Error(
                 'wp_api_error',
-                __('Failed to generate WordPress API key.', 'crawlaco')
+                esc_html__('Failed to generate WordPress API key.', 'crawlaco')
             );
         }
     }
@@ -114,7 +114,7 @@ class Crawlaco_API_Keys {
             if (!function_exists('WC')) {
                 return new WP_Error(
                     'wc_not_loaded',
-                    __('WooCommerce is not properly loaded.', 'crawlaco')
+                    esc_html__('WooCommerce is not properly loaded.', 'crawlaco')
                 );
             }
 
@@ -125,7 +125,7 @@ class Crawlaco_API_Keys {
                 if (!class_exists('WC_Admin_API_Keys')) {
                     return new WP_Error(
                         'wc_api_error',
-                        __('WooCommerce API class could not be loaded.', 'crawlaco')
+                        esc_html__('WooCommerce API class could not be loaded.', 'crawlaco')
                     );
                 }
             }
@@ -170,7 +170,7 @@ class Crawlaco_API_Keys {
             if (!$wpdb->insert_id) {
                 return new WP_Error(
                     'wc_api_error',
-                    __('Failed to store WooCommerce API key in the database.', 'crawlaco')
+                    esc_html__('Failed to store WooCommerce API key in the database.', 'crawlaco')
                 );
             }
 
@@ -181,7 +181,7 @@ class Crawlaco_API_Keys {
         } catch (Exception $e) {
             return new WP_Error(
                 'wc_api_error',
-                __('Failed to generate WooCommerce API keys.', 'crawlaco')
+                esc_html__('Failed to generate WooCommerce API keys.', 'crawlaco')
             );
         }
     }

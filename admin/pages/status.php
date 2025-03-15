@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 ?>
 
 <div class="wrap">
-    <h1 class="crawlaco-header"><?php _e('Crawlaco Status', 'crawlaco'); ?></h1>
+    <h1 class="crawlaco-header"><?php esc_html_e('Crawlaco Status', 'crawlaco'); ?></h1>
     
     <?php do_action('crawlaco_admin_notices'); ?>
 
@@ -22,36 +22,36 @@ if (!defined('ABSPATH')) {
         <?php else: ?>
             <div class="crawlaco-dashboard-overview">
                 <div class="crawlaco-card">
-                    <h2><?php _e('Website Information', 'crawlaco'); ?></h2>
+                    <h2><?php esc_html_e('Website Information', 'crawlaco'); ?></h2>
                     <table class="widefat crawlaco-widefat">
                         <tr>
-                            <th scope="row"><?php _e('Website ID', 'crawlaco'); ?></th>
+                            <th scope="row"><?php esc_html_e('Website ID', 'crawlaco'); ?></th>
                             <td><?php echo esc_html($website_info['id']); ?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e('Website Address', 'crawlaco'); ?></th>
+                            <th scope="row"><?php esc_html_e('Website Address', 'crawlaco'); ?></th>
                             <td><?php echo esc_html($website_info['address']); ?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e('Website Name', 'crawlaco'); ?></th>
+                            <th scope="row"><?php esc_html_e('Website Name', 'crawlaco'); ?></th>
                             <td><?php echo esc_html($website_info['name']); ?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e('Wallet Balance', 'crawlaco'); ?></th>
+                            <th scope="row"><?php esc_html_e('Wallet Balance', 'crawlaco'); ?></th>
                             <td><?php echo esc_html($website_info['wallet']['balance']); ?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e('Status', 'crawlaco'); ?></th>
+                            <th scope="row"><?php esc_html_e('Status', 'crawlaco'); ?></th>
                             <td>
                                 <?php if ($website_info['isActive']): ?>
                                     <span class="crawlaco-status active">
                                         <span class="dashicons dashicons-yes-alt"></span>
-                                        <?php _e('Active', 'crawlaco'); ?>
+                                        <?php esc_html_e('Active', 'crawlaco'); ?>
                                     </span>
                                 <?php else: ?>
                                     <span class="crawlaco-status inactive">
                                         <span class="dashicons dashicons-no-alt"></span>
-                                        <?php _e('Inactive', 'crawlaco'); ?>
+                                        <?php esc_html_e('Inactive', 'crawlaco'); ?>
                                     </span>
                                 <?php endif; ?>
                             </td>
@@ -61,23 +61,23 @@ if (!defined('ABSPATH')) {
 
                 <?php if (get_option('crawlaco_setup_complete', false)): ?>
                     <div class="crawlaco-card">
-                        <h2><?php _e('Quick Actions', 'crawlaco'); ?></h2>
+                        <h2><?php esc_html_e('Quick Actions', 'crawlaco'); ?></h2>
                         <div class="crawlaco-quick-actions">
                             <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-settings')); ?>"
                                 class="button button-secondary">
                                 <span class="dashicons dashicons-admin-settings"></span>
-                                <?php _e('Settings', 'crawlaco'); ?>
+                                <?php esc_html_e('Settings', 'crawlaco'); ?>
                             </a>
                             <a href="<?php echo esc_url(CRAWLACO_DASHBOARD_URL); ?>" class="button button-primary" target="_blank">
                                 <span class="dashicons dashicons-external"></span>
-                                <?php _e('Go to Crawlaco Dashboard', 'crawlaco'); ?>
+                                <?php esc_html_e('Go to Crawlaco Dashboard', 'crawlaco'); ?>
                             </a>
                         </div>
                     </div>
 
                     <?php if (class_exists('WooCommerce')): ?>
                         <div class="crawlaco-card">
-                            <h2><?php _e('WooCommerce Integration', 'crawlaco'); ?></h2>
+                            <h2><?php esc_html_e('WooCommerce Integration', 'crawlaco'); ?></h2>
                             <div class="crawlaco-wc-info">
                                 <?php
                                 // Get mapped attributes
@@ -98,22 +98,22 @@ if (!defined('ABSPATH')) {
                                 ?>
                                 <table class="widefat crawlaco-widefat">
                                     <tr>
-                                        <th scope="row"><?php _e('Size Attribute', 'crawlaco'); ?></th>
-                                        <td><?php echo $size_attr ? esc_html($size_attr) : __('Not mapped', 'crawlaco'); ?></td>
+                                        <th scope="row"><?php esc_html_e('Size Attribute', 'crawlaco'); ?></th>
+                                        <td><?php echo $size_attr ? esc_html($size_attr) : esc_html__('Not mapped', 'crawlaco'); ?></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row"><?php _e('Color Attribute', 'crawlaco'); ?></th>
-                                        <td><?php echo $color_attr ? esc_html($color_attr) : __('Not mapped', 'crawlaco'); ?></td>
+                                        <th scope="row"><?php esc_html_e('Color Attribute', 'crawlaco'); ?></th>
+                                        <td><?php echo $color_attr ? esc_html($color_attr) : esc_html__('Not mapped', 'crawlaco'); ?></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row"><?php _e('Brand Attribute', 'crawlaco'); ?></th>
-                                        <td><?php echo $brand_attr ? esc_html($brand_attr) : __('Not mapped', 'crawlaco'); ?></td>
+                                        <th scope="row"><?php esc_html_e('Brand Attribute', 'crawlaco'); ?></th>
+                                        <td><?php echo $brand_attr ? esc_html($brand_attr) : esc_html__('Not mapped', 'crawlaco'); ?></td>
                                     </tr>
                                 </table>
                                 <p>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-settings')); ?>"
                                         class="button button-secondary">
-                                        <?php _e('Update Attribute Mapping', 'crawlaco'); ?>
+                                        <?php esc_html_e('Update Attribute Mapping', 'crawlaco'); ?>
                                     </a>
                                 </p>
                             </div>
@@ -123,12 +123,12 @@ if (!defined('ABSPATH')) {
                     <div>
                         <div class="notice notice-warning">
                             <p>
-                                <?php _e('Please complete the initial setup process before accessing these features.', 'crawlaco'); ?>
+                                <?php esc_html_e('Please complete the initial setup process before accessing these features.', 'crawlaco'); ?>
                                 </p>
                                 <p>
                                     <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-setup-wizard')); ?>"
                                         class="button button-primary">
-                                        <?php _e('Complete Setup', 'crawlaco'); ?>
+                                        <?php esc_html_e('Complete Setup', 'crawlaco'); ?>
                                     </a>
                                 </p>
                         </div>

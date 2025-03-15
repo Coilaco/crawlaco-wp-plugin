@@ -57,14 +57,14 @@ class Crawlaco_API {
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array(
-                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+                'message' => esc_html__('You do not have permission to perform this action.', 'crawlaco')
             ));
         }
 
-        $website_key = sanitize_text_field($_POST['website_key']);
+        $website_key = isset($_POST['website_key']) ? sanitize_text_field(wp_unslash($_POST['website_key'])) : '';
         if (empty($website_key)) {
             wp_send_json_error(array(
-                'message' => __('Website key is required.', 'crawlaco')
+                'message' => esc_html__('Website key is required.', 'crawlaco')
             ));
         }
 
@@ -81,8 +81,8 @@ class Crawlaco_API {
         update_option('crawlaco_setup_step', 2);
         
         wp_send_json_success(array(
-            'message' => __('Website key validated successfully!', 'crawlaco'),
-            'redirect' => admin_url('admin.php?page=crawlaco')
+            'message' => esc_html__('Website key validated successfully!', 'crawlaco'),
+            'redirect' => esc_url(admin_url('admin.php?page=crawlaco'))
         ));
     }
 
@@ -106,7 +106,7 @@ class Crawlaco_API {
         if (is_wp_error($response)) {
             return new WP_Error(
                 'api_error',
-                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                esc_html__('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
             );
         }
 
@@ -117,7 +117,7 @@ class Crawlaco_API {
         if ($response_code !== 200) {
             $error_message = isset($response_data['message']) 
                 ? $response_data['message'] 
-                : __('Invalid website key. Please check and try again.', 'crawlaco');
+                : esc_html__('Invalid website key. Please check and try again.', 'crawlaco');
             
             return new WP_Error('invalid_key', $error_message);
         }
@@ -134,7 +134,7 @@ class Crawlaco_API {
         if (empty($website_key)) {
             return new WP_Error(
                 'missing_key',
-                __('Website key not found. Please complete step 1 first.', 'crawlaco')
+                esc_html__('Website key not found. Please complete step 1 first.', 'crawlaco')
             );
         }
 
@@ -181,7 +181,7 @@ class Crawlaco_API {
         if (is_wp_error($response)) {
             return new WP_Error(
                 'api_error',
-                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                esc_html__('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
             );
         }
 
@@ -192,7 +192,7 @@ class Crawlaco_API {
         if ($response_code !== 201) {
             $error_message = isset($response_data['message']) 
                 ? $response_data['message'] 
-                : __('Failed to send API keys to Crawlaco. Please try again.', 'crawlaco');
+                : esc_html__('Failed to send API keys to Crawlaco. Please try again.', 'crawlaco');
             
             return new WP_Error('send_failed', $error_message);
         }
@@ -208,7 +208,7 @@ class Crawlaco_API {
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array(
-                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+                'message' => esc_html__('You do not have permission to perform this action.', 'crawlaco')
             ));
         }
 
@@ -221,7 +221,7 @@ class Crawlaco_API {
         }
 
         wp_send_json_success(array(
-            'message' => __('Data fetching initiated successfully!', 'crawlaco'),
+            'message' => esc_html__('Data fetching initiated successfully!', 'crawlaco'),
             'taskId' => $response
         ));
     }
@@ -234,14 +234,14 @@ class Crawlaco_API {
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array(
-                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+                'message' => esc_html__('You do not have permission to perform this action.', 'crawlaco')
             ));
         }
 
-        $task_id = sanitize_text_field($_POST['task_id']);
+        $task_id = isset($_POST['task_id']) ? sanitize_text_field(wp_unslash($_POST['task_id'])) : '';
         if (empty($task_id)) {
             wp_send_json_error(array(
-                'message' => __('Task ID is required.', 'crawlaco')
+                'message' => esc_html__('Task ID is required.', 'crawlaco')
             ));
         }
 
@@ -265,7 +265,7 @@ class Crawlaco_API {
         if (empty($website_key)) {
             return new WP_Error(
                 'missing_key',
-                __('Website key not found. Please complete step 1 first.', 'crawlaco')
+                esc_html__('Website key not found. Please complete step 1 first.', 'crawlaco')
             );
         }
 
@@ -285,7 +285,7 @@ class Crawlaco_API {
         if (is_wp_error($response)) {
             return new WP_Error(
                 'api_error',
-                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                esc_html__('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
             );
         }
 
@@ -296,7 +296,7 @@ class Crawlaco_API {
         if ($response_code !== 202) {
             $error_message = isset($response_data['message']) 
                 ? $response_data['message'] 
-                : __('Failed to initiate data fetching. Please try again.', 'crawlaco');
+                : esc_html__('Failed to initiate data fetching. Please try again.', 'crawlaco');
             
             return new WP_Error('init_failed', $error_message);
         }
@@ -304,7 +304,7 @@ class Crawlaco_API {
         if (!isset($response_data['taskId'])) {
             return new WP_Error(
                 'invalid_response',
-                __('Invalid response from Crawlaco API. Please try again.', 'crawlaco')
+                esc_html__('Invalid response from Crawlaco API. Please try again.', 'crawlaco')
             );
         }
 
@@ -320,7 +320,7 @@ class Crawlaco_API {
         if (empty($website_key)) {
             return new WP_Error(
                 'missing_key',
-                __('Website key not found. Please complete step 1 first.', 'crawlaco')
+                esc_html__('Website key not found. Please complete step 1 first.', 'crawlaco')
             );
         }
 
@@ -340,7 +340,7 @@ class Crawlaco_API {
         if (is_wp_error($response)) {
             return new WP_Error(
                 'api_error',
-                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                esc_html__('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
             );
         }
 
@@ -351,7 +351,7 @@ class Crawlaco_API {
         if ($response_code !== 200) {
             $error_message = isset($response_data['message']) 
                 ? $response_data['message'] 
-                : __('Failed to check task status. Please try again.', 'crawlaco');
+                : esc_html__('Failed to check task status. Please try again.', 'crawlaco');
             
             return new WP_Error('status_check_failed', $error_message);
         }
@@ -359,7 +359,7 @@ class Crawlaco_API {
         if (!isset($response_data['status'])) {
             return new WP_Error(
                 'invalid_response',
-                __('Invalid response from Crawlaco API. Please try again.', 'crawlaco')
+                esc_html__('Invalid response from Crawlaco API. Please try again.', 'crawlaco')
             );
         }
 
@@ -382,13 +382,13 @@ class Crawlaco_API {
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array(
-                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+                'message' => esc_html__('You do not have permission to perform this action.', 'crawlaco')
             ));
         }
 
-        $size_attr_id = isset($_POST['size_attr_id']) ? sanitize_text_field($_POST['size_attr_id']) : '';
-        $color_attr_id = isset($_POST['color_attr_id']) ? sanitize_text_field($_POST['color_attr_id']) : '';
-        $brand_attr_id = isset($_POST['brand_attr_id']) ? sanitize_text_field($_POST['brand_attr_id']) : '';
+        $size_attr_id = isset($_POST['size_attr_id']) ? sanitize_text_field(wp_unslash($_POST['size_attr_id'])) : '';
+        $color_attr_id = isset($_POST['color_attr_id']) ? sanitize_text_field(wp_unslash($_POST['color_attr_id'])) : '';
+        $brand_attr_id = isset($_POST['brand_attr_id']) ? sanitize_text_field(wp_unslash($_POST['brand_attr_id'])) : '';
 
         // Save attribute mappings to WordPress options
         update_option('crawlaco_size_attr_id', $size_attr_id);
@@ -439,7 +439,7 @@ class Crawlaco_API {
 
             if (is_wp_error($response)) {
                 wp_send_json_error(array(
-                    'message' => __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                    'message' => esc_html__('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
                 ));
             }
 
@@ -447,13 +447,13 @@ class Crawlaco_API {
             
             if ($response_code !== 201) {
                 wp_send_json_error(array(
-                    'message' => __('Failed to save attribute mappings. Please try again.', 'crawlaco')
+                    'message' => esc_html__('Failed to save attribute mappings. Please try again.', 'crawlaco')
                 ));
             }
         }
 
         wp_send_json_success(array(
-            'message' => __('Attribute mappings saved successfully!', 'crawlaco')
+            'message' => esc_html__('Attribute mappings saved successfully!', 'crawlaco')
         ));
     }
 
@@ -465,7 +465,7 @@ class Crawlaco_API {
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array(
-                'message' => __('You do not have permission to perform this action.', 'crawlaco')
+                'message' => esc_html__('You do not have permission to perform this action.', 'crawlaco')
             ));
         }
 
@@ -492,7 +492,7 @@ class Crawlaco_API {
 
         if (is_wp_error($response)) {
             wp_send_json_error(array(
-                'message' => __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                'message' => esc_html__('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
             ));
         }
 
@@ -500,7 +500,7 @@ class Crawlaco_API {
         
         if ($response_code !== 200) {
             wp_send_json_error(array(
-                'message' => __('Failed to complete setup. Please try again.', 'crawlaco')
+                'message' => esc_html__('Failed to complete setup. Please try again.', 'crawlaco')
             ));
         }
 
@@ -509,8 +509,8 @@ class Crawlaco_API {
         update_option('crawlaco_setup_step', 4);
 
         wp_send_json_success(array(
-            'message' => __('Setup completed successfully!', 'crawlaco'),
-            'redirect' => admin_url('admin.php?page=crawlaco')
+            'message' => esc_html__('Setup completed successfully!', 'crawlaco'),
+            'redirect' => esc_url(admin_url('admin.php?page=crawlaco'))
         ));
     }
 
@@ -523,7 +523,7 @@ class Crawlaco_API {
         if (empty($website_key)) {
             return new WP_Error(
                 'missing_key',
-                __('Website key not found. Please complete step 1 first.', 'crawlaco')
+                esc_html__('Website key not found. Please complete step 1 first.', 'crawlaco')
             );
         }
 
@@ -545,7 +545,7 @@ class Crawlaco_API {
         if (is_wp_error($response)) {
             return new WP_Error(
                 'api_error',
-                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                esc_html__('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
             );
         }
 
@@ -557,7 +557,7 @@ class Crawlaco_API {
         if ($response_code !== 201 && $response_code !== 200) {
             $error_message = isset($response_data['message']) 
                 ? $response_data['message'] 
-                : __('Failed to update meta data. Please try again.', 'crawlaco');
+                : esc_html__('Failed to update meta data. Please try again.', 'crawlaco');
             
             return new WP_Error('update_failed', $error_message);
         }
@@ -574,7 +574,7 @@ class Crawlaco_API {
         if (empty($website_key)) {
             return new WP_Error(
                 'missing_key',
-                __('Website key not found. Please complete step 1 first.', 'crawlaco')
+                esc_html__('Website key not found. Please complete step 1 first.', 'crawlaco')
             );
         }
 
@@ -594,7 +594,7 @@ class Crawlaco_API {
         if (is_wp_error($response)) {
             return new WP_Error(
                 'api_error',
-                __('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
+                esc_html__('Failed to connect to Crawlaco API. Please try again.', 'crawlaco')
             );
         }
 
@@ -605,7 +605,7 @@ class Crawlaco_API {
         if ($response_code !== 200) {
             $error_message = isset($response_data['message']) 
                 ? $response_data['message'] 
-                : __('Failed to fetch website information. Please try again.', 'crawlaco');
+                : esc_html__('Failed to fetch website information. Please try again.', 'crawlaco');
             
             return new WP_Error('fetch_failed', $error_message);
         }
