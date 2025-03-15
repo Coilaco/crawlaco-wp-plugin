@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Crawlaco 1.0.0\n"
-"POT-Creation-Date: 2025-03-13 22:40+0330\n"
-"PO-Revision-Date: 2025-03-13 23:26+0330\n"
+"POT-Creation-Date: 2025-03-15 13:09+0330\n"
+"PO-Revision-Date: 2025-03-15 13:10+0330\n"
 "Last-Translator: Crawlaco Team\n"
 "Language-Team: Persian\n"
 "Language: fa_IR\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 
-#: admin/pages/settings.php:8 includes/class-crawlaco-admin.php:159
+#: admin/pages/settings.php:8 includes/class-crawlaco-admin.php:161
 msgid "Crawlaco Settings"
 msgstr "تنظیمات Crawlaco"
 
@@ -71,21 +71,21 @@ msgid ""
 "Fetch and sync your site data with Crawlaco. This will update your product "
 "information, categories, and other relevant data."
 msgstr ""
-"داده های سایت خود را با Crawlaco واکشی و همگام سازی کنید. با این کار اطلاعات ویژگی "
-"محصولات، دسته‌ها و سایر داده‌های مرتبط و غیر حساس شما به‌روزرسانی می‌شود."
+"داده های سایت خود را با Crawlaco واکشی و همگام سازی کنید. با این کار اطلاعات "
+"ویژگی محصولات، دسته‌ها و سایر داده‌های مرتبط و غیر حساس شما به‌روزرسانی می‌شود."
 
-#: admin/pages/settings.php:86 admin/pages/setup_wizard.php:180
-#: includes/class-crawlaco-admin.php:127
+#: admin/pages/settings.php:86 admin/pages/setup_wizard.php:186
+#: includes/class-crawlaco-admin.php:129
 msgid "Fetching data..."
 msgstr "در حال دریافت اطلاعات ..."
 
-#: admin/pages/settings.php:92 admin/pages/setup_wizard.php:186
-#: includes/class-crawlaco-admin.php:131
+#: admin/pages/settings.php:92 admin/pages/setup_wizard.php:192
+#: includes/class-crawlaco-admin.php:133
 msgid "Start Data Sync"
 msgstr "شروع به همگام سازی داده‌ها"
 
-#: admin/pages/settings.php:99 admin/pages/setup_wizard.php:193
-#: includes/class-crawlaco-admin.php:132
+#: admin/pages/settings.php:99 admin/pages/setup_wizard.php:199
+#: includes/class-crawlaco-admin.php:134
 msgid "Retry"
 msgstr "تلاش مجدد"
 
@@ -106,97 +106,106 @@ msgid "You can now start using Crawlaco to manage your website data."
 msgstr "حالا شما می‌توانید از کرالاکو برای مدیریت وب‌سایت خود استفاده کنید."
 
 #: admin/pages/setup_wizard.php:31
+msgid "The setup process has been completed successfully."
+msgstr "راه‌اندازی با موفقیت انجام شد!"
+
+#: admin/pages/setup_wizard.php:32
+msgid "You can now use Crawlaco's features."
+msgstr "حالا شما می‌توانید از کرالاکو برای مدیریت وب‌سایت خود استفاده کنید."
+
+#: admin/pages/setup_wizard.php:37
 msgid "Go to Status Page"
 msgstr "برو به صفحه وضعیت"
 
-#: admin/pages/setup_wizard.php:48
+#: admin/pages/setup_wizard.php:54
 msgid "Step 1: Website Key Validation"
 msgstr "مرحله ۱: احراز کلید وب‌سایت"
 
-#: admin/pages/setup_wizard.php:49
+#: admin/pages/setup_wizard.php:55
 msgid "Enter your Website Key generated from the Crawlaco dashboard:"
 msgstr "کلید وب‌سایت خود را که در داشبورد کرالاکو تولید شده را اینجا وارد کنید:"
 
-#: admin/pages/setup_wizard.php:57 admin/pages/setup_wizard.php:311
+#: admin/pages/setup_wizard.php:63 admin/pages/setup_wizard.php:317
 msgid "Website Key"
 msgstr "کلید وب‌سایت"
 
-#: admin/pages/setup_wizard.php:69
+#: admin/pages/setup_wizard.php:75
 msgid "You can find your Website Key in your Crawlaco dashboard."
 msgstr "شما می‌توانید کلید وب‌سایت را از داشبورد کرالاکو پیدا کنید."
 
-#: admin/pages/setup_wizard.php:82 includes/class-crawlaco-admin.php:125
+#: admin/pages/setup_wizard.php:88 includes/class-crawlaco-admin.php:127
 msgid "Validate Key"
 msgstr "کلید وب‌سایت"
 
-#: admin/pages/setup_wizard.php:102
+#: admin/pages/setup_wizard.php:108
 msgid "Step 2: API Key Generation"
 msgstr "مرحله ۲: تولید کلید‌های API"
 
-#: admin/pages/setup_wizard.php:103
+#: admin/pages/setup_wizard.php:109
 msgid ""
-"We need to generate API keys to enable communication between your WordPress site "
-"and Crawlaco:"
+"We need to generate API keys to enable communication between your WordPress "
+"site and Crawlaco:"
 msgstr ""
 "برای ارتباط میان داشبورد کرالاکو و وب‌سایت شما نیاز است که کلید‌های API مربوط به "
 "وردپرس را تولید کنیم:"
 
-#: admin/pages/setup_wizard.php:106
+#: admin/pages/setup_wizard.php:112
 msgid "API Keys Status"
 msgstr "وضعیت کلید‌های API"
 
-#: admin/pages/setup_wizard.php:110
+#: admin/pages/setup_wizard.php:116
 msgid "WordPress API Key:"
 msgstr "کلید API وردپرس:"
 
-#: admin/pages/setup_wizard.php:114 admin/pages/setup_wizard.php:127
+#: admin/pages/setup_wizard.php:120 admin/pages/setup_wizard.php:133
 msgid "Generated"
 msgstr "تولید شده"
 
-#: admin/pages/setup_wizard.php:117 admin/pages/setup_wizard.php:130
+#: admin/pages/setup_wizard.php:123 admin/pages/setup_wizard.php:136
 msgid "Not Generated"
 msgstr "تولید نشده"
 
-#: admin/pages/setup_wizard.php:123
+#: admin/pages/setup_wizard.php:129
 msgid "WooCommerce API Keys:"
 msgstr "کلیدهای API ووکامرس:"
 
-#: admin/pages/setup_wizard.php:147
+#: admin/pages/setup_wizard.php:153
 msgid "API Keys Generated"
 msgstr "کلیدهای API تولید شدند"
 
-#: admin/pages/setup_wizard.php:149 includes/class-crawlaco-admin.php:126
+#: admin/pages/setup_wizard.php:155 includes/class-crawlaco-admin.php:128
 msgid "Generate API Keys"
 msgstr "تولید کلید‌های API"
 
-#: admin/pages/setup_wizard.php:159
+#: admin/pages/setup_wizard.php:165
 msgid "Proceed to Next Step"
 msgstr "به مرحله بعدی برو"
 
-#: admin/pages/setup_wizard.php:173
+#: admin/pages/setup_wizard.php:179
 msgid "Step 3: Data Synchronization"
 msgstr "مرحله ۳: همگام سازی داده‌ها"
 
-#: admin/pages/setup_wizard.php:174
+#: admin/pages/setup_wizard.php:180
 msgid ""
-"We will now fetch essential data from your WordPress site to sync with Crawlaco:"
+"We will now fetch essential data from your WordPress site to sync with "
+"Crawlaco:"
 msgstr ""
 "ما اکنون داده های ضروری و غیر حساس را از سایت وردپرس شما برای همگام سازی با "
 "داشبورد کرالاکو دریافت می کنیم:"
 
-#: admin/pages/setup_wizard.php:216
+#: admin/pages/setup_wizard.php:222
 msgid "Step 4: Map Product Attributes"
 msgstr "مرحله ۴: ویژگی محصولات را ترسیم کنید"
 
-#: admin/pages/setup_wizard.php:221
+#: admin/pages/setup_wizard.php:227
 msgid "WooCommerce is not installed or inactive. You can skip this step."
 msgstr "افزونه ووکامرس نصب یا فعال نیست، می‌توانید از این مرحله گذر کنید."
 
-#: admin/pages/setup_wizard.php:225
+#: admin/pages/setup_wizard.php:231
 msgid "Finish Setup"
 msgstr "پایان راه اندازی"
 
-#: admin/pages/setup_wizard.php:231
+#: admin/pages/setup_wizard.php:237
 msgid ""
 "Map your WooCommerce product attributes to help Crawlaco understand your data "
 "structure:"
@@ -204,47 +213,47 @@ msgstr ""
 "با ترسیم (مپ) کردن ویژگی محصولات ووکامرس خود، به کرالاکو برای درک بهتر ساختار "
 "محصولات خود کمک کنید. (این برای آپلود محصولات جدید به وب‌سایت شما ضروری است.)"
 
-#: admin/pages/setup_wizard.php:242 admin/pages/status.php:101
+#: admin/pages/setup_wizard.php:248 admin/pages/status.php:101
 msgid "Size Attribute"
 msgstr "ویژگی سایز"
 
-#: admin/pages/setup_wizard.php:246
+#: admin/pages/setup_wizard.php:252
 msgid "-- Select Size Attribute --"
 msgstr "-- انتخاب ویژگی سایز --"
 
-#: admin/pages/setup_wizard.php:258 admin/pages/status.php:105
+#: admin/pages/setup_wizard.php:264 admin/pages/status.php:105
 msgid "Color Attribute"
 msgstr "ویژگی رنگ"
 
-#: admin/pages/setup_wizard.php:262
+#: admin/pages/setup_wizard.php:268
 msgid "-- Select Color Attribute --"
 msgstr "-- انتخاب ویژگی رنگ --"
 
-#: admin/pages/setup_wizard.php:274 admin/pages/status.php:109
+#: admin/pages/setup_wizard.php:280 admin/pages/status.php:109
 msgid "Brand Attribute"
 msgstr "ویژگی برند"
 
-#: admin/pages/setup_wizard.php:278
+#: admin/pages/setup_wizard.php:284
 msgid "-- Select Brand Attribute --"
 msgstr "-- انتخاب ویژگی برند --"
 
-#: admin/pages/setup_wizard.php:293
+#: admin/pages/setup_wizard.php:299
 msgid "Save Attribute Mapping"
 msgstr "ذخیره ترسیم ویژگی‌ها"
 
-#: admin/pages/setup_wizard.php:303
+#: admin/pages/setup_wizard.php:309
 msgid "Crawlaco Setup Wizard"
 msgstr "به راه‌اندازی سریع کرالاکو خوش آمدید"
 
-#: admin/pages/setup_wizard.php:314
+#: admin/pages/setup_wizard.php:320
 msgid "API Keys"
 msgstr "کلیدهای API"
 
-#: admin/pages/setup_wizard.php:317
+#: admin/pages/setup_wizard.php:323
 msgid "Data Sync"
 msgstr "همگام‌سازی داده"
 
-#: admin/pages/setup_wizard.php:320
+#: admin/pages/setup_wizard.php:326
 msgid "Attributes"
 msgstr "ویژگی‌ها"
 
@@ -289,8 +298,8 @@ msgstr "غیرفعال"
 msgid "Quick Actions"
 msgstr "دسترسی سریع"
 
-#: admin/pages/status.php:69 crawlaco.php:167 includes/class-crawlaco-admin.php:59
-#: includes/class-crawlaco-admin.php:60
+#: admin/pages/status.php:69 crawlaco.php:167
+#: includes/class-crawlaco-admin.php:59 includes/class-crawlaco-admin.php:60
 msgid "Settings"
 msgstr "تنظیمات"
 
@@ -302,7 +311,8 @@ msgstr "برو به داشبورد کرالاکو"
 msgid "WooCommerce Integration"
 msgstr "ادغام ووکامرس"
 
-#: admin/pages/status.php:102 admin/pages/status.php:106 admin/pages/status.php:110
+#: admin/pages/status.php:102 admin/pages/status.php:106
+#: admin/pages/status.php:110
 msgid "Not mapped"
 msgstr "ترسیم نشده"
 
@@ -311,9 +321,11 @@ msgid "Update Attribute Mapping"
 msgstr "بروزرسانی ترسیم ویژگی‌ها"
 
 #: admin/pages/status.php:126
-msgid "Please complete the initial setup process before accessing these features."
+msgid ""
+"Please complete the initial setup process before accessing these features."
 msgstr ""
-"لطفاً تنظیمات افزونه کرالاکو را تکمیل کنید تا بتوانید از ویژگی‌های آن استفاده کنید."
+"لطفاً تنظیمات افزونه کرالاکو را تکمیل کنید تا بتوانید از ویژگی‌های آن استفاده "
+"کنید."
 
 #: admin/pages/status.php:131 crawlaco.php:140
 msgid "Complete Setup"
@@ -332,7 +344,8 @@ msgstr "کرالاکو نیاز به نسخه PHP %s یا بالاتر دارد.
 #: crawlaco.php:139
 msgid "Please complete the Crawlaco plugin setup to start using its features."
 msgstr ""
-"لطفاً تنظیمات افزونه کرالاکو را تکمیل کنید تا بتوانید از ویژگی‌های آن استفاده کنید."
+"لطفاً تنظیمات افزونه کرالاکو را تکمیل کنید تا بتوانید از ویژگی‌های آن استفاده "
+"کنید."
 
 #: includes/class-crawlaco-admin.php:29 includes/class-crawlaco-admin.php:30
 msgid "Crawlaco"
@@ -350,77 +363,77 @@ msgstr "داشبورد"
 msgid "Login to Crawlaco"
 msgstr "ورود به کرالاکو"
 
-#: includes/class-crawlaco-admin.php:121
+#: includes/class-crawlaco-admin.php:123
 msgid "Validating..."
 msgstr "در حال احراز ..."
 
-#: includes/class-crawlaco-admin.php:122
+#: includes/class-crawlaco-admin.php:124
 msgid "Generating API Keys..."
 msgstr "در حال تولید کلید‌های API ..."
 
-#: includes/class-crawlaco-admin.php:123
+#: includes/class-crawlaco-admin.php:125
 msgid "Success!"
 msgstr "موفقیت آمیز!"
 
-#: includes/class-crawlaco-admin.php:124
+#: includes/class-crawlaco-admin.php:126
 msgid "Error:"
 msgstr "خطا:"
 
-#: includes/class-crawlaco-admin.php:128
+#: includes/class-crawlaco-admin.php:130
 msgid "Data fetching timed out. Please try again."
 msgstr "دریافت داده‌ها زیادی طول کشید. لطفاً دوباره تلاش کنید."
 
-#: includes/class-crawlaco-admin.php:129
+#: includes/class-crawlaco-admin.php:131
 msgid "Data fetching failed. Please try again."
 msgstr ""
-"دریافت داده‌ها با شکست مواجه شد. لطفاً دوباره تلاش کنید یا با پشتیبانی کرالاکو در "
-"ارتباط باشید."
+"دریافت داده‌ها با شکست مواجه شد. لطفاً دوباره تلاش کنید یا با پشتیبانی کرالاکو "
+"در ارتباط باشید."
 
-#: includes/class-crawlaco-admin.php:130
+#: includes/class-crawlaco-admin.php:132
 msgid "Data fetched successfully!"
 msgstr "دریافت داده‌ها موفقیت آمیز بود!"
 
-#: includes/class-crawlaco-admin.php:133
+#: includes/class-crawlaco-admin.php:135
 msgid "Saving attribute mappings..."
 msgstr "در حال ذخیره ترسیم ویژگی‌ها ..."
 
-#: includes/class-crawlaco-admin.php:134 includes/class-crawlaco-api.php:458
+#: includes/class-crawlaco-admin.php:136 includes/class-crawlaco-api.php:458
 msgid "Attribute mappings saved successfully!"
 msgstr "ترسیم ویژگی‌ها با موفقیت ذخیره شد!"
 
-#: includes/class-crawlaco-admin.php:135
+#: includes/class-crawlaco-admin.php:137
 msgid "Failed to save attribute mappings."
 msgstr "ذخیره ترسیم ویژگی‌ها با شکست روبرو شد."
 
-#: includes/class-crawlaco-admin.php:136
+#: includes/class-crawlaco-admin.php:138
 msgid "Finalizing setup..."
 msgstr "در حال نهایی کردن راه اندازی ..."
 
-#: includes/class-crawlaco-admin.php:137
+#: includes/class-crawlaco-admin.php:139
 msgid "Setup completed successfully! Redirecting to dashboard..."
 msgstr "راه اندازی با موفقیت انجام شد! در حال تغییر مسیر به داشبورد..."
 
-#: includes/class-crawlaco-admin.php:138
+#: includes/class-crawlaco-admin.php:140
 msgid "Failed to complete setup."
 msgstr "تکمیل راه اندازی با شکست روبرو شد. لطفاً دوباره تلاش کنید."
 
-#: includes/class-crawlaco-admin.php:162
+#: includes/class-crawlaco-admin.php:164
 msgid "Please complete the setup process before accessing the settings page."
 msgstr "لطفاً قبل از ورود به صفحه تنظیمات ابتدا فرآیند راه اندازی را تکمیل کنید."
 
-#: includes/class-crawlaco-admin.php:166
+#: includes/class-crawlaco-admin.php:168
 msgid "Go to Setup Wizard"
 msgstr "برو به راه‌اندازی تنظیمات"
 
-#: includes/class-crawlaco-admin.php:233 includes/class-crawlaco-admin.php:238
+#: includes/class-crawlaco-admin.php:235 includes/class-crawlaco-admin.php:240
 msgid "Security check failed. Please try again."
 msgstr "بررسی امنیتی ناموفق بود. لطفاً دوباره امتحان کنید."
 
-#: includes/class-crawlaco-admin.php:243 includes/class-settings-handler.php:31
+#: includes/class-crawlaco-admin.php:245 includes/class-settings-handler.php:31
 msgid "You do not have sufficient permissions to perform this action."
 msgstr "شما مجوزهای کافی برای انجام این عمل را ندارید."
 
-#: includes/class-crawlaco-admin.php:271 includes/class-settings-handler.php:59
+#: includes/class-crawlaco-admin.php:273 includes/class-settings-handler.php:59
 msgid "Settings saved successfully."
 msgstr "تنظیمات با موفقیت ذخیره شد."
 
@@ -434,7 +447,8 @@ msgstr "شما اجازه انجام این عمل را ندارید."
 msgid "API keys generated and sent successfully!"
 msgstr "کلیدهای API با موفقیت تولید و ارسال شدند!"
 
-#: includes/class-crawlaco-api-keys.php:90 includes/class-crawlaco-api-keys.php:103
+#: includes/class-crawlaco-api-keys.php:90
+#: includes/class-crawlaco-api-keys.php:103
 msgid "Failed to generate WordPress API key."
 msgstr "کلید API وردپرس ایجاد نشد."
 

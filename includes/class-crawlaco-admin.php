@@ -96,6 +96,8 @@ class Crawlaco_Admin {
             return;
         }
 
+        wp_enqueue_style('dashicons');
+
         // Enqueue styles
         wp_enqueue_style(
             'crawlaco-admin',

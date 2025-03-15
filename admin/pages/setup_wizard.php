@@ -26,9 +26,20 @@ if ($setup_complete) {
                 <p><?php _e('You can now start using Crawlaco to manage your website data.', 'crawlaco'); ?></p>
             </div>
 
+            <div class="crawlaco-completion-section">
+                <span class="dashicons dashicons-yes-alt" style="color: green;"></span>
+                <h4><?php _e('The setup process has been completed successfully.', 'crawlaco'); ?></h4>
+                <p><?php _e('You can now use Crawlaco\'s features.', 'crawlaco'); ?></p>
+            </div>
+
             <div class="crawlaco-completion-actions">
                 <a href="<?php echo admin_url('admin.php?page=crawlaco'); ?>" class="button button-primary">
                     <?php _e('Go to Status Page', 'crawlaco'); ?>
+                </a>
+                <a href="<?php echo esc_url(CRAWLACO_DASHBOARD_URL); ?>"
+                    class="button button-secondary" target="_blank">
+                    <span class="dashicons dashicons-external"></span>
+                    <?php _e('Go to Crawlaco Dashboard', 'crawlaco'); ?>
                 </a>
             </div>
         </div>
