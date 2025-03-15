@@ -31,7 +31,7 @@ class Crawlaco_Admin {
             'manage_options',
             'crawlaco',
             array($this, 'render_status_page'),
-            'data:image/svg+xml;base64,' . base64_encode('<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#A0A5AA"/>'),
+            'data:image/svg+xml;base64,' . base64_encode('<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 120 120"><g fill="#262626"><path d="M103 74.4c-8 23-33 35.1-56 27.2s-35.1-33-27.2-56 33-35.1 56-27.2L81 3.3C49.8-7.5 15.6 9 4.7 40.4s5.7 65.5 37.1 76.3 65.5-5.7 76.3-37.1L103 74.4z"/><circle cx="110.6" cy="77" r="8"/><circle cx="78.5" cy="10.9" r="8"/><path d="M60 33.9c-14.4 0-26.1 11.7-26.1 26.1S45.6 86.1 60 86.1c14.4 0 26.1-11.7 26.1-26.1S74.4 33.9 60 33.9zm0 41.9c-8.7 0-15.8-7.1-15.8-15.8S51.3 44.2 60 44.2c8.7 0 15.8 7.1 15.8 15.8S68.7 75.8 60 75.8z"/></g></svg>'),
             100
         );
 
