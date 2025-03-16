@@ -1,0 +1,136 @@
+/* Import Vazirmatn font */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p,
+span {
+    font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, 'dashicons' !important;
+}
+
+
+.crawlaco-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100000;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.crawlaco-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+    z-index: 100001;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+.crawlaco-modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.crawlaco-modal-header .dashicons {
+    color: #dc3232;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+html[dir="rtl"] .crawlaco-modal-header .dashicons {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+.crawlaco-modal-header h3 {
+    margin: 0;
+    color: #23282d;
+    font-size: 1.3em;
+}
+
+.crawlaco-modal-content {
+    margin-bottom: 20px;
+    color: #444;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.crawlaco-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.crawlaco-modal-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.5;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.crawlaco-modal-cancel {
+    background: #f6f7f7;
+    border: 1px solid #c3c4c7;
+    color: #2c3338;
+}
+
+.crawlaco-modal-cancel:hover {
+    background: #f0f0f1;
+    border-color: #8c8f94;
+    color: #2c3338;
+}
+
+.crawlaco-modal-deactivate {
+    background: #dc3232;
+    border: 1px solid #dc3232;
+    color: #fff;
+}
+
+.crawlaco-modal-deactivate:hover {
+    background: #cc2929;
+    border-color: #cc2929;
+    color: #fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Crawlaco 1.0.0\n"
-"POT-Creation-Date: 2025-03-15 18:22+0330\n"
-"PO-Revision-Date: 2025-03-15 18:23+0330\n"
+"POT-Creation-Date: 2025-03-16 17:16+0330\n"
+"PO-Revision-Date: 2025-03-16 17:18+0330\n"
 "Last-Translator: Crawlaco Team\n"
 "Language-Team: Persian\n"
 "Language: fa_IR\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 
-#: admin/pages/settings.php:8 includes/class-crawlaco-admin.php:322
+#: admin/pages/settings.php:8 includes/class-crawlaco-admin.php:372
 msgid "Crawlaco Settings"
 msgstr "تنظیمات Crawlaco"
 
@@ -75,17 +75,17 @@ msgstr ""
 "ویژگی محصولات، دسته‌ها و سایر داده‌های مرتبط و غیر حساس شما به‌روزرسانی می‌شود."
 
 #: admin/pages/settings.php:86 admin/pages/setup_wizard.php:191
-#: includes/class-crawlaco-admin.php:290
+#: includes/class-crawlaco-admin.php:294
 msgid "Fetching data..."
 msgstr "در حال دریافت اطلاعات ..."
 
 #: admin/pages/settings.php:92 admin/pages/setup_wizard.php:197
-#: includes/class-crawlaco-admin.php:294
+#: includes/class-crawlaco-admin.php:298
 msgid "Start Data Sync"
 msgstr "شروع به همگام سازی داده‌ها"
 
 #: admin/pages/settings.php:99 admin/pages/setup_wizard.php:204
-#: includes/class-crawlaco-admin.php:295
+#: includes/class-crawlaco-admin.php:299
 msgid "Retry"
 msgstr "تلاش مجدد"
 
@@ -107,7 +107,7 @@ msgstr "حالا شما می‌توانید از کرالاکو برای مدی�
 
 #: admin/pages/setup_wizard.php:31
 msgid "The setup process has been completed successfully."
-msgstr "راه‌اندازی با موفقیت انجام شد!"
+msgstr "راه‌اندازی با موفقیت انجام شد."
 
 #: admin/pages/setup_wizard.php:32
 msgid "You can now use Crawlaco's features."
@@ -137,7 +137,7 @@ msgstr "کلید وب‌سایت"
 msgid "You can find your Website Key in your Crawlaco dashboard."
 msgstr "شما می‌توانید کلید وب‌سایت را از داشبورد کرالاکو پیدا کنید."
 
-#: admin/pages/setup_wizard.php:93 includes/class-crawlaco-admin.php:288
+#: admin/pages/setup_wizard.php:93 includes/class-crawlaco-admin.php:292
 msgid "Validate Key"
 msgstr "کلید وب‌سایت"
 
@@ -177,7 +177,7 @@ msgstr "کلیدهای API ووکامرس:"
 msgid "API Keys Generated"
 msgstr "کلیدهای API تولید شدند"
 
-#: admin/pages/setup_wizard.php:160 includes/class-crawlaco-admin.php:289
+#: admin/pages/setup_wizard.php:160 includes/class-crawlaco-admin.php:293
 msgid "Generate API Keys"
 msgstr "تولید کلید‌های API"
 
@@ -285,8 +285,8 @@ msgstr "نام وب‌سایت شما"
 msgid "Wallet Balance"
 msgstr "موجودی کیف پول"
 
-#: admin/pages/status.php:44 includes/class-crawlaco-admin.php:41
-#: includes/class-crawlaco-admin.php:42
+#: admin/pages/status.php:44 includes/class-crawlaco-admin.php:45
+#: includes/class-crawlaco-admin.php:46
 msgid "Status"
 msgstr "وضعیت"
 
@@ -302,8 +302,8 @@ msgstr "غیرفعال"
 msgid "Quick Actions"
 msgstr "دسترسی سریع"
 
-#: admin/pages/status.php:69 crawlaco.php:175
-#: includes/class-crawlaco-admin.php:59 includes/class-crawlaco-admin.php:60
+#: admin/pages/status.php:69 crawlaco.php:186
+#: includes/class-crawlaco-admin.php:63 includes/class-crawlaco-admin.php:64
 msgid "Settings"
 msgstr "تنظیمات"
 
@@ -327,119 +327,155 @@ msgstr ""
 "لطفاً تنظیمات افزونه کرالاکو را تکمیل کنید تا بتوانید از ویژگی‌های آن استفاده "
 "کنید."
 
-#: admin/pages/status.php:131 crawlaco.php:148
+#: admin/pages/status.php:131 crawlaco.php:159
 msgid "Complete Setup"
 msgstr "تکمیل تنظیمات"
 
-#: crawlaco.php:54
+#: crawlaco.php:53
 #, php-format
 msgid "Crawlaco requires WordPress version %s or higher."
 msgstr "کرالاکو نیاز به نسخه وردپرس %s یا بالاتر دارد."
 
-#: crawlaco.php:64
+#: crawlaco.php:63
 #, php-format
 msgid "Crawlaco requires PHP version %s or higher."
 msgstr "کرالاکو نیاز به نسخه PHP %s یا بالاتر دارد."
 
-#: crawlaco.php:147
+#: crawlaco.php:158
 msgid "Please complete the Crawlaco plugin setup to start using its features."
 msgstr ""
 "لطفاً تنظیمات افزونه کرالاکو را تکمیل کنید تا بتوانید از ویژگی‌های آن استفاده "
 "کنید."
 
-#: includes/class-crawlaco-admin.php:29 includes/class-crawlaco-admin.php:30
+#: includes/class-crawlaco-admin.php:33 includes/class-crawlaco-admin.php:34
 msgid "Crawlaco"
 msgstr "کرالاکو"
 
-#: includes/class-crawlaco-admin.php:50 includes/class-crawlaco-admin.php:51
+#: includes/class-crawlaco-admin.php:54 includes/class-crawlaco-admin.php:55
 msgid "Setup Wizard"
 msgstr "راه‌اندازی سریع"
 
-#: includes/class-crawlaco-admin.php:68
+#: includes/class-crawlaco-admin.php:72
 msgid "Dashboard"
 msgstr "داشبورد"
 
-#: includes/class-crawlaco-admin.php:69
+#: includes/class-crawlaco-admin.php:73
 msgid "Login to Crawlaco"
 msgstr "ورود به کرالاکو"
 
-#: includes/class-crawlaco-admin.php:284
+#: includes/class-crawlaco-admin.php:288
 msgid "Validating..."
 msgstr "در حال احراز ..."
 
-#: includes/class-crawlaco-admin.php:285
+#: includes/class-crawlaco-admin.php:289
 msgid "Generating API Keys..."
 msgstr "در حال تولید کلید‌های API ..."
 
-#: includes/class-crawlaco-admin.php:286
+#: includes/class-crawlaco-admin.php:290
 msgid "Success!"
 msgstr "موفقیت آمیز!"
 
-#: includes/class-crawlaco-admin.php:287
+#: includes/class-crawlaco-admin.php:291
 msgid "Error:"
 msgstr "خطا:"
 
-#: includes/class-crawlaco-admin.php:291
+#: includes/class-crawlaco-admin.php:295
 msgid "Data fetching timed out. Please try again."
 msgstr "دریافت داده‌ها زیادی طول کشید. لطفاً دوباره تلاش کنید."
 
-#: includes/class-crawlaco-admin.php:292
+#: includes/class-crawlaco-admin.php:296
 msgid "Data fetching failed. Please try again."
 msgstr ""
 "دریافت داده‌ها با شکست مواجه شد. لطفاً دوباره تلاش کنید یا با پشتیبانی کرالاکو "
 "در ارتباط باشید."
 
-#: includes/class-crawlaco-admin.php:293
+#: includes/class-crawlaco-admin.php:297
 msgid "Data fetched successfully!"
 msgstr "دریافت داده‌ها موفقیت آمیز بود!"
 
-#: includes/class-crawlaco-admin.php:296
+#: includes/class-crawlaco-admin.php:300
 msgid "Saving attribute mappings..."
 msgstr "در حال ذخیره ترسیم ویژگی‌ها ..."
 
-#: includes/class-crawlaco-admin.php:297 includes/class-crawlaco-api.php:457
+#: includes/class-crawlaco-admin.php:301 includes/class-crawlaco-api.php:457
 msgid "Attribute mappings saved successfully!"
 msgstr "ترسیم ویژگی‌ها با موفقیت ذخیره شد!"
 
-#: includes/class-crawlaco-admin.php:298
+#: includes/class-crawlaco-admin.php:302
 msgid "Failed to save attribute mappings."
 msgstr "ذخیره ترسیم ویژگی‌ها با شکست روبرو شد."
 
-#: includes/class-crawlaco-admin.php:299
+#: includes/class-crawlaco-admin.php:303
 msgid "Finalizing setup..."
 msgstr "در حال نهایی کردن راه اندازی ..."
 
-#: includes/class-crawlaco-admin.php:300
+#: includes/class-crawlaco-admin.php:304
 msgid "Setup completed successfully! Redirecting to dashboard..."
 msgstr "راه اندازی با موفقیت انجام شد! در حال تغییر مسیر به داشبورد..."
 
-#: includes/class-crawlaco-admin.php:301
+#: includes/class-crawlaco-admin.php:305
 msgid "Failed to complete setup."
 msgstr "تکمیل راه اندازی با شکست روبرو شد. لطفاً دوباره تلاش کنید."
 
-#: includes/class-crawlaco-admin.php:327 includes/class-crawlaco-admin.php:340
+#: includes/class-crawlaco-admin.php:343
+msgid "Deactivate Crawlaco?"
+msgstr "آیا کرالاکو غیرفعال شود؟"
+
+#: includes/class-crawlaco-admin.php:344
+msgid ""
+"Warning: Deactivating the Crawlaco plugin will require you to go through the "
+"setup wizard process again when reactivated. All your settings will be reset. "
+"Are you sure you want to deactivate?"
+msgstr ""
+"هشدار: غیرفعال کردن پلاگین کرالاکو | Crawlaco باعث می‌شود که پس از فعال‌سازی "
+"مجدد، فرآیند راه اندازی سریع را دوباره طی کنید، همچنین داشبورد شما نیز از کار "
+"میوفتد. \n"
+"تمام تنظیمات شما بازنشانی خواهد شد. آیا مطمئن هستید که می خواهید غیرفعال کنید؟"
+
+#: includes/class-crawlaco-admin.php:345
+msgid "Cancel"
+msgstr "لغو"
+
+#: includes/class-crawlaco-admin.php:346
+msgid "Yes, Deactivate"
+msgstr "بله، غیرفعال کن"
+
+#: includes/class-crawlaco-admin.php:347
+msgid "Deactivating..."
+msgstr "در حال غیرفعال سازی ..."
+
+#: includes/class-crawlaco-admin.php:348
+msgid "An error occurred while deactivating the plugin. Please try again."
+msgstr "هنگام غیرفعال کردن افزونه خطایی روی داد. لطفا دوباره امتحان کنید."
+
+#: includes/class-crawlaco-admin.php:377 includes/class-crawlaco-admin.php:390
 msgid "Please complete the setup process before accessing the settings page."
 msgstr "لطفاً قبل از ورود به صفحه تنظیمات ابتدا فرآیند راه اندازی را تکمیل کنید."
 
-#: includes/class-crawlaco-admin.php:331 includes/class-crawlaco-admin.php:346
+#: includes/class-crawlaco-admin.php:381 includes/class-crawlaco-admin.php:396
 msgid "Go to Setup Wizard"
 msgstr "برو به راه‌اندازی سریع"
 
-#: includes/class-crawlaco-admin.php:339
+#: includes/class-crawlaco-admin.php:389
 msgid "Setup is not complete"
 msgstr "راه‌اندازی تکمیل نشده است"
 
-#: includes/class-crawlaco-admin.php:409 includes/class-crawlaco-admin.php:413
+#: includes/class-crawlaco-admin.php:459 includes/class-crawlaco-admin.php:463
+#: includes/class-crawlaco-admin.php:505
 msgid "Security check failed. Please try again."
 msgstr "بررسی امنیتی ناموفق بود. لطفاً دوباره امتحان کنید."
 
-#: includes/class-crawlaco-admin.php:418 includes/class-settings-handler.php:31
+#: includes/class-crawlaco-admin.php:468 includes/class-settings-handler.php:31
 msgid "You do not have sufficient permissions to perform this action."
 msgstr "شما مجوزهای کافی برای انجام این عمل را ندارید."
 
-#: includes/class-crawlaco-admin.php:446 includes/class-settings-handler.php:56
+#: includes/class-crawlaco-admin.php:496 includes/class-settings-handler.php:56
 msgid "Settings saved successfully."
 msgstr "تنظیمات با موفقیت ذخیره شد."
+
+#: includes/class-crawlaco-admin.php:510
+msgid "You do not have sufficient permissions to deactivate plugins."
+msgstr "شما مجوز کافی برای غیرفعال کردن افزونه ها را ندارید."
 
 #: includes/class-crawlaco-api-keys.php:21 includes/class-crawlaco-api.php:61
 #: includes/class-crawlaco-api.php:212 includes/class-crawlaco-api.php:238
@@ -478,7 +514,7 @@ msgstr "کلید وب‌سایت اجباری است."
 
 #: includes/class-crawlaco-api.php:85
 msgid "Website key validated successfully!"
-msgstr "احراز کلید وب‌سایت با موفقیت انجام شد."
+msgstr "احراز کلید وب‌سایت با موفقیت انجام شد!"
 
 #: includes/class-crawlaco-api.php:110 includes/class-crawlaco-api.php:185
 #: includes/class-crawlaco-api.php:289 includes/class-crawlaco-api.php:344
@@ -540,6 +576,15 @@ msgstr "بروزرسانی داده‌های متا انجام نشد. لطفا�
 #: includes/class-crawlaco-api.php:609
 msgid "Failed to fetch website information. Please try again."
 msgstr "دریافت اطلاعات وب‌سایت شکست خورد. لطفاً دوباره تلاش کنید."
+
+#: includes/class-crawlaco-api.php:626
+msgid "Website key not found."
+msgstr "کلید وب‌سایت پیدا نشد."
+
+#: includes/class-crawlaco-api.php:655
+#, php-format
+msgid "API request failed with code: %d"
+msgstr "درخواست API با کد: %d ناموفق بود"
 
 #: includes/class-settings-handler.php:26
 msgid "Invalid nonce. Please try again."

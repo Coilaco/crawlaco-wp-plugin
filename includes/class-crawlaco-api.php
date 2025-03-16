@@ -612,4 +612,51 @@ class Crawlaco_API {
 
         return $response_data;
     }
+
+    /**
+     * Update website status on plugin deactivation
+     *
+     * @return bool|WP_Error True on success, WP_Error on failure
+     */
+    public function update_website_status_on_deactivation() {
+        $website_key = get_option('crawlaco_website_key', '');
+        
+        if (empty($website_key)) {
+            return new WP_Error('no_website_key', esc_html__('Website key not found.', 'crawlaco'));
+        }
+
+        $response = wp_remote_request(
+            $this->api_base_url . '/websites/plugin/websites/',
+            array(
+                'method' => 'PATCH',
+                'headers' => array(
+                    'host' => 'api.crawlaco.com',
+                    'website-key' => $website_key,
+                    'website-address' => get_site_url(),
+                    'Content-Type' => 'application/json'
+                ),
+                'body' => json_encode(array(
+                    'is_active' => false
+                ))
+            )
+        );
+
+        if (is_wp_error($response)) {
+            return $response;
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        if ($response_code !== 200) {
+            return new WP_Error(
+                'api_error',
+                sprintf(
+                    /* translators: %d: HTTP response code */
+                    esc_html__('API request failed with code: %d', 'crawlaco'),
+                    $response_code
+                )
+            );
+        }
+
+        return true;
+    }
 } 

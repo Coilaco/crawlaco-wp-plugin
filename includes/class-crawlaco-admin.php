@@ -16,8 +16,12 @@ class Crawlaco_Admin {
         // Enqueue admin scripts and styles
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
 
+        // Add deactivation confirmation
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_deactivation_script'));
+
         // Add AJAX handlers
         add_action('wp_ajax_crawlaco_update_settings', array($this, 'handle_settings_update'));
+        add_action('wp_ajax_crawlaco_deactivate', array($this, 'handle_deactivation'));
     }
 
     /**
@@ -304,6 +308,52 @@ class Crawlaco_Admin {
     }
 
     /**
+     * Enqueue plugin deactivation confirmation script
+     *
+     * @param string $hook The current admin page
+     */
+    public function enqueue_deactivation_script($hook) {
+        if ($hook !== 'plugins.php') {
+            return;
+        }
+
+        // Enqueue styles
+        wp_enqueue_style(
+            'crawlaco-deactivation-modal',
+            CRAWLACO_PLUGIN_URL . 'assets/css/deactivation-modal.css',
+            array('dashicons'),
+            CRAWLACO_VERSION
+        );
+
+        // Enqueue script
+        wp_enqueue_script(
+            'crawlaco-deactivation',
+            CRAWLACO_PLUGIN_URL . 'assets/js/plugin-deactivation.js',
+            array('jquery'),
+            CRAWLACO_VERSION,
+            true
+        );
+
+        // Localize script
+        wp_localize_script(
+            'crawlaco-deactivation',
+            'crawlacoDeactivation',
+            array(
+                'strings' => array(
+                    'modalTitle' => esc_html__('Deactivate Crawlaco?', 'crawlaco'),
+                    'modalMessage' => esc_html__('Warning: Deactivating the Crawlaco plugin will require you to go through the setup wizard process again when reactivated. All your settings will be reset. Are you sure you want to deactivate?', 'crawlaco'),
+                    'cancelButton' => esc_html__('Cancel', 'crawlaco'),
+                    'deactivateButton' => esc_html__('Yes, Deactivate', 'crawlaco'),
+                    'deactivating' => esc_html__('Deactivating...', 'crawlaco'),
+                    'errorMessage' => esc_html__('An error occurred while deactivating the plugin. Please try again.', 'crawlaco')
+                ),
+                'nonce' => wp_create_nonce('crawlaco-deactivation-nonce'),
+                'ajaxurl' => admin_url('admin-ajax.php')
+            )
+        );
+    }
+
+    /**
      * Render main page (Setup Wizard)
      */
     public function render_setup_wizard_page() {
@@ -444,5 +494,30 @@ class Crawlaco_Admin {
         }
 
         wp_send_json_success(array('message' => esc_html__('Settings saved successfully.', 'crawlaco')));
+    }
+
+    /**
+     * Handle plugin deactivation AJAX request
+     */
+    public function handle_deactivation() {
+        // Verify nonce
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'crawlaco-deactivation-nonce')) {
+            wp_send_json_error(array('message' => esc_html__('Security check failed. Please try again.', 'crawlaco')));
+        }
+
+        // Check user capabilities
+        if (!current_user_can('activate_plugins')) {
+            wp_send_json_error(array('message' => esc_html__('You do not have sufficient permissions to deactivate plugins.', 'crawlaco')));
+        }
+
+        // Call API to update website status
+        $api = new Crawlaco_API();
+        $result = $api->update_website_status_on_deactivation();
+
+        if (is_wp_error($result)) {
+            wp_send_json_error(array('message' => $result->get_error_message()));
+        }
+
+        wp_send_json_success();
     }
 } 

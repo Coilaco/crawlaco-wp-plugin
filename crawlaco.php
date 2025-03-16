@@ -105,10 +105,22 @@ register_activation_hook(__FILE__, 'crawlaco_plugin_activation');
 function crawlaco_plugin_deactivation() {
     // Remove activation flag
     delete_option('crawlaco_plugin_activated');
+
+    // Remove setup complete flag
+    delete_option('crawlaco_setup_complete');
+
+    // Remove setup step
+    delete_option('crawlaco_setup_step');
     
     // Clear API keys
     delete_option('crawlaco_wp_api_key');
     delete_option('crawlaco_wc_api_keys');
+
+    // Remove website key
+    delete_option('crawlaco_website_key');
+
+    // Remove mapped attributes
+    delete_option('crawlaco_mapped_attributes');
     
     // Clear permalinks
     flush_rewrite_rules();
