@@ -341,7 +341,11 @@ class Crawlaco_Admin {
             array(
                 'strings' => array(
                     'modalTitle' => esc_html__('Deactivate Crawlaco?', 'crawlaco'),
-                    'modalMessage' => esc_html__('Warning: Deactivating the Crawlaco plugin will require you to go through the setup wizard process again when reactivated. All your settings will be reset. Are you sure you want to deactivate?', 'crawlaco'),
+                    'modalMessage' => wp_kses_post(
+                        __('Warning: Deactivating the <b>Crawlaco</b> plugin will result in the following:', 'crawlaco') . 
+                        __('<ul> <li>All your settings and configurations will be permanently deleted</li> <li>Your website will be disabled in the Crawlaco dashboard</li> <li>You will need to go through the entire setup wizard process again when reactivating</li> <li>All API keys and connections will need to be reconfigured</li> </ul>', 'crawlaco') . 
+                        __('Are you sure you want to deactivate?', 'crawlaco')
+                    ),
                     'cancelButton' => esc_html__('Cancel', 'crawlaco'),
                     'deactivateButton' => esc_html__('Yes, Deactivate', 'crawlaco'),
                     'deactivating' => esc_html__('Deactivating...', 'crawlaco'),
@@ -374,7 +378,7 @@ class Crawlaco_Admin {
                 <div class="crawlaco-admin">
                     <div class="notice notice-warning">
                         <p>
-                            <?php _e('Please complete the setup process before accessing the settings page.', 'crawlaco'); ?>
+                            <?php esc_html_e('Please complete the setup process before accessing the settings page.', 'crawlaco'); ?>
                         </p>
                         <p>
                             <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-setup-wizard')); ?>" class="button button-primary">
