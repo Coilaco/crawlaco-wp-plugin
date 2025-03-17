@@ -82,7 +82,7 @@ class Crawlaco_API {
         
         wp_send_json_success(array(
             'message' => esc_html__('Website key validated successfully!', 'crawlaco'),
-            'redirect' => esc_url(admin_url('admin.php?page=crawlaco'))
+            'redirect' => esc_url(admin_url('admin.php?page=crawlaco-setup-wizard'))
         ));
     }
 
@@ -98,6 +98,7 @@ class Crawlaco_API {
         $response = wp_remote_get(
             $this->api_base_url . '/websites/plugin/websites/',
             array(
+                'host' => 'api.crawlaco.com',
                 'headers' => $headers,
                 'timeout' => 30
             )
@@ -622,7 +623,7 @@ class Crawlaco_API {
         $website_key = get_option('crawlaco_website_key', '');
         
         if (empty($website_key)) {
-            return new WP_Error('no_website_key', esc_html__('Website key not found.', 'crawlaco'));
+            return true;
         }
 
         $response = wp_remote_request(

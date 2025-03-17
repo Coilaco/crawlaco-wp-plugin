@@ -60,7 +60,7 @@ class Crawlaco_API_Keys {
 
         wp_send_json_success(array(
             'message' => esc_html__('API keys generated and sent successfully!', 'crawlaco'),
-            'redirect' => esc_url(admin_url('admin.php?page=crawlaco'))
+            'redirect' => esc_url(admin_url('admin.php?page=crawlaco-setup-wizard'))
         ));
     }
 
