@@ -227,15 +227,20 @@ function render_step_four() {
         <h2><?php esc_html_e('Step 4: Map Product Attributes', 'crawlaco'); ?></h2>
         
         <?php if (!$has_woocommerce): ?>
-            <div class="notice notice-warning">
+            <div class="crawlaco-completion-section">
+                <h4>
+                    <span class="dashicons dashicons-warning" style="color: #DBA617;"></span>
+                    <?php esc_html_e('WooCommerce is not installed or inactive.', 'crawlaco'); ?>
+                </h4>
                 <p>
-                    <?php esc_html_e('WooCommerce is not installed or inactive. You can skip this step.', 'crawlaco'); ?>
+                    <?php esc_html_e('WooCommerce plugin is not installed or inactive. You can skip this step.', 'crawlaco'); ?>
                 </p>
-                <p>
-                    <button type="button" class="button button-primary" id="crawlaco-finish-setup">
-                        <?php esc_html_e('Finish Setup', 'crawlaco'); ?>
-                    </button>
-                </p>
+            </div>
+
+            <div class="crawlaco-completion-actions">
+                <button type="button" class="button button-primary" id="crawlaco-finish-setup">
+                    <?php esc_html_e('Finish Setup', 'crawlaco'); ?>
+                </button>
             </div>
         <?php else: ?>
             <p class="description">

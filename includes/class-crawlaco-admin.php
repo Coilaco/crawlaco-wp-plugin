@@ -406,21 +406,34 @@ class Crawlaco_Admin {
             return;
         }
 
-        // Get mapped attributes from both sources
-        $mapped_attributes = get_option('crawlaco_mapped_attributes', array());
-        
-        // Convert mapped attributes to the format expected by the form
+        // Check if WooCommerce is active
+        $is_woocommerce_active = in_array(
+            'woocommerce/woocommerce.php',
+            apply_filters('active_plugins', get_option('active_plugins'))
+        );
+
+        // Only get WooCommerce data if WooCommerce is active
+        $wc_attributes = array();
         $formatted_attributes = array();
-        if (is_array($mapped_attributes)) {
-            foreach ($mapped_attributes as $attr) {
-                if (isset($attr['key']) && isset($attr['value'])) {
-                    $formatted_attributes[$attr['key']] = $attr['value'];
+        
+        if ($is_woocommerce_active) {
+            // Get mapped attributes from both sources
+            $mapped_attributes = get_option('crawlaco_mapped_attributes', array());
+            
+            // Convert mapped attributes to the format expected by the form
+            if (is_array($mapped_attributes)) {
+                foreach ($mapped_attributes as $attr) {
+                    if (isset($attr['key']) && isset($attr['value'])) {
+                        $formatted_attributes[$attr['key']] = $attr['value'];
+                    }
                 }
             }
+            
+            // Get all WooCommerce attributes only if WooCommerce is active
+            if (function_exists('wc_get_attribute_taxonomies')) {
+                $wc_attributes = wc_get_attribute_taxonomies();
+            }
         }
-        
-        // Get all WooCommerce attributes
-        $wc_attributes = wc_get_attribute_taxonomies();
 
         include CRAWLACO_PLUGIN_DIR . 'admin/pages/settings.php';
     }

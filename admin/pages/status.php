@@ -19,6 +19,23 @@ if (!defined('ABSPATH')) {
             <div class="notice notice-error">
                 <p><?php echo esc_html($error_message); ?></p>
             </div>
+                <div class="crawlaco-dashboard-overview">
+                    <div class="crawlaco-completion-section">
+                        <h4>
+                            <span class="dashicons dashicons-dismiss" style="color: red;"></span>
+                            <?php esc_html_e('The setup wizard has not started.', 'crawlaco'); ?>
+                        </h4>
+                        <p>
+                            <?php esc_html_e('To see the information on this page, you must first complete the setup wizard steps.', 'crawlaco'); ?>
+                        </p>
+                    </div>
+
+                    <div class="crawlaco-completion-actions">
+                        <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-setup-wizard')); ?>" class="button button-primary">
+                            <?php esc_html_e('Go to Setup Wizard', 'crawlaco'); ?>
+                        </a>
+                    </div>
+            </div>
         <?php else: ?>
             <div class="crawlaco-dashboard-overview">
                 <div class="crawlaco-card">
