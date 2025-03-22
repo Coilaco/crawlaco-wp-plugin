@@ -130,7 +130,7 @@ class Crawlaco_API {
     /**
      * Send API keys to Crawlaco backend
      */
-    public function send_api_keys($wp_api_key, $wc_api_keys = array()) {
+    public function send_api_keys($wp_api_key = array(), $wc_api_keys = array()) {
         $website_key = get_option('crawlaco_website_key');
         
         if (empty($website_key)) {
@@ -139,19 +139,21 @@ class Crawlaco_API {
                 esc_html__('Website key not found. Please complete step 1 first.', 'crawlaco')
             );
         }
-
-        $meta_data = array(
-            array(
-                'key' => 'WP_SECRET_KEY',
-                'value' => $wp_api_key['secret'],
-                'is_password' => true
-            ),
-            array(
-                'key' => 'WP_USERNAME',
-                'value' => $wp_api_key['username'],
-                'is_password' => true
-            )
-        );
+        
+        if (!empty($wp_api_key)) {
+            $meta_data = array(
+                array(
+                    'key' => 'WP_SECRET_KEY',
+                    'value' => $wp_api_key['secret'],
+                    'is_password' => true
+                ),
+                array(
+                    'key' => 'WP_USERNAME',
+                    'value' => $wp_api_key['username'],
+                    'is_password' => true
+                )
+            );
+        }
 
         if (!empty($wc_api_keys)) {
             $meta_data[] = array(

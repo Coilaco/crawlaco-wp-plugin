@@ -104,10 +104,7 @@ function render_step_one() {
 function render_step_two() {
     $wp_api_key = get_option('crawlaco_wp_api_key', '');
     $wc_api_keys = get_option('crawlaco_wc_api_keys', array());
-    $has_woocommerce = in_array(
-        'woocommerce/woocommerce.php',
-        apply_filters('active_plugins', get_option('active_plugins'))
-    );
+    $has_woocommerce = class_exists('WooCommerce');
     ?>
     <div class="crawlaco-setup-step active">
         <h2><?php esc_html_e('Step 2: API Key Generation', 'crawlaco'); ?></h2>
@@ -213,10 +210,7 @@ function render_step_three() {
  */
 function render_step_four() {
     // Check if WooCommerce is installed and active
-    $has_woocommerce = in_array(
-        'woocommerce/woocommerce.php',
-        apply_filters('active_plugins', get_option('active_plugins'))
-    );
+    $has_woocommerce = class_exists('WooCommerce');
 
     // Get saved attribute mappings
     $size_attr_id = get_option('crawlaco_size_attr_id', '');

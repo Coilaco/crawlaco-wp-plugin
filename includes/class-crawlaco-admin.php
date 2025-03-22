@@ -407,11 +407,7 @@ class Crawlaco_Admin {
         }
 
         // Check if WooCommerce is active
-        $is_woocommerce_active = in_array(
-            'woocommerce/woocommerce.php',
-            apply_filters('active_plugins', get_option('active_plugins'))
-        );
-
+        $is_woocommerce_active = class_exists('WooCommerce');
         // Only get WooCommerce data if WooCommerce is active
         $wc_attributes = array();
         $formatted_attributes = array();

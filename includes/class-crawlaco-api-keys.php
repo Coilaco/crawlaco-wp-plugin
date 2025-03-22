@@ -8,6 +8,7 @@ class Crawlaco_API_Keys {
      */
     public function __construct() {
         add_action('wp_ajax_generate_api_keys', array($this, 'ajax_generate_api_keys'));
+        add_action('wp_ajax_generate_wc_api_keys', array($this, 'ajax_generate_wc_api_keys'));
     }
 
     /**
@@ -32,7 +33,7 @@ class Crawlaco_API_Keys {
 
         // Generate WooCommerce API keys if WooCommerce is active and properly loaded
         $wc_api_keys = array();
-        if ($this->is_woocommerce_active() && $this->is_woocommerce_loaded()) {
+        if ($this->is_woocommerce_active()) {
             $wc_api_keys = $this->generate_wc_api_keys();
             if (is_wp_error($wc_api_keys)) {
                 wp_send_json_error(array(
@@ -62,6 +63,53 @@ class Crawlaco_API_Keys {
             'message' => esc_html__('API keys generated and sent successfully!', 'crawlaco'),
             'redirect' => esc_url(admin_url('admin.php?page=crawlaco-setup-wizard'))
         ));
+    }
+
+    /**
+     * Generate WooCommerce API keys via AJAX for settings page
+     */
+    public function ajax_generate_wc_api_keys() {
+        check_ajax_referer('crawlaco-admin-nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array(
+                'message' => esc_html__('You do not have permission to perform this action.', 'crawlaco')
+            ));
+        }
+
+        // Generate WooCommerce API keys if WooCommerce is active and properly loaded
+        if ($this->is_woocommerce_active()) {
+            $wc_api_keys = $this->generate_wc_api_keys();
+            if (is_wp_error($wc_api_keys)) {
+                wp_send_json_error(array(
+                    'message' => $wc_api_keys->get_error_message()
+                ));
+            }
+
+            // Send API keys to Crawlaco backend
+            $api = new Crawlaco_API();
+            $response = $api->send_api_keys(array(), $wc_api_keys);
+            
+            if (is_wp_error($response)) {
+                wp_send_json_error(array(
+                    'message' => $response->get_error_message()
+                ));
+            }
+
+            // Save API keys
+            if (!empty($wc_api_keys)) {
+                update_option('crawlaco_wc_api_keys', $wc_api_keys);
+            }
+
+            wp_send_json_success(array(
+                'message' => esc_html__('WooCommerce API keys generated and sent successfully!', 'crawlaco'),
+                'redirect' => esc_url(admin_url('admin.php?page=crawlaco-settings'))
+            ));
+        } else {
+            wp_send_json_error(array(
+                'message' => esc_html__('WooCommerce is not properly loaded.', 'crawlaco')
+            ));
+        }
     }
 
     /**
@@ -190,10 +238,7 @@ class Crawlaco_API_Keys {
      * Check if WooCommerce is active
      */
     private function is_woocommerce_active() {
-        return in_array(
-            'woocommerce/woocommerce.php',
-            apply_filters('active_plugins', get_option('active_plugins'))
-        );
+        return class_exists('WooCommerce');
     }
 
     /**
