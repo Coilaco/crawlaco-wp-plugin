@@ -453,4 +453,59 @@ jQuery(document).ready(function ($) {
             $(this).remove();
         });
     });
+
+    // Handle WooCommerce API key generation in settings page
+    $('#generate-wc-api-keys').on('click', function (e) {
+        e.preventDefault();
+
+        const $button = $(this);
+        const $message = $('.crawlaco-message-wc-api-keys');
+
+        // Disable button and show loading state
+        $button
+            .prop('disabled', true)
+            .html(crawlacoAdmin.strings.generating);
+
+        // Send AJAX request
+        $.ajax({
+            url: crawlacoAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'generate_wc_api_keys',
+                nonce: crawlacoAdmin.nonce
+            },
+            success: function (response) {
+                if (response.success) {
+                    $message
+                        .removeClass('error')
+                        .addClass('success')
+                        .html(response.data.message);
+
+                    // Redirect to settings page after a short delay
+                    setTimeout(function () {
+                        window.location.href = response.data.redirect;
+                    }, 1000);
+                } else {
+                    $message
+                        .removeClass('success')
+                        .addClass('error')
+                        .html(crawlacoAdmin.strings.error + ' ' + response.data.message);
+
+                    $button
+                        .prop('disabled', false)
+                        .html(crawlacoAdmin.strings.generate);
+                }
+            },
+            error: function () {
+                $message
+                    .removeClass('success')
+                    .addClass('error')
+                    .html(crawlacoAdmin.strings.error + ' ' + 'Failed to connect to the server. Please try again.');
+
+                $button
+                    .prop('disabled', false)
+                    .html(crawlacoAdmin.strings.generate);
+            }
+        });
+    });
 }); 

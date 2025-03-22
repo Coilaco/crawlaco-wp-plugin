@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Crawlaco 1.0.0\n"
-"POT-Creation-Date: 2025-03-22 17:23+0330\n"
-"PO-Revision-Date: 2025-03-22 17:24+0330\n"
+"POT-Creation-Date: 2025-03-22 18:13+0330\n"
+"PO-Revision-Date: 2025-03-22 18:36+0330\n"
 "Last-Translator: Crawlaco Team\n"
 "Language-Team: Persian\n"
 "Language: fa_IR\n"
@@ -18,15 +18,15 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 
-#: admin/pages/settings.php:14 includes/class-crawlaco-admin.php:376
+#: admin/pages/settings.php:8 includes/class-crawlaco-admin.php:376
 msgid "Crawlaco Settings"
 msgstr "تنظیمات کرالاکو"
 
-#: admin/pages/settings.php:24 admin/pages/settings.php:84
+#: admin/pages/settings.php:18 admin/pages/settings.php:78
 msgid "Attribute Mapping"
 msgstr "ترسیم ویژگی"
 
-#: admin/pages/settings.php:26
+#: admin/pages/settings.php:20
 msgid ""
 "Map your WooCommerce product attributes to help Crawlaco understand your data "
 "structure."
@@ -34,35 +34,35 @@ msgstr ""
 "با ترسیم (مپ) کردن ویژگی محصولات ووکامرس خود، به کرالاکو برای درک بهتر ساختار "
 "محصولات خود کمک کنید. (این برای آپلود محصولات جدید به وب‌سایت شما ضروری است.)"
 
-#: admin/pages/settings.php:32
+#: admin/pages/settings.php:26
 msgid "Crawlaco Attribute"
 msgstr "ویژگی‌های کرالاکو"
 
-#: admin/pages/settings.php:33
+#: admin/pages/settings.php:27
 msgid "WooCommerce Attribute"
 msgstr "ویژگی‌های ووکامرس"
 
-#: admin/pages/settings.php:39
+#: admin/pages/settings.php:33
 msgid "Size"
 msgstr "سایز"
 
-#: admin/pages/settings.php:40
+#: admin/pages/settings.php:34
 msgid "Color"
 msgstr "رنگ"
 
-#: admin/pages/settings.php:41
+#: admin/pages/settings.php:35
 msgid "Brand"
 msgstr "برند"
 
-#: admin/pages/settings.php:62
+#: admin/pages/settings.php:56
 msgid "-- Select Attribute --"
 msgstr "-- انتخاب ویژگی --"
 
-#: admin/pages/settings.php:72
+#: admin/pages/settings.php:66
 msgid "Currently mapped to:"
 msgstr "در حال حاضر:"
 
-#: admin/pages/settings.php:86
+#: admin/pages/settings.php:80
 msgid ""
 "WooCommerce is required for attribute mapping. Please install and activate "
 "WooCommerce to access this feature. If your site is not using WooCommerce, you "
@@ -72,11 +72,52 @@ msgstr ""
 "افزونه ووکامرس را نصب یا فعال کنید. اگر وب‌سایت شما از ووکامرس استفاده نمی‌کند، "
 "می‌توانید از این قسمت چشم پوشی کنید."
 
-#: admin/pages/settings.php:92
+#: admin/pages/settings.php:86
+msgid "WooCommerce API Keys"
+msgstr "کلیدهای API ووکامرس:"
+
+#: admin/pages/settings.php:91
+msgid "Generate and manage WooCommerce API keys for Crawlaco integration."
+msgstr "کلید‌های API ووکامرس را برای ادغام با کرالاکو تولید و ارسال کنید."
+
+#: admin/pages/settings.php:100 admin/pages/setup_wizard.php:117
+msgid "API Keys Status"
+msgstr "وضعیت کلید‌های API"
+
+#: admin/pages/settings.php:104 admin/pages/setup_wizard.php:134
+msgid "WooCommerce API Keys:"
+msgstr "کلیدهای API ووکامرس:"
+
+#: admin/pages/settings.php:108 admin/pages/setup_wizard.php:125
+#: admin/pages/setup_wizard.php:138
+msgid "Generated"
+msgstr "تولید شده"
+
+#: admin/pages/settings.php:111 admin/pages/setup_wizard.php:128
+#: admin/pages/setup_wizard.php:141
+msgid "Not Generated"
+msgstr "تولید نشده"
+
+#: admin/pages/settings.php:125 admin/pages/setup_wizard.php:160
+#: includes/class-crawlaco-admin.php:293
+msgid "Generate API Keys"
+msgstr "تولید کلید‌های API"
+
+#: admin/pages/settings.php:131
+msgid ""
+"WooCommerce is required for API key generation. Please install and activate "
+"WooCommerce to access this feature. If your site is not using WooCommerce, you "
+"can skip this step."
+msgstr ""
+"افزونه ووکامرس برای تولید کلید‌های API مورد نیاز است. لطفاً برای دسترسی به این "
+"قسمت افزونه ووکامرس را نصب یا فعال کنید. اگر وب‌سایت شما از ووکامرس استفاده "
+"نمی‌کند، می‌توانید از این قسمت چشم پوشی کنید."
+
+#: admin/pages/settings.php:137
 msgid "Data Synchronization"
 msgstr "همگام سازی داده‌ها"
 
-#: admin/pages/settings.php:94
+#: admin/pages/settings.php:139
 msgid ""
 "Fetch and sync your site data with Crawlaco. This will update your product "
 "information, categories, and other relevant data."
@@ -84,22 +125,22 @@ msgstr ""
 "داده های سایت خود را با Crawlaco واکشی و همگام سازی کنید. با این کار اطلاعات "
 "ویژگی محصولات، دسته‌ها و سایر داده‌های مرتبط و غیر حساس شما به‌روزرسانی می‌شود."
 
-#: admin/pages/settings.php:101 admin/pages/setup_wizard.php:191
+#: admin/pages/settings.php:146 admin/pages/setup_wizard.php:191
 #: includes/class-crawlaco-admin.php:294
 msgid "Fetching data..."
 msgstr "در حال دریافت اطلاعات ..."
 
-#: admin/pages/settings.php:107 admin/pages/setup_wizard.php:197
+#: admin/pages/settings.php:152 admin/pages/setup_wizard.php:197
 #: includes/class-crawlaco-admin.php:298
 msgid "Start Data Sync"
 msgstr "شروع به همگام سازی داده‌ها"
 
-#: admin/pages/settings.php:114 admin/pages/setup_wizard.php:204
+#: admin/pages/settings.php:159 admin/pages/setup_wizard.php:204
 #: includes/class-crawlaco-admin.php:299
 msgid "Retry"
 msgstr "تلاش مجدد"
 
-#: admin/pages/settings.php:121
+#: admin/pages/settings.php:166
 msgid "Save Settings"
 msgstr "ذخیره تنظیمات"
 
@@ -163,33 +204,13 @@ msgstr ""
 "برای ارتباط میان داشبورد کرالاکو و وب‌سایت شما نیاز است که کلید‌های API مربوط به "
 "وردپرس را تولید کنیم:"
 
-#: admin/pages/setup_wizard.php:117
-msgid "API Keys Status"
-msgstr "وضعیت کلید‌های API"
-
 #: admin/pages/setup_wizard.php:121
 msgid "WordPress API Key:"
 msgstr "کلید API وردپرس:"
 
-#: admin/pages/setup_wizard.php:125 admin/pages/setup_wizard.php:138
-msgid "Generated"
-msgstr "تولید شده"
-
-#: admin/pages/setup_wizard.php:128 admin/pages/setup_wizard.php:141
-msgid "Not Generated"
-msgstr "تولید نشده"
-
-#: admin/pages/setup_wizard.php:134
-msgid "WooCommerce API Keys:"
-msgstr "کلیدهای API ووکامرس:"
-
 #: admin/pages/setup_wizard.php:158
 msgid "API Keys Generated"
 msgstr "کلیدهای API تولید شدند"
-
-#: admin/pages/setup_wizard.php:160 includes/class-crawlaco-admin.php:293
-msgid "Generate API Keys"
-msgstr "تولید کلید‌های API"
 
 #: admin/pages/setup_wizard.php:170
 msgid "Proceed to Next Step"

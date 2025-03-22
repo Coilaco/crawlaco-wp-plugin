@@ -2,12 +2,6 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
-// Check if WooCommerce is active
-$is_woocommerce_active = in_array(
-    'woocommerce/woocommerce.php',
-    apply_filters('active_plugins', get_option('active_plugins'))
-);
 ?>
 
 <div class="wrap">
@@ -19,7 +13,7 @@ $is_woocommerce_active = in_array(
         <form id="crawlaco-settings-form" class="crawlaco-settings-form">
             <?php wp_nonce_field('crawlaco_update_settings', 'crawlaco_settings_nonce'); ?>
 
-            <?php if ($is_woocommerce_active) : ?>
+            <?php if (class_exists('WooCommerce')): ?>
                 <div class="crawlaco-card crawlaco-attribute-mapper">
                     <h2><?php echo esc_html__('Attribute Mapping', 'crawlaco'); ?></h2>
                     <p class="description">
@@ -87,6 +81,56 @@ $is_woocommerce_active = in_array(
                     </p>
                 </div>
             <?php endif; ?>
+
+                <div class="crawlaco-card">
+                    <h2><?php echo esc_html__('WooCommerce API Keys', 'crawlaco'); ?></h2>
+
+                    
+                    <?php if (class_exists('WooCommerce')): ?>
+                        <p class="description">
+                            <?php echo esc_html__('Generate and manage WooCommerce API keys for Crawlaco integration.', 'crawlaco'); ?>
+                        </p>
+
+                        <?php
+                        $wc_api_keys = get_option('crawlaco_wc_api_keys', array());
+                        ?>
+                        
+                        <div class="crawlaco-api-keys-status">
+                            <h3><?php esc_html_e('API Keys Status', 'crawlaco'); ?></h3>
+                            
+                            <table class="widefat">
+                                <tr>
+                                    <td><strong><?php esc_html_e('WooCommerce API Keys:', 'crawlaco'); ?></strong></td>
+                                    <td>
+                                        <?php if (!empty($wc_api_keys)): ?>
+                                            <span class="dashicons dashicons-yes-alt" style="color: green;"></span>
+                                            <?php esc_html_e('Generated', 'crawlaco'); ?>
+                                        <?php else: ?>
+                                            <span class="dashicons dashicons-no-alt" style="color: red;"></span>
+                                            <?php esc_html_e('Not Generated', 'crawlaco'); ?>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="crawlaco-submit-wrapper">
+                            <div class="crawlaco-message-wc-api-keys"></div>
+                            <?php if (empty($wc_api_keys)): ?>
+                                <button type="button" 
+                                        class="button button-primary" 
+                                        id="generate-wc-api-keys"
+                                >
+                                    <?php esc_html_e('Generate WooCommerce API Keys', 'crawlaco'); ?>
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                    <?php else : ?>
+                        <p class="description">
+                            <?php echo esc_html__('WooCommerce is required for API key generation. Please install and activate WooCommerce to access this feature. If your site is not using WooCommerce, you can skip this step.', 'crawlaco'); ?>
+                        </p>
+                    <?php endif; ?>
+                </div>
 
             <div class="crawlaco-card">
                 <h2><?php echo esc_html__('Data Synchronization', 'crawlaco'); ?></h2>
