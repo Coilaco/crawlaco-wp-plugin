@@ -6,8 +6,7 @@ class Crawlaco_API {
     /**
      * API Base URL
      */
-    // private $api_base_url = 'https://api.crawlaco.com';
-    private $api_base_url = 'http://127.0.0.1:9001';
+    private $api_base_url = 'https://api.crawlaco.com';
 
     /**
      * Constructor
