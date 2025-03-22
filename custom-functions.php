@@ -146,208 +146,226 @@ add_action('woocommerce_process_product_meta', 'save_simple_product_custom_field
 
 
 // Rank Math related code
-if (class_exists('RankMath')) {
-    add_action('rest_api_init', function () {
-        register_rest_route('custom-rankmath/v1', '/add-redirect', array(
-            'methods' => 'POST',
-            'callback' => 'add_custom_redirect',
-            'permission_callback' => function () {
-                return current_user_can('manage_options');
-            },
-        ));
-    });
+add_action('rest_api_init', function () {
+    register_rest_route('custom-rankmath/v1', '/add-redirect', array(
+        'methods' => 'POST',
+        'callback' => 'add_custom_redirect',
+        'permission_callback' => function () {
+            return current_user_can('manage_options');
+        },
+    ));
+});
 
-    function add_custom_redirect($request) {
-        global $wpdb;
-
-        // Extract parameters from the POST request
-        $params = $request->get_json_params();
-        $url = isset($params['url']) ? esc_url_raw($params['url']) : '';
-        $status_code = isset($params['status_code']) ? intval($params['status_code']) : 410; // Default to 410 if not provided
-        $url_to = isset($params['url_to']) ? esc_url_raw($params['url_to']) : ''; // Target URL for 301 and 302 redirects
-
-        // Validate status code (allow only 301, 302, and 410)
-        $allowed_status_codes = array(301, 302, 410);
-        if (!in_array($status_code, $allowed_status_codes)) {
-            return new WP_Error('invalid_status_code', 'Status code must be 301, 302, or 410.', array('status' => 400));
-        }
-
-        if (empty($url)) {
-            return new WP_Error('missing_url', 'URL parameter is required.', array('status' => 400));
-        }
-
-        // Remove protocol and domain if present, keeping only the path
-        $parsed_url = wp_parse_url($url);
-        $url_path = isset($parsed_url['path']) ? $parsed_url['path'] : '';
-        $url_path .= isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
-        $url_path .= isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
-
-        // If status code is 301 or 302, the `url_to` parameter should not be empty
-        if (in_array($status_code, array(301, 302)) && empty($url_to)) {
-            return new WP_Error('missing_url_to', 'The target URL (url_to) is required for 301 and 302 redirects.', array('status' => 400));
-        }
-
-        // Check if the URL already has a redirect in Rank Math
-        $existing_redirect = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM {$wpdb->prefix}rank_math_redirections WHERE sources LIKE %s",
-            '%"url":"' . $url_path . '"%'
-        ));
-
-        if ($existing_redirect) {
-            return new WP_Error('redirect_exists', 'A redirect already exists for this URL.', array('status' => 409));
-        }
-
-        // Structure sources data to meet Rank Math's expected format
-        $sources = array(array('pattern' => $url_path, 'comparison' => 'exact'));
-
-        // Insert a new redirect into Rank Math's redirect table
-        $result = $wpdb->insert(
-            "{$wpdb->prefix}rank_math_redirections",
-            array(
-                'sources' => maybe_serialize($sources),
-                'url_to' => $status_code === 410 ? '' : $url_to, // Set `url_to` only if not 410
-                'header_code' => $status_code,
-                'status' => 'active',
-                'hits' => 0,
-                'created' => current_time('mysql'),
-                'updated' => current_time('mysql')
-            ),
-            array('%s', '%s', '%d', '%s', '%d', '%s', '%s')
-        );
-
-        // Check for any errors in the insertion process
-        if ($result === false) {
-            $error_message = $wpdb->last_error;
-            return new WP_Error('db_insert_error', 'Failed to create redirect in the database. Error: ' . $error_message, array('status' => 500));
-        }
-
+function add_custom_redirect($request) {
+    if (!class_exists('RankMath')) {
+        return new WP_Error('rank_math_not_found', 'Rank Math is not installed.', array('status' => 404));
+    }
+    
+    global $wpdb;
+    
+    // Check if the redirections table exists
+    $table_name = $wpdb->prefix . 'rank_math_redirections';
+    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
         return new WP_REST_Response(array(
             'success' => true,
-            'message' => "{$status_code} redirect added successfully.",
-            'data' => array(
-                'url' => $url_path,
-                'url_to' => $url_to,
-                'status_code' => $status_code
-            )
+            'message' => "Table does not exist, skipping redirect creation.",
         ), 200);
     }
 
-    // Register Rank Math meta fields
-    function register_rankmath_meta() {
-        register_meta('post', 'rank_math_title', [
-            'show_in_rest' => [
-                'schema' => [
-                    'type' => 'string',
-                    'context' => ['view', 'edit']
-                ]
-            ],
-            'single' => true,
-            'type' => 'string',
-            'auth_callback' => function() {
-                return current_user_can('edit_posts');
-            }
-        ]);
-        register_meta('post', 'rank_math_description', [
-            'show_in_rest' => [
-                'schema' => [
-                    'type' => 'string',
-                    'context' => ['view', 'edit']
-                ]
-            ],
-            'single' => true,
-            'type' => 'string',
-            'auth_callback' => function() {
-                return current_user_can('edit_posts');
-            }
-        ]);
-        register_meta('post', 'rank_math_focus_keyword', [
-            'show_in_rest' => [
-                'schema' => [
-                    'type' => 'string',
-                    'context' => ['view', 'edit']
-                ]
-            ],
-            'single' => true,
-            'type' => 'string',
-            'auth_callback' => function() {
-                return current_user_can('edit_posts');
-            }
-        ]);
+    // Extract parameters from the POST request
+    $params = $request->get_json_params();
+    $url = isset($params['url']) ? esc_url_raw($params['url']) : '';
+    $status_code = isset($params['status_code']) ? intval($params['status_code']) : 410; // Default to 410 if not provided
+    $url_to = isset($params['url_to']) ? esc_url_raw($params['url_to']) : ''; // Target URL for 301 and 302 redirects
+
+    // Validate status code (allow only 301, 302, and 410)
+    $allowed_status_codes = array(301, 302, 410);
+    if (!in_array($status_code, $allowed_status_codes)) {
+        return new WP_Error('invalid_status_code', 'Status code must be 301, 302, or 410.', array('status' => 400));
     }
-    add_action('init', 'register_rankmath_meta');
+
+    if (empty($url)) {
+        return new WP_Error('missing_url', 'URL parameter is required.', array('status' => 400));
+    }
+
+    // Remove protocol and domain if present, keeping only the path
+    $parsed_url = wp_parse_url($url);
+    $url_path = isset($parsed_url['path']) ? $parsed_url['path'] : '';
+    $url_path .= isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+    $url_path .= isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+
+    // If status code is 301 or 302, the `url_to` parameter should not be empty
+    if (in_array($status_code, array(301, 302)) && empty($url_to)) {
+        return new WP_Error('missing_url_to', 'The target URL (url_to) is required for 301 and 302 redirects.', array('status' => 400));
+    }
+
+    // Check if the URL already has a redirect in Rank Math
+    $existing_redirect = $wpdb->get_row($wpdb->prepare(
+        "SELECT * FROM {$wpdb->prefix}rank_math_redirections WHERE sources LIKE %s",
+        '%"url":"' . $url_path . '"%'
+    ));
+
+    if ($existing_redirect) {
+        return new WP_Error('redirect_exists', 'A redirect already exists for this URL.', array('status' => 409));
+    }
+
+    // Structure sources data to meet Rank Math's expected format
+    $sources = array(array('pattern' => $url_path, 'comparison' => 'exact'));
+
+    // Insert a new redirect into Rank Math's redirect table
+    $result = $wpdb->insert(
+        "{$wpdb->prefix}rank_math_redirections",
+        array(
+            'sources' => maybe_serialize($sources),
+            'url_to' => $status_code === 410 ? '' : $url_to, // Set `url_to` only if not 410
+            'header_code' => $status_code,
+            'status' => 'active',
+            'hits' => 0,
+            'created' => current_time('mysql'),
+            'updated' => current_time('mysql')
+        ),
+        array('%s', '%s', '%d', '%s', '%d', '%s', '%s')
+    );
+
+    // Check for any errors in the insertion process
+    if ($result === false) {
+        $error_message = $wpdb->last_error;
+        return new WP_Error('db_insert_error', 'Failed to create redirect in the database. Error: ' . $error_message, array('status' => 500));
+    }
+
+    return new WP_REST_Response(array(
+        'success' => true,
+        'message' => "{$status_code} redirect added successfully.",
+        'data' => array(
+            'url' => $url_path,
+            'url_to' => $url_to,
+            'status_code' => $status_code
+        )
+    ), 200);
 }
+
+// Register Rank Math meta fields
+function register_rankmath_meta() {
+    register_meta('post', 'rank_math_title', [
+        'show_in_rest' => [
+            'schema' => [
+                'type' => 'string',
+                'context' => ['view', 'edit']
+            ]
+        ],
+        'single' => true,
+        'type' => 'string',
+        'auth_callback' => function() {
+            return current_user_can('edit_posts');
+        }
+    ]);
+    register_meta('post', 'rank_math_description', [
+        'show_in_rest' => [
+            'schema' => [
+                'type' => 'string',
+                'context' => ['view', 'edit']
+            ]
+        ],
+        'single' => true,
+        'type' => 'string',
+        'auth_callback' => function() {
+            return current_user_can('edit_posts');
+        }
+    ]);
+    register_meta('post', 'rank_math_focus_keyword', [
+        'show_in_rest' => [
+            'schema' => [
+                'type' => 'string',
+                'context' => ['view', 'edit']
+            ]
+        ],
+        'single' => true,
+        'type' => 'string',
+        'auth_callback' => function() {
+            return current_user_can('edit_posts');
+        }
+    ]);
+}
+add_action('init', 'register_rankmath_meta');
+
 
 // Yoast SEO related code
-if (class_exists('WPSEO_Options')) {
-    // Hook into the REST API to handle meta values for Yoast SEO when creating posts.
-    add_action('rest_insert_post', function ($post, $request, $creating) {
-        // Check if it's a POST request and if meta data exists in the request.
-        if ($creating && isset($request['meta'])) {
-            $meta = $request['meta'];
+// Hook into the REST API to handle meta values for Yoast SEO when creating posts.
+add_action('rest_insert_post', function ($post, $request, $creating) {
+    // Check if it's a POST request and if meta data exists in the request.
+    if ($creating && isset($request['meta'])) {
+        $meta = $request['meta'];
 
-            // Validate and sanitize input for Yoast SEO fields.
-            $focus_keyword = isset($meta['yoast_seo_focus_keyword']) ? sanitize_text_field($meta['yoast_seo_focus_keyword']) : '';
-            $seo_description = isset($meta['yoast_seo_description']) ? sanitize_textarea_field($meta['yoast_seo_description']) : '';
-            $seo_title = isset($meta['yoast_seo_title']) ? sanitize_text_field($meta['yoast_seo_title']) : '';
+        // Validate and sanitize input for Yoast SEO fields.
+        $focus_keywords = isset($meta['yoast_seo_focus_keyword']) ? sanitize_text_field($meta['yoast_seo_focus_keyword']) : '';
+        $seo_description = isset($meta['yoast_seo_description']) ? sanitize_textarea_field($meta['yoast_seo_description']) : '';
+        $seo_title = isset($meta['yoast_seo_title']) ? sanitize_text_field($meta['yoast_seo_title']) : '';
 
-            // Update the Yoast SEO metadata for the post.
-            if (!empty($focus_keyword)) {
-                update_post_meta($post->ID, '_yoast_wpseo_focuskw', $focus_keyword);
-            }
-            if (!empty($seo_description)) {
-                update_post_meta($post->ID, '_yoast_wpseo_metadesc', $seo_description);
-            }
-            if (!empty($seo_title)) {
-                update_post_meta($post->ID, '_yoast_wpseo_title', $seo_title);
-            }
+        // Process focus keywords: split by comma and trim whitespace.
+        if (!empty($focus_keywords)) {
+            $keywords_array = array_map('trim', explode(',', $focus_keywords));
+
+            // Store the first keyword as the primary focus keyword (Yoast default behavior).
+            update_post_meta($post->ID, '_yoast_wpseo_focuskw', $keywords_array[0]);
+
+            // Optionally, store all keywords in a custom meta key (for custom handling).
+            update_post_meta($post->ID, '_custom_yoast_keywords', $keywords_array);
         }
-    }, 10, 3);
 
-    // Hook into the WooCommerce REST API to handle Yoast SEO metadata for products.
-    add_action('rest_insert_product', function ($product, $request, $creating) {
-        // Check if it's a POST request and if meta_data exists in the request.
-        if ($creating && isset($request['meta_data'])) {
-            $meta_data = $request['meta_data'];
+        // Update the Yoast SEO description and title.
+        if (!empty($seo_description)) {
+            update_post_meta($post->ID, '_yoast_wpseo_metadesc', $seo_description);
+        }
+        if (!empty($seo_title)) {
+            update_post_meta($post->ID, '_yoast_wpseo_title', $seo_title);
+        }
+    }
+}, 10, 3);
 
-            // Parse meta_data for Yoast SEO fields.
-            $focus_keywords = '';
-            $seo_description = '';
-            $seo_title = '';
+// Hook into the WooCommerce REST API to handle Yoast SEO metadata for products.
+add_action('rest_insert_product', function ($product, $request, $creating) {
+    // Check if it's a POST request and if meta_data exists in the request.
+    if ($creating && isset($request['meta_data'])) {
+        $meta_data = $request['meta_data'];
 
-            foreach ($meta_data as $meta_entry) {
-                if (isset($meta_entry['key']) && isset($meta_entry['value'])) {
-                    switch ($meta_entry['key']) {
-                        case 'yoast_seo_focus_keyword':
-                            $focus_keywords = sanitize_text_field($meta_entry['value']);
-                            break;
-                        case 'yoast_seo_description':
-                            $seo_description = sanitize_textarea_field($meta_entry['value']);
-                            break;
-                        case 'yoast_seo_title':
-                            $seo_title = sanitize_text_field($meta_entry['value']);
-                            break;
-                    }
+        // Parse meta_data for Yoast SEO fields.
+        $focus_keywords = '';
+        $seo_description = '';
+        $seo_title = '';
+
+        foreach ($meta_data as $meta_entry) {
+            if (isset($meta_entry['key']) && isset($meta_entry['value'])) {
+                switch ($meta_entry['key']) {
+                    case 'yoast_seo_focus_keyword':
+                        $focus_keywords = sanitize_text_field($meta_entry['value']);
+                        break;
+                    case 'yoast_seo_description':
+                        $seo_description = sanitize_textarea_field($meta_entry['value']);
+                        break;
+                    case 'yoast_seo_title':
+                        $seo_title = sanitize_text_field($meta_entry['value']);
+                        break;
                 }
             }
-
-            // Process focus keywords: split by comma and trim whitespace.
-            if (!empty($focus_keywords)) {
-                $keywords_array = array_map('trim', explode(',', $focus_keywords));
-
-                // Store the first keyword as the primary focus keyword (Yoast default behavior).
-                update_post_meta($product->ID, '_yoast_wpseo_focuskw', $keywords_array[0]);
-
-                // Optionally, store all keywords in a custom meta key (for custom handling).
-                update_post_meta($product->ID, '_custom_yoast_keywords', $keywords_array);
-            }
-
-            // Update the Yoast SEO description and title.
-            if (!empty($seo_description)) {
-                update_post_meta($product->ID, '_yoast_wpseo_metadesc', $seo_description);
-            }
-            if (!empty($seo_title)) {
-                update_post_meta($product->ID, '_yoast_wpseo_title', $seo_title);
-            }
         }
-    }, 10, 3);
-}
+
+        // Process focus keywords: split by comma and trim whitespace.
+        if (!empty($focus_keywords)) {
+            $keywords_array = array_map('trim', explode(',', $focus_keywords));
+
+            // Store the first keyword as the primary focus keyword (Yoast default behavior).
+            update_post_meta($product->ID, '_yoast_wpseo_focuskw', $keywords_array[0]);
+
+            // Optionally, store all keywords in a custom meta key (for custom handling).
+            update_post_meta($product->ID, '_custom_yoast_keywords', $keywords_array);
+        }
+
+        // Update the Yoast SEO description and title.
+        if (!empty($seo_description)) {
+            update_post_meta($product->ID, '_yoast_wpseo_metadesc', $seo_description);
+        }
+        if (!empty($seo_title)) {
+            update_post_meta($product->ID, '_yoast_wpseo_title', $seo_title);
+        }
+    }
+}, 10, 3);
