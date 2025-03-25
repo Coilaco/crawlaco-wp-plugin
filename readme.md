@@ -1,29 +1,41 @@
-=== Crawlaco ===
-Contributors: crawlaco
-Tags: woocommerce, product-management, ecommerce, inventory, crawlaco
-Requires at least: 5.0
-Tested up to: 6.4
-Stable tag: 1.0.0
-Requires PHP: 7.4
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+# Crawlaco | کرالاکو
+
+[![WordPress](https://img.shields.io/wordpress/v/crawlaco.svg)](https://wordpress.org/plugins/crawlaco/)
+[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D7.4-blue.svg)](https://php.net/)
+[![License](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 Connect your WordPress/WooCommerce site to Crawlaco dashboard for seamless product and inventory management.
 
-== Description ==
+## Description
 
 Crawlaco WordPress Plugin acts as a bridge between your WordPress/WooCommerce website and the Crawlaco dashboard. It simplifies communication between the two systems by handling API key generation, data synchronization, and attribute mapping.
 
-= Key Features =
+### Key Features
 
-* Easy setup with WebsiteKey validation
-* Automatic API key generation and management
-* Seamless data synchronization for articles and products
-* User-friendly interface for attribute mapping
-* Secure communication between your site and Crawlaco
-* Real-time status monitoring
+- Easy setup with WebsiteKey validation
+- Automatic API key generation and management
+- Seamless data synchronization for articles and products
+- User-friendly interface for attribute mapping
+- Secure communication between your site and Crawlaco
+- Real-time status monitoring
+- RTL language support
+- Translation ready
 
-= How It Works =
+## Requirements
+
+- WordPress 5.0 or higher
+- PHP 7.4 or higher
+- WooCommerce 3.0 or higher (for WooCommerce features)
+
+## Installation
+
+1. Upload the plugin files to the `/wp-content/plugins/crawlaco` directory, or install the plugin through the WordPress plugins screen directly
+2. Activate the plugin through the 'Plugins' screen in WordPress
+3. Go to the Crawlaco menu item in your admin panel
+4. Enter your WebsiteKey from the Crawlaco dashboard
+5. Follow the setup wizard to complete the configuration
+
+## How It Works
 
 1. Enter your WebsiteKey from Crawlaco dashboard
 2. Plugin automatically generates and configures API keys
@@ -31,82 +43,71 @@ Crawlaco WordPress Plugin acts as a bridge between your WordPress/WooCommerce we
 4. Map your product attributes
 5. Start managing your store through Crawlaco dashboard
 
-= Requirements =
+## Security
 
-* WordPress 5.0 or higher
-* PHP 7.4 or higher
-* WooCommerce 3.0 or higher (for WooCommerce features)
+We implement industry-standard security practices including:
 
-= Documentation =
+- Secure API key generation and storage
+- Encrypted communication
+- Regular security updates
 
-For detailed documentation and setup instructions, please visit our [GitHub repository](https://github.com/Coilaco/crawlaco-wp-plugin).
+## FAQ
 
-= Support =
-
-Need help? Contact our support team through:
-
-* [Crawlaco Support](https://crawlaco.com/support)
-* [GitHub Issues](https://github.com/Coilaco/crawlaco-wp-plugin/issues)
-
-== Installation ==
-
-1. Upload the plugin files to the `/wp-content/plugins/crawlaco` directory, or install the plugin through the WordPress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Go to the Crawlaco menu item in your admin panel
-4. Enter your WebsiteKey from the Crawlaco dashboard
-5. Follow the setup wizard to complete the configuration
-
-== Frequently Asked Questions ==
-
-= Do I need a Crawlaco account? =
+### Do I need a Crawlaco account?
 
 Yes, you need a Crawlaco account to use this plugin. Visit [Crawlaco](https://crawlaco.com) to create one.
 
-= Is WooCommerce required? =
+### Is WooCommerce required?
 
 WooCommerce is required only if you want to sync and manage WooCommerce products. The plugin can work with regular WordPress posts and pages without WooCommerce.
 
-= How secure is the connection? =
-
-We use industry-standard security practices including:
-* Secure API key generation and storage
-* Encrypted communication
-* Regular security updates
-
-= Can I use this plugin with a multilingual site? =
+### Can I use this plugin with a multilingual site?
 
 Yes, the plugin supports RTL languages and is translation-ready.
 
-== Screenshots ==
+## Support
 
-1. Plugin setup wizard
-2. WebsiteKey validation screen
-3. Product attribute mapping interface
-4. Sync status dashboard
-5. Settings page
+Need help? Contact our support team through:
 
-== Changelog ==
+- [Crawlaco Support](https://crawlaco.com/support)
+- [GitHub Issues](https://github.com/Coilaco/crawlaco-wp-plugin/issues)
 
-= 1.0.0 =
-* Initial release
-* Basic setup wizard
-* API key management
-* Data synchronization
-* Product attribute mapping
-* RTL support
-
-== Upgrade Notice ==
-
-= 1.0.0 =
-Initial release of the Crawlaco WordPress plugin.
-
-== Privacy Policy ==
+## Privacy
 
 The Crawlaco plugin connects your WordPress site with the Crawlaco dashboard service. It collects and transmits the following data:
 
-* Website URL and WebsiteKey
-* WooCommerce product data (if WooCommerce is installed)
-* WordPress post data
-* Product attributes and categories
+- Website URL and WebsiteKey
+- WooCommerce product data (if WooCommerce is installed)
+- WordPress post data
+- Product attributes and categories
 
-For more information about how we handle your data, please visit our [Privacy Policy](https://crawlaco.com/privacy). 
+For more information about how we handle your data, please visit our [Privacy Policy](https://crawlaco.com/privacy).
+
+## License
+
+This project is licensed under the GPLv2 or later - see the [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html) file for details.
+
+## Changelog
+
+### 1.1.2
+
+- Update API base URL
+
+### 1.1.1
+
+* Fix SEO plugins issue in custom-functions.php
+* Improved display of error messages in forms
+* Improved settings page
+
+### 1.1.0
+
+- Improved plugin deactivation logic
+
+### 1.0.0
+
+- Initial release
+- Basic setup wizard
+- API key management
+- Data synchronization
+- Product attribute mapping
+- RTL support
