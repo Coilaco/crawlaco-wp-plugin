@@ -25,7 +25,7 @@
 // Your custom code goes here:
 
 // Add custom meta field to product varation (provider url)
-function provider_product_url_field( $loop, $variation_data, $variation ) {
+function crawlaco_provider_product_url_field( $loop, $variation_data, $variation ) {
     if (!class_exists('WooCommerce')) {
         return;
     }
@@ -41,10 +41,10 @@ function provider_product_url_field( $loop, $variation_data, $variation ) {
         )
     );
 }
-add_action( 'woocommerce_product_after_variable_attributes', 'provider_product_url_field', 10, 3 );
+add_action( 'woocommerce_product_after_variable_attributes', 'crawlaco_provider_product_url_field', 10, 3 );
   
 // Add custom meta field to product varation (is archive)
-function is_archive_field( $loop, $variation_data, $variation ) {
+function crawlaco_product_archive_field( $loop, $variation_data, $variation ) {
     if (!class_exists('WooCommerce')) {
         return;
     }
@@ -59,10 +59,10 @@ function is_archive_field( $loop, $variation_data, $variation ) {
         )
     );
 }
-add_action( 'woocommerce_product_after_variable_attributes', 'is_archive_field', 10, 3 );
+add_action( 'woocommerce_product_after_variable_attributes', 'crawlaco_product_archive_field', 10, 3 );
 
 // Save custom meta field to product variations
-function save_custom_meta_fields( $variation_id, $loop ) {
+function crawlaco_save_variation_meta_fields( $variation_id, $loop ) {
     if (!class_exists('WooCommerce')) {
         return;
     }
@@ -98,11 +98,11 @@ function save_custom_meta_fields( $variation_id, $loop ) {
     update_post_meta($variation_id, 'is_archived', $checkbox_field);
 }
 
-add_action( 'woocommerce_save_product_variation', 'save_custom_meta_fields', 10, 2 );
+add_action( 'woocommerce_save_product_variation', 'crawlaco_save_variation_meta_fields', 10, 2 );
 
 
 // Add custom meta fields to simple products
-function add_simple_product_custom_fields() {
+function crawlaco_add_simple_product_fields() {
     if (!class_exists('WooCommerce')) {
         return;
     }
@@ -143,10 +143,10 @@ function add_simple_product_custom_fields() {
         )
     );
 }
-add_action('woocommerce_product_options_general_product_data', 'add_simple_product_custom_fields');
+add_action('woocommerce_product_options_general_product_data', 'crawlaco_add_simple_product_fields');
 
 // Save custom meta fields for simple products
-function save_simple_product_custom_fields($post_id) {
+function crawlaco_save_simple_product_fields($post_id) {
     if (!class_exists('WooCommerce')) {
         return;
     }
@@ -165,21 +165,21 @@ function save_simple_product_custom_fields($post_id) {
     $is_archived = isset($_POST['is_archived']) ? 'yes' : 'no';
     update_post_meta($post_id, 'is_archived', $is_archived);
 }
-add_action('woocommerce_process_product_meta', 'save_simple_product_custom_fields');
+add_action('woocommerce_process_product_meta', 'crawlaco_save_simple_product_fields');
 
 
 // Rank Math related code
 add_action('rest_api_init', function () {
     register_rest_route('custom-rankmath/v1', '/add-redirect', array(
         'methods' => 'POST',
-        'callback' => 'add_custom_redirect',
+        'callback' => 'crawlaco_add_rankmath_redirect',
         'permission_callback' => function () {
             return current_user_can('manage_options');
         },
     ));
 });
 
-function add_custom_redirect($request) {
+function crawlaco_add_rankmath_redirect($request) {
     if (!class_exists('RankMath')) {
         return new WP_Error('rank_math_not_found', 'Rank Math is not installed.', array('status' => 404));
     }
@@ -268,7 +268,7 @@ function add_custom_redirect($request) {
 }
 
 // Register Rank Math meta fields
-function register_rankmath_meta() {
+function crawlaco_register_rankmath_meta() {
     register_meta('post', 'rank_math_title', [
         'show_in_rest' => [
             'schema' => [
@@ -309,7 +309,7 @@ function register_rankmath_meta() {
         }
     ]);
 }
-add_action('init', 'register_rankmath_meta');
+add_action('init', 'crawlaco_register_rankmath_meta');
 
 
 // Yoast SEO related code

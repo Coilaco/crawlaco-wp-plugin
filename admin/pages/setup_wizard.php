@@ -51,7 +51,7 @@ if ($setup_complete) {
 /**
  * Render step one (Website Key validation)
  */
-function render_step_one() {
+function crawlaco_render_step_one() {
     $website_key = get_option('crawlaco_website_key', '');
     $setup_complete = get_option('crawlaco_setup_complete', false);
     ?>
@@ -101,7 +101,7 @@ function render_step_one() {
 /**
  * Render step two (API Key Generation)
  */
-function render_step_two() {
+function crawlaco_render_step_two() {
     $wp_api_key = get_option('crawlaco_wp_api_key', '');
     $wc_api_keys = get_option('crawlaco_wc_api_keys', array());
     $has_woocommerce = class_exists('WooCommerce');
@@ -175,7 +175,7 @@ function render_step_two() {
 /**
  * Render step three (Data Synchronization)
  */
-function render_step_three() {
+function crawlaco_render_step_three() {
     ?>
     <div class="crawlaco-setup-step active">
         <h2><?php esc_html_e('Step 3: Data Synchronization', 'crawlaco'); ?></h2>
@@ -208,7 +208,7 @@ function render_step_three() {
 /**
  * Render step four (Attribute Mapping)
  */
-function render_step_four() {
+function crawlaco_render_step_four() {
     // Check if WooCommerce is installed and active
     $has_woocommerce = class_exists('WooCommerce');
 
@@ -336,16 +336,16 @@ function render_step_four() {
             <?php
             switch ($current_step) {
                 case 1:
-                    render_step_one();
+                    crawlaco_render_step_one();
                     break;
                 case 2:
-                    render_step_two();
+                    crawlaco_render_step_two();
                     break;
                 case 3:
-                    render_step_three();
+                    crawlaco_render_step_three();
                     break;
                 case 4:
-                    render_step_four();
+                    crawlaco_render_step_four();
                     break;
             }
             ?>
