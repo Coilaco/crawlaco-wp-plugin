@@ -33,7 +33,7 @@ if ($setup_complete) {
             </div>
 
             <div class="crawlaco-completion-actions">
-                <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco-setup-wizard')); ?>" class="button button-primary">
+                <a href="<?php echo esc_url(admin_url('admin.php?page=crawlaco')); ?>" class="button button-primary">
                     <?php esc_html_e('Go to Status Page', 'crawlaco'); ?>
                 </a>
                 <a href="<?php echo esc_url(CRAWLACO_DASHBOARD_URL); ?>"
