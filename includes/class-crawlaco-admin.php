@@ -485,7 +485,7 @@ class Crawlaco_Admin {
         }
 
         // Get and sanitize mapped attributes
-        $mapped_attributes = isset($_POST['mapped_attributes']) ? $_POST['mapped_attributes'] : array();
+        $mapped_attributes = isset($_POST['mapped_attributes']) ? wp_unslash($_POST['mapped_attributes']) : array();
         $mapped_attributes = map_deep($mapped_attributes, 'sanitize_text_field');
 
         // Validate mapped attributes
@@ -521,7 +521,7 @@ class Crawlaco_Admin {
      */
     public function handle_deactivation() {
         // Verify nonce
-        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'crawlaco-deactivation-nonce')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(wp_unslash($_POST['nonce']), 'crawlaco-deactivation-nonce')) {
             wp_send_json_error(array('message' => esc_html__('Security check failed. Please try again.', 'crawlaco')));
         }
 

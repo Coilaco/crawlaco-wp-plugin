@@ -156,9 +156,17 @@ function crawlaco_save_simple_product_fields($post_id) {
         return;
     }
 
+    // Verify nonce
+    if (!isset($_POST['woocommerce_meta_nonce']) || !wp_verify_nonce(
+        sanitize_text_field(wp_unslash($_POST['woocommerce_meta_nonce'])),
+        'woocommerce_save_data'
+    )) {
+        return;
+    }
+
     // Save provider URL
     if (isset($_POST['provider_url'])) {
-        update_post_meta($post_id, 'provider_url', sanitize_text_field($_POST['provider_url']));
+        update_post_meta($post_id, 'provider_url', sanitize_text_field(wp_unslash($_POST['provider_url'])));
     }
 
     // Save is_archived

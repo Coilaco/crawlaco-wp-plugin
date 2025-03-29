@@ -37,7 +37,7 @@ class Crawlaco_Settings_Handler {
         }
 
         // Get and sanitize mapped attributes
-        $mapped_attributes = isset($_POST['mapped_attributes']) ? $_POST['mapped_attributes'] : array();
+        $mapped_attributes = isset($_POST['mapped_attributes']) ? wp_unslash($_POST['mapped_attributes']) : array();
         $mapped_attributes = map_deep($mapped_attributes, 'sanitize_text_field');
 
         // Validate mapped attributes
