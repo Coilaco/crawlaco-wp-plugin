@@ -141,6 +141,11 @@ function crawlaco_init() {
     
     // Initialize API Keys class
     new Crawlaco_API_Keys();
+
+    // Load text domain for translations - move it to 'init' hook for better compatibility
+    add_action('init', function() {
+        load_plugin_textdomain('crawlaco', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    });
 }
 add_action('plugins_loaded', 'crawlaco_init');
 
