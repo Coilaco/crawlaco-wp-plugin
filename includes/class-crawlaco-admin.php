@@ -467,12 +467,15 @@ class Crawlaco_Admin {
      * Handle settings form submission
      */
     public function handle_settings_update() {
-        // Verify nonce
+        // Verify nonce with proper sanitization
         if (!isset($_POST['crawlaco_settings_nonce'])) {
             wp_send_json_error(array('message' => esc_html__('Security check failed. Please try again.', 'crawlaco')));
         }
 
-        if (!wp_verify_nonce($_POST['crawlaco_settings_nonce'], 'crawlaco_update_settings')) {
+        if (!wp_verify_nonce(
+            sanitize_text_field(wp_unslash($_POST['crawlaco_settings_nonce'])), 
+            'crawlaco_update_settings'
+        )) {
             wp_send_json_error(array('message' => esc_html__('Security check failed. Please try again.', 'crawlaco')));
         }
 
@@ -481,26 +484,30 @@ class Crawlaco_Admin {
             wp_send_json_error(array('message' => esc_html__('You do not have sufficient permissions to perform this action.', 'crawlaco')));
         }
 
-        // Get mapped attributes
+        // Get and sanitize mapped attributes
         $mapped_attributes = isset($_POST['mapped_attributes']) ? $_POST['mapped_attributes'] : array();
+        $mapped_attributes = map_deep($mapped_attributes, 'sanitize_text_field');
 
-        // Format attributes for API
-        $formatted_attributes = array();
+        // Validate mapped attributes
+        $validated_attributes = array();
         foreach ($mapped_attributes as $key => $value) {
             if (!empty($value)) {
-                $formatted_attributes[] = array(
-                    'key' => $key,
-                    'value' => sanitize_text_field($value)
-                );
+                // Validate the key is a valid attribute ID
+                $key = absint($key);
+                if ($key > 0) {
+                    // Sanitize the value based on its expected type
+                    $value = sanitize_text_field($value);
+                    $validated_attributes[$key] = $value;
+                }
             }
         }
 
         // Save to WordPress options
-        update_option('crawlaco_mapped_attributes', $formatted_attributes);
+        update_option('crawlaco_mapped_attributes', $validated_attributes);
 
         // Send to Crawlaco API
         $api = new Crawlaco_API();
-        $response = $api->update_meta_data($formatted_attributes, 'PATCH');
+        $response = $api->update_meta_data($validated_attributes, 'PATCH');
 
         if (is_wp_error($response)) {
             wp_send_json_error(array('message' => $response->get_error_message()));

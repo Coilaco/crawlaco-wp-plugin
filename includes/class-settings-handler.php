@@ -21,8 +21,13 @@ class Crawlaco_Settings_Handler {
      * Handle settings form submission
      */
     public function handle_settings_update() {
-        // Verify nonce
-        if (!isset($_POST['crawlaco_settings_nonce']) || !wp_verify_nonce($_POST['crawlaco_settings_nonce'], 'crawlaco_update_settings')) {
+        // Verify nonce with proper sanitization
+        if (!isset($_POST['crawlaco_settings_nonce']) || 
+            !wp_verify_nonce(
+                sanitize_text_field(wp_unslash($_POST['crawlaco_settings_nonce'])), 
+                'crawlaco_update_settings'
+            )
+        ) {
             wp_send_json_error(array('message' => esc_html__('Invalid nonce. Please try again.', 'crawlaco')));
         }
 
@@ -31,14 +36,21 @@ class Crawlaco_Settings_Handler {
             wp_send_json_error(array('message' => esc_html__('You do not have sufficient permissions to perform this action.', 'crawlaco')));
         }
 
-        // Get mapped attributes
+        // Get and sanitize mapped attributes
         $mapped_attributes = isset($_POST['mapped_attributes']) ? $_POST['mapped_attributes'] : array();
+        $mapped_attributes = map_deep($mapped_attributes, 'sanitize_text_field');
 
         // Validate mapped attributes
         $validated_attributes = array();
         foreach ($mapped_attributes as $key => $value) {
             if (!empty($value)) {
-                $validated_attributes[$key] = sanitize_text_field($value);
+                // Validate the key is a valid attribute ID
+                $key = absint($key);
+                if ($key > 0) {
+                    // Sanitize the value based on its expected type
+                    $value = sanitize_text_field($value);
+                    $validated_attributes[$key] = $value;
+                }
             }
         }
 

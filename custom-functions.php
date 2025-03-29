@@ -66,13 +66,36 @@ function save_custom_meta_fields( $variation_id, $loop ) {
     if (!class_exists('WooCommerce')) {
         return;
     }
-    // Text Field
-    $text_field = ! empty( $_POST[ 'text_field' ][ $loop ] ) ? $_POST[ 'text_field' ][ $loop ] : '';
-    update_post_meta( $variation_id, 'provider_url', sanitize_text_field( $text_field ) );
+
+    // Verify nonce if it exists
+    if (isset($_POST['woocommerce_meta_nonce'])) {
+        if (!wp_verify_nonce(
+            sanitize_text_field(wp_unslash($_POST['woocommerce_meta_nonce'])),
+            'woocommerce_save_data'
+        )) {
+            return;
+        }
+    }
+
+    // Sanitize and validate loop index
+    $loop = absint($loop);
+    if ($loop < 0) {
+        return;
+    }
+
+    // Text Field - Sanitize array access and value
+    $text_field = '';
+    if (isset($_POST['text_field']) && is_array($_POST['text_field']) && isset($_POST['text_field'][$loop])) {
+        $text_field = sanitize_text_field(wp_unslash($_POST['text_field'][$loop]));
+    }
+    update_post_meta($variation_id, 'provider_url', $text_field);
     
-    // Checkbox Field
-    $checkbox_field = ! empty( $_POST[ 'is_archived' ][ $loop ] ) ? 'yes' : 'no';
-    update_post_meta( $variation_id, 'is_archived', $checkbox_field );
+    // Checkbox Field - Sanitize array access and value
+    $checkbox_field = 'no';
+    if (isset($_POST['is_archived']) && is_array($_POST['is_archived']) && isset($_POST['is_archived'][$loop])) {
+        $checkbox_field = sanitize_text_field(wp_unslash($_POST['is_archived'][$loop])) === 'yes' ? 'yes' : 'no';
+    }
+    update_post_meta($variation_id, 'is_archived', $checkbox_field);
 }
 
 add_action( 'woocommerce_save_product_variation', 'save_custom_meta_fields', 10, 2 );
