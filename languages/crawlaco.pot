@@ -1,0 +1,651 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Crawlaco | کرالاکو\n"
+"POT-Creation-Date: 2025-03-29 16:08+0330\n"
+"PO-Revision-Date: 2025-03-29 16:08+0330\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: crawlaco.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/pages/settings.php:8 includes/class-crawlaco-admin.php:376
+msgid "Crawlaco Settings"
+msgstr ""
+
+#: admin/pages/settings.php:18 admin/pages/settings.php:87
+msgid "Attribute Mapping"
+msgstr ""
+
+#: admin/pages/settings.php:20
+msgid ""
+"Map your WooCommerce product attributes to help Crawlaco understand your "
+"data structure."
+msgstr ""
+
+#: admin/pages/settings.php:26
+msgid "Crawlaco Attribute"
+msgstr ""
+
+#: admin/pages/settings.php:27
+msgid "WooCommerce Attribute"
+msgstr ""
+
+#: admin/pages/settings.php:34
+msgid "Size"
+msgstr ""
+
+#: admin/pages/settings.php:38
+msgid "Color"
+msgstr ""
+
+#: admin/pages/settings.php:42
+msgid "Brand"
+msgstr ""
+
+#: admin/pages/settings.php:65
+msgid "-- Select Attribute --"
+msgstr ""
+
+#: admin/pages/settings.php:75
+msgid "Currently mapped to:"
+msgstr ""
+
+#: admin/pages/settings.php:89
+msgid ""
+"WooCommerce is required for attribute mapping. Please install and activate "
+"WooCommerce to access this feature. If your site is not using WooCommerce, "
+"you can skip this step."
+msgstr ""
+
+#: admin/pages/settings.php:95
+msgid "WooCommerce API Keys"
+msgstr ""
+
+#: admin/pages/settings.php:100
+msgid "Generate and manage WooCommerce API keys for Crawlaco integration."
+msgstr ""
+
+#: admin/pages/settings.php:108 admin/pages/setup_wizard.php:114
+msgid "API Keys Status"
+msgstr ""
+
+#: admin/pages/settings.php:112 admin/pages/setup_wizard.php:131
+msgid "WooCommerce API Keys:"
+msgstr ""
+
+#: admin/pages/settings.php:116 admin/pages/setup_wizard.php:122
+#: admin/pages/setup_wizard.php:135
+msgid "Generated"
+msgstr ""
+
+#: admin/pages/settings.php:119 admin/pages/setup_wizard.php:125
+#: admin/pages/setup_wizard.php:138
+msgid "Not Generated"
+msgstr ""
+
+#: admin/pages/settings.php:133
+msgid "Generate WooCommerce API Keys"
+msgstr ""
+
+#: admin/pages/settings.php:139
+msgid ""
+"WooCommerce is required for API key generation. Please install and activate "
+"WooCommerce to access this feature. If your site is not using WooCommerce, "
+"you can skip this step."
+msgstr ""
+
+#: admin/pages/settings.php:145
+msgid "Data Synchronization"
+msgstr ""
+
+#: admin/pages/settings.php:147
+msgid ""
+"Fetch and sync your site data with Crawlaco. This will update your product "
+"information, categories, and other relevant data."
+msgstr ""
+
+#: admin/pages/settings.php:154 admin/pages/setup_wizard.php:188
+#: includes/class-crawlaco-admin.php:294
+msgid "Fetching data..."
+msgstr ""
+
+#: admin/pages/settings.php:160 admin/pages/setup_wizard.php:194
+#: includes/class-crawlaco-admin.php:298
+msgid "Start Data Sync"
+msgstr ""
+
+#: admin/pages/settings.php:167 admin/pages/setup_wizard.php:201
+#: includes/class-crawlaco-admin.php:299
+msgid "Retry"
+msgstr ""
+
+#: admin/pages/settings.php:174
+msgid "Save Settings"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:19
+msgid "Crawlaco Setup Complete"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:25
+msgid "Great! Your Crawlaco plugin has been successfully set up."
+msgstr ""
+
+#: admin/pages/setup_wizard.php:26
+msgid "You can now start using Crawlaco to manage your website data."
+msgstr ""
+
+#: admin/pages/setup_wizard.php:31
+msgid "The setup process has been completed successfully."
+msgstr ""
+
+#: admin/pages/setup_wizard.php:32
+msgid "You can now use Crawlaco's features."
+msgstr ""
+
+#: admin/pages/setup_wizard.php:37
+msgid "Go to Status Page"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:42 admin/pages/status.php:101
+msgid "Go to Crawlaco Dashboard"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:59
+msgid "Step 1: Website Key Validation"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:60
+msgid "Enter your Website Key generated from the Crawlaco dashboard:"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:68 admin/pages/setup_wizard.php:321
+msgid "Website Key"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:80
+msgid "You can find your Website Key in your Crawlaco dashboard."
+msgstr ""
+
+#: admin/pages/setup_wizard.php:93 includes/class-crawlaco-admin.php:292
+msgid "Validate Key"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:110
+msgid "Step 2: API Key Generation"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:111
+msgid ""
+"We need to generate API keys to enable communication between your WordPress "
+"site and Crawlaco:"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:118
+msgid "WordPress API Key:"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:155
+msgid "API Keys Generated"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:157 includes/class-crawlaco-admin.php:293
+msgid "Generate API Keys"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:167
+msgid "Proceed to Next Step"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:181
+msgid "Step 3: Data Synchronization"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:182
+msgid ""
+"We will now fetch essential data from your WordPress site to sync with "
+"Crawlaco:"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:221
+msgid "Step 4: Map Product Attributes"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:227
+msgid "WooCommerce is not installed or inactive."
+msgstr ""
+
+#: admin/pages/setup_wizard.php:230
+msgid ""
+"WooCommerce plugin is not installed or inactive. You can skip this step."
+msgstr ""
+
+#: admin/pages/setup_wizard.php:236
+msgid "Finish Setup"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:241
+msgid ""
+"Map your WooCommerce product attributes to help Crawlaco understand your "
+"data structure:"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:252 admin/pages/status.php:122
+msgid "Size Attribute"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:256
+msgid "-- Select Size Attribute --"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:268 admin/pages/status.php:126
+msgid "Color Attribute"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:272
+msgid "-- Select Color Attribute --"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:284 admin/pages/status.php:130
+msgid "Brand Attribute"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:288
+msgid "-- Select Brand Attribute --"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:303
+msgid "Save Attribute Mapping"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:313
+msgid "Crawlaco Setup Wizard"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:324
+msgid "API Keys"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:327
+msgid "Data Sync"
+msgstr ""
+
+#: admin/pages/setup_wizard.php:330
+msgid "Attributes"
+msgstr ""
+
+#: admin/pages/status.php:24
+msgid "Crawlaco Status"
+msgstr ""
+
+#: admin/pages/status.php:37
+msgid "The setup wizard has not started."
+msgstr ""
+
+#: admin/pages/status.php:40
+msgid ""
+"To see the information on this page, you must first complete the setup "
+"wizard steps."
+msgstr ""
+
+#: admin/pages/status.php:46 includes/class-crawlaco-admin.php:385
+#: includes/class-crawlaco-admin.php:400
+msgid "Go to Setup Wizard"
+msgstr ""
+
+#: admin/pages/status.php:53
+msgid "Website Information"
+msgstr ""
+
+#: admin/pages/status.php:56
+msgid "Website ID"
+msgstr ""
+
+#: admin/pages/status.php:60
+msgid "Website Address"
+msgstr ""
+
+#: admin/pages/status.php:64
+msgid "Website Name"
+msgstr ""
+
+#: admin/pages/status.php:68
+msgid "Wallet Balance"
+msgstr ""
+
+#: admin/pages/status.php:72 includes/class-crawlaco-admin.php:45
+#: includes/class-crawlaco-admin.php:46
+msgid "Status"
+msgstr ""
+
+#: admin/pages/status.php:77
+msgid "Active"
+msgstr ""
+
+#: admin/pages/status.php:82
+msgid "Inactive"
+msgstr ""
+
+#: admin/pages/status.php:92
+msgid "Quick Actions"
+msgstr ""
+
+#: admin/pages/status.php:97 crawlaco.php:188
+#: includes/class-crawlaco-admin.php:63 includes/class-crawlaco-admin.php:64
+msgid "Settings"
+msgstr ""
+
+#: admin/pages/status.php:108
+msgid "WooCommerce Integration"
+msgstr ""
+
+#: admin/pages/status.php:123 admin/pages/status.php:127
+#: admin/pages/status.php:131
+msgid "Not mapped"
+msgstr ""
+
+#: admin/pages/status.php:137
+msgid "Update Attribute Mapping"
+msgstr ""
+
+#: admin/pages/status.php:147
+msgid ""
+"Please complete the initial setup process before accessing these features."
+msgstr ""
+
+#: admin/pages/status.php:152 crawlaco.php:161
+msgid "Complete Setup"
+msgstr ""
+
+#. translators: %s: minimum WordPress version number
+#: crawlaco.php:53
+#, php-format
+msgid "Crawlaco requires WordPress version %s or higher."
+msgstr ""
+
+#. translators: %s: minimum PHP version number
+#: crawlaco.php:63
+#, php-format
+msgid "Crawlaco requires PHP version %s or higher."
+msgstr ""
+
+#: crawlaco.php:160
+msgid "Please complete the Crawlaco plugin setup to start using its features."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:33 includes/class-crawlaco-admin.php:34
+msgid "Crawlaco"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:54 includes/class-crawlaco-admin.php:55
+msgid "Setup Wizard"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:72
+msgid "Dashboard"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:73
+msgid "Login to Crawlaco"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:288
+msgid "Validating..."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:289
+msgid "Generating API Keys..."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:290
+msgid "Success!"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:291
+msgid "Error:"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:295
+msgid "Data fetching timed out. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:296
+msgid "Data fetching failed. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:297
+msgid "Data fetched successfully!"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:300
+msgid "Saving attribute mappings..."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:301 includes/class-crawlaco-api.php:459
+msgid "Attribute mappings saved successfully!"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:302
+msgid "Failed to save attribute mappings."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:303
+msgid "Finalizing setup..."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:304
+msgid "Setup completed successfully! Redirecting to dashboard..."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:305
+msgid "Failed to complete setup."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:343
+msgid "Deactivate Crawlaco?"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:345
+msgid ""
+"Warning: Deactivating the <b>Crawlaco</b> plugin will result in the "
+"following:"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:346
+msgid ""
+"<ul> <li>All your settings and configurations will be permanently deleted</"
+"li> <li>Your website will be disabled in the Crawlaco dashboard</li> <li>You "
+"will need to go through the entire setup wizard process again when "
+"reactivating</li> <li>All API keys and connections will need to be "
+"reconfigured</li> </ul>"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:347
+msgid "Are you sure you want to deactivate?"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:349
+msgid "Cancel"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:350
+msgid "Yes, Deactivate"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:351
+msgid "Deactivating..."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:352
+msgid "An error occurred while deactivating the plugin. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:381 includes/class-crawlaco-admin.php:394
+msgid "Please complete the setup process before accessing the settings page."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:393
+msgid "Setup is not complete"
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:472 includes/class-crawlaco-admin.php:479
+#: includes/class-crawlaco-admin.php:541
+msgid "Security check failed. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:484 includes/class-settings-handler.php:36
+msgid "You do not have sufficient permissions to perform this action."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:532 includes/class-settings-handler.php:68
+msgid "Settings saved successfully."
+msgstr ""
+
+#: includes/class-crawlaco-admin.php:546
+msgid "You do not have sufficient permissions to deactivate plugins."
+msgstr ""
+
+#: includes/class-crawlaco-api-keys.php:22
+#: includes/class-crawlaco-api-keys.php:76 includes/class-crawlaco-api.php:60
+#: includes/class-crawlaco-api.php:214 includes/class-crawlaco-api.php:240
+#: includes/class-crawlaco-api.php:388 includes/class-crawlaco-api.php:471
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: includes/class-crawlaco-api-keys.php:63
+msgid "API keys generated and sent successfully!"
+msgstr ""
+
+#: includes/class-crawlaco-api-keys.php:105
+msgid "WooCommerce API keys generated and sent successfully!"
+msgstr ""
+
+#: includes/class-crawlaco-api-keys.php:110
+#: includes/class-crawlaco-api-keys.php:165
+msgid "WooCommerce is not properly loaded."
+msgstr ""
+
+#: includes/class-crawlaco-api-keys.php:138
+#: includes/class-crawlaco-api-keys.php:151
+msgid "Failed to generate WordPress API key."
+msgstr ""
+
+#: includes/class-crawlaco-api-keys.php:176
+msgid "WooCommerce API class could not be loaded."
+msgstr ""
+
+#: includes/class-crawlaco-api-keys.php:221
+msgid "Failed to store WooCommerce API key in the database."
+msgstr ""
+
+#: includes/class-crawlaco-api-keys.php:232
+msgid "Failed to generate WooCommerce API keys."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:67
+msgid "Website key is required."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:84
+msgid "Website key validated successfully!"
+msgstr ""
+
+#: includes/class-crawlaco-api.php:110 includes/class-crawlaco-api.php:187
+#: includes/class-crawlaco-api.php:291 includes/class-crawlaco-api.php:346
+#: includes/class-crawlaco-api.php:445 includes/class-crawlaco-api.php:498
+#: includes/class-crawlaco-api.php:551 includes/class-crawlaco-api.php:600
+msgid "Failed to connect to Crawlaco API. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:121
+msgid "Invalid website key. Please check and try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:138 includes/class-crawlaco-api.php:271
+#: includes/class-crawlaco-api.php:326 includes/class-crawlaco-api.php:529
+#: includes/class-crawlaco-api.php:580
+msgid "Website key not found. Please complete step 1 first."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:198
+msgid "Failed to send API keys to Crawlaco. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:227
+msgid "Data fetching initiated successfully!"
+msgstr ""
+
+#: includes/class-crawlaco-api.php:247
+msgid "Task ID is required."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:302
+msgid "Failed to initiate data fetching. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:310 includes/class-crawlaco-api.php:365
+msgid "Invalid response from Crawlaco API. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:357
+msgid "Failed to check task status. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:453
+msgid "Failed to save attribute mappings. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:506
+msgid "Failed to complete setup. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:515
+msgid "Setup completed successfully!"
+msgstr ""
+
+#: includes/class-crawlaco-api.php:563
+msgid "Failed to update meta data. Please try again."
+msgstr ""
+
+#: includes/class-crawlaco-api.php:611
+msgid "Failed to fetch website information. Please try again."
+msgstr ""
+
+#. translators: %d: HTTP response code
+#: includes/class-crawlaco-api.php:657
+#, php-format
+msgid "API request failed with code: %d"
+msgstr ""
+
+#: includes/class-settings-handler.php:31
+msgid "Invalid nonce. Please try again."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Crawlaco | کرالاکو"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://crawlaco.com/plugin"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "پلی میان وب‌سایت شما و داشبورد کرالاکو برای مدیریت راحت‌تر وب‌سایت شما."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Crawlaco Team"
+msgstr ""
