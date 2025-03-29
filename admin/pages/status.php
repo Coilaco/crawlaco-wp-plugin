@@ -7,6 +7,17 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+// Enqueue admin styles
+function crawlaco_enqueue_admin_styles() {
+    wp_enqueue_style(
+        'crawlaco-admin-styles',
+        CRAWLACO_PLUGIN_URL . 'admin/css/admin.css',
+        array(),
+        CRAWLACO_VERSION
+    );
+}
+add_action('admin_enqueue_scripts', 'crawlaco_enqueue_admin_styles');
 ?>
 
 <div class="wrap">
@@ -155,67 +166,3 @@ if (!defined('ABSPATH')) {
         <?php endif; ?>
     </div>
 </div>
-
-<style>
-    .crawlaco-dashboard-overview {
-        margin-top: 20px;
-    }
-
-    .crawlaco-card {
-        background: #fff;
-        border: 1px solid #ccd0d4;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
-        margin-bottom: 20px;
-        padding: 20px;
-    }
-
-    .crawlaco-card h2 {
-        margin-top: 0;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .crawlaco-status {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 8px;
-        border-radius: 3px;
-    }
-
-    .crawlaco-status.active {
-        background: #ecf7ed;
-        color: #46b450;
-    }
-
-    .crawlaco-status.inactive {
-        background: #fbeaea;
-        color: #dc3232;
-    }
-
-    .crawlaco-status .dashicons {
-        margin-right: 4px;
-    }
-
-    .crawlaco-quick-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 15px;
-    }
-
-    .crawlaco-quick-actions .button {
-        display: inline-flex;
-        align-items: center;
-    }
-
-    .crawlaco-quick-actions .dashicons {
-        margin-right: 5px;
-    }
-
-    .crawlaco-wc-info {
-        margin-top: 15px;
-    }
-
-    .crawlaco-wc-info p {
-        margin-top: 15px;
-    }
-</style>
