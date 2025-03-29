@@ -1,5 +1,5 @@
 === Crawlaco | کرالاکو ===
-Contributors: crawlaco
+Contributors: aminalih47
 Tags: woocommerce, product-management, ecommerce, inventory, crawlaco
 Requires at least: 5.0
 Tested up to: 6.7
@@ -36,6 +36,37 @@ Crawlaco WordPress Plugin acts as a bridge between your WordPress/WooCommerce we
 * WordPress 5.0 or higher
 * PHP 7.4 or higher
 * WooCommerce 3.0 or higher (for WooCommerce features)
+
+== External Services ==
+
+This plugin connects to the Crawlaco API service (api.crawlaco.com) to enable product and inventory management features. 
+The service is essential for the plugin's core functionality.
+
+= Data Transmission =
+
+The plugin sends the following data to the Crawlaco API:
+
+* Website URL and User WebsiteKey (during initial setup and all API requests)
+* Website address (with each API request for identification)
+* WooCommerce product data (if WooCommerce is installed)
+* WordPress post data
+* Product attributes and categories
+* Task status and progress information
+
+= When Data is Sent =
+
+Data is transmitted in the following scenarios:
+* During initial setup and WebsiteKey validation
+* When synchronizing products and inventory
+* When checking task status and progress
+* When updating product information
+* When mapping product attributes
+
+= Service Information =
+
+The Crawlaco API service is provided by Crawlaco. For more information about how we handle your data and our terms of service, please visit:
+* [Crawlaco Terms of Service](https://crawlaco.com/terms)
+* [Crawlaco Privacy Policy](https://crawlaco.com/privacy)
 
 = Documentation =
 
