@@ -89,9 +89,13 @@ This project is licensed under the GPLv2 or later - see the [LICENSE](https://ww
 
 ## Changelog
 
-### 1.1.2
-
-- Update API base URL
+### 1.2.0
+* Fix attribute mapper issue in status and settings page
+* Improve readme.txt and add more detail about plugin
+* Remove unnecessary files
+* Add crawlaco namespace to functions and classes
+* Add inline styles to wp_enqueue_style
+* Improve validating requests and sanitization
 
 ### 1.1.1
 

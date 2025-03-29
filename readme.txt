@@ -3,7 +3,7 @@ Contributors: aminalih47
 Tags: woocommerce, product-management, ecommerce, inventory, crawlaco
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -118,6 +118,22 @@ Yes, the plugin supports RTL languages and is translation-ready.
 
 == Changelog ==
 
+= 1.2.0 =
+* Fix attribute mapper issue in status and settings page
+* Improve readme.txt and add more detail about plugin
+* Remove unnecessary files
+* Add crawlaco namespace to functions and classes
+* Add inline styles to wp_enqueue_style
+* Improve validating requests and sanitization
+
+= 1.1.1 =
+* Fix SEO plugins issue in custom-functions.php
+* Improved display of error messages in forms
+* Improved settings page
+
+= 1.1.0 =
+* Improved plugin deactivation logic
+
 = 1.0.0 =
 * Initial release
 * Basic setup wizard
@@ -126,10 +142,6 @@ Yes, the plugin supports RTL languages and is translation-ready.
 * Product attribute mapping
 * RTL support
 
-== Upgrade Notice ==
-
-= 1.0.0 =
-Initial release of the Crawlaco WordPress plugin.
 
 == Privacy Policy ==
 
