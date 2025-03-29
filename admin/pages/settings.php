@@ -30,13 +30,22 @@ if (!defined('ABSPATH')) {
                         <tbody>
                             <?php
                             $required_attributes = array(
-                                'SIZE_ATTR_ID' => esc_html__('Size', 'crawlaco'),
-                                'COLOR_ATTR_ID' => esc_html__('Color', 'crawlaco'),
-                                'BRAND_ATTR_ID' => esc_html__('Brand', 'crawlaco')
+                                'SIZE_ATTR_ID' => array(
+                                    'label' => esc_html__('Size', 'crawlaco'),
+                                    'value' => get_option('crawlaco_size_attr_id', '')
+                                ),
+                                'COLOR_ATTR_ID' => array(
+                                    'label' => esc_html__('Color', 'crawlaco'),
+                                    'value' => get_option('crawlaco_color_attr_id', '')
+                                ),
+                                'BRAND_ATTR_ID' => array(
+                                    'label' => esc_html__('Brand', 'crawlaco'),
+                                    'value' => get_option('crawlaco_brand_attr_id', '')
+                                )
                             );
 
-                            foreach ($required_attributes as $attr_key => $attr_label) :
-                                $current_value = isset($formatted_attributes[$attr_key]) ? $formatted_attributes[$attr_key] : '';
+                            foreach ($required_attributes as $attr_key => $attr_data) :
+                                $current_value = $attr_data['value'];
                                 $selected_attr = null;
                                 
                                 // Find the selected attribute object
@@ -50,7 +59,7 @@ if (!defined('ABSPATH')) {
                                 }
                             ?>
                                 <tr>
-                                    <th><?php echo esc_html($attr_label); ?></th>
+                                    <th><?php echo esc_html($attr_data['label']); ?></th>
                                     <td>
                                         <select name="mapped_attributes[<?php echo esc_attr($attr_key); ?>]" class="regular-text">
                                             <option value=""><?php echo esc_html__('-- Select Attribute --', 'crawlaco'); ?></option>

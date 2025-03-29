@@ -488,26 +488,42 @@ class Crawlaco_Admin {
         $mapped_attributes = isset($_POST['mapped_attributes']) ? wp_unslash($_POST['mapped_attributes']) : array();
         $mapped_attributes = map_deep($mapped_attributes, 'sanitize_text_field');
 
-        // Validate mapped attributes
-        $validated_attributes = array();
-        foreach ($mapped_attributes as $key => $value) {
-            if (!empty($value)) {
-                // Validate the key is a valid attribute ID
-                $key = absint($key);
-                if ($key > 0) {
-                    // Sanitize the value based on its expected type
-                    $value = sanitize_text_field($value);
-                    $validated_attributes[$key] = $value;
-                }
-            }
-        }
+        // Save individual attribute IDs
+        $size_attr_id = isset($mapped_attributes['SIZE_ATTR_ID']) ? absint($mapped_attributes['SIZE_ATTR_ID']) : '';
+        $color_attr_id = isset($mapped_attributes['COLOR_ATTR_ID']) ? absint($mapped_attributes['COLOR_ATTR_ID']) : '';
+        $brand_attr_id = isset($mapped_attributes['BRAND_ATTR_ID']) ? absint($mapped_attributes['BRAND_ATTR_ID']) : '';
 
-        // Save to WordPress options
-        update_option('crawlaco_mapped_attributes', $validated_attributes);
+        update_option('crawlaco_size_attr_id', $size_attr_id);
+        update_option('crawlaco_color_attr_id', $color_attr_id);
+        update_option('crawlaco_brand_attr_id', $brand_attr_id);
+
+        // Format metadata for API in the required structure
+        $api_metadata = array();
+        
+        if (!empty($size_attr_id)) {
+            $api_metadata[] = array(
+                'key' => 'SIZE_ATTR_ID',
+                'value' => $size_attr_id
+            );
+        }
+        
+        if (!empty($color_attr_id)) {
+            $api_metadata[] = array(
+                'key' => 'COLOR_ATTR_ID',
+                'value' => $color_attr_id
+            );
+        }
+        
+        if (!empty($brand_attr_id)) {
+            $api_metadata[] = array(
+                'key' => 'BRAND_ATTR_ID',
+                'value' => $brand_attr_id
+            );
+        }
 
         // Send to Crawlaco API
         $api = new Crawlaco_API();
-        $response = $api->update_meta_data($validated_attributes, 'PATCH');
+        $response = $api->update_meta_data($api_metadata, 'PATCH');
 
         if (is_wp_error($response)) {
             wp_send_json_error(array('message' => $response->get_error_message()));

@@ -109,20 +109,13 @@ add_action('admin_enqueue_scripts', 'crawlaco_enqueue_admin_styles');
                             <div class="crawlaco-wc-info">
                                 <?php
                                 // Get mapped attributes
-                                $mapped_attributes = get_option('crawlaco_mapped_attributes', array());
-                                $size_attr = '';
-                                $color_attr = '';
-                                $brand_attr = '';
+                                $size_attr_id = get_option('crawlaco_size_attr_id', '');
+                                $color_attr_id = get_option('crawlaco_color_attr_id', '');
+                                $brand_attr_id = get_option('crawlaco_brand_attr_id', '');
 
-                                foreach ($mapped_attributes as $attr) {
-                                    if ($attr['key'] === 'SIZE_ATTR_ID') {
-                                        $size_attr = wc_attribute_label($attr['value']);
-                                    } elseif ($attr['key'] === 'COLOR_ATTR_ID') {
-                                        $color_attr = wc_attribute_label($attr['value']);
-                                    } elseif ($attr['key'] === 'BRAND_ATTR_ID') {
-                                        $brand_attr = wc_attribute_label($attr['value']);
-                                    }
-                                }
+                                $size_attr = $size_attr_id ? wc_attribute_label($size_attr_id) : '';
+                                $color_attr = $color_attr_id ? wc_attribute_label($color_attr_id) : '';
+                                $brand_attr = $brand_attr_id ? wc_attribute_label($brand_attr_id) : '';
                                 ?>
                                 <table class="widefat crawlaco-widefat">
                                     <tr>
