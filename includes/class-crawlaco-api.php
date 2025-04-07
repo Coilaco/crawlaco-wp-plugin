@@ -144,12 +144,16 @@ class Crawlaco_API {
                 array(
                     'key' => 'WP_SECRET_KEY',
                     'value' => $wp_api_key['secret'],
-                    'is_password' => true
+                    'is_password' => true,
+                    'is_editable' => false,
+                    'is_deletable' => false,
                 ),
                 array(
                     'key' => 'WP_USERNAME',
                     'value' => $wp_api_key['username'],
-                    'is_password' => true
+                    'is_password' => true,
+                    'is_editable' => false,
+                    'is_deletable' => false,
                 )
             );
         }
@@ -158,12 +162,16 @@ class Crawlaco_API {
             $meta_data[] = array(
                 'key' => 'WC_CONSUMER_KEY',
                 'value' => $wc_api_keys['key'],
-                'is_password' => true
+                'is_password' => true,
+                'is_editable' => false,
+                'is_deletable' => false,
             );
             $meta_data[] = array(
                 'key' => 'WC_CONSUMER_SECRET',
                 'value' => $wc_api_keys['secret'],
-                'is_password' => true
+                'is_password' => true,
+                'is_editable' => false,
+                'is_deletable' => false,
             );
         }
 
@@ -404,21 +412,27 @@ class Crawlaco_API {
         if (!empty($size_attr_id)) {
             $meta_data[] = array(
                 'key' => 'SIZE_ATTR_ID',
-                'value' => $size_attr_id
+                'value' => $size_attr_id,
+                'is_deletable' => false,
+                'is_visible' => false,
             );
         }
         
         if (!empty($color_attr_id)) {
             $meta_data[] = array(
                 'key' => 'COLOR_ATTR_ID',
-                'value' => $color_attr_id
+                'value' => $color_attr_id,
+                'is_deletable' => false,
+                'is_visible' => false,
             );
         }
         
         if (!empty($brand_attr_id)) {
             $meta_data[] = array(
                 'key' => 'BRAND_ATTR_ID',
-                'value' => $brand_attr_id
+                'value' => $brand_attr_id,
+                'is_deletable' => false,
+                'is_visible' => false,
             );
         }
 
