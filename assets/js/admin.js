@@ -6,17 +6,21 @@ jQuery(document).ready(function ($) {
         const $form = $(this);
         const $submitButton = $('#validate-website-key');
         const $message = $('.crawlaco-message');
+        const $errorMessage = $('.crawlaco-error-message');
 
         // Get the website key
         const websiteKey = $('#crawlaco_website_key').val().trim();
 
         if (!websiteKey) {
-            $message
-                .removeClass('success')
-                .addClass('error')
-                .html(crawlacoAdmin.strings.error + ' ' + 'Please enter a website key.');
+            $errorMessage
+                .html(crawlacoAdmin.strings.error + ' ' + 'Please enter a website key.')
+                .show();
             return;
         }
+
+        // Hide any existing messages
+        $message.empty().removeClass('success error');
+        $errorMessage.empty().hide();
 
         // Disable form and show loading state
         $submitButton
@@ -44,10 +48,9 @@ jQuery(document).ready(function ($) {
                         window.location.href = response.data.redirect;
                     }, 1000);
                 } else {
-                    $message
-                        .removeClass('success')
-                        .addClass('error')
-                        .html(crawlacoAdmin.strings.error + ' ' + response.data.message);
+                    $errorMessage
+                        .html(response.data.message)
+                        .show();
 
                     $submitButton
                         .prop('disabled', false)
@@ -55,10 +58,9 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function () {
-                $message
-                    .removeClass('success')
-                    .addClass('error')
-                    .html(crawlacoAdmin.strings.error + ' ' + 'Failed to connect to the server. Please try again.');
+                $errorMessage
+                    .html(crawlacoAdmin.strings.error + ' ' + 'Failed to connect to the server. Please try again.')
+                    .show();
 
                 $submitButton
                     .prop('disabled', false)
