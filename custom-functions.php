@@ -25,7 +25,7 @@
 // Your custom code goes here:
 
 // Add custom meta field to product varation (provider url)
-function crawlaco_provider_product_url_field( $loop, $variation_data, $variation ) {
+function crawlaco_provider_url_field( $loop, $variation_data, $variation ) {
     if (!class_exists('WooCommerce')) {
         return;
     }
@@ -37,11 +37,11 @@ function crawlaco_provider_product_url_field( $loop, $variation_data, $variation
         'placeholder'   => 'لینک ارائه دهنده محصول ...',
         'desc_tip'      => true,
         'description'   => 'لینک محصول در وب‌سایت اصلی ارائه دهنده (مثال: دیجیکالا، آمازون، ترندیول و...)',
-        'value'         => get_post_meta( $variation->ID, 'provider_product_url', true )
+        'value'         => get_post_meta( $variation->ID, 'provider_url', true )
         )
     );
 }
-add_action( 'woocommerce_product_after_variable_attributes', 'crawlaco_provider_product_url_field', 10, 3 );
+add_action( 'woocommerce_product_after_variable_attributes', 'crawlaco_provider_url_field', 10, 3 );
   
 // Add custom meta field to product varation (is archive)
 function crawlaco_product_archive_field( $loop, $variation_data, $variation ) {
