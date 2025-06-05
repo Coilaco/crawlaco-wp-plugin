@@ -3,7 +3,7 @@
  * Plugin Name: Crawlaco | کرالاکو
  * Plugin URI: https://crawlaco.com/plugin
  * Description: پلی میان وب‌سایت شما و داشبورد کرالاکو برای مدیریت راحت‌تر وب‌سایت شما.
- * Version: 1.2.1
+ * Version: 1.2.2
  * Requires at least: 5.0
  * Requires PHP: 7.4
  * Author: Crawlaco Team
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('CRAWLACO_VERSION', '1.2.1');
+define('CRAWLACO_VERSION', '1.2.2');
 define('CRAWLACO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CRAWLACO_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CRAWLACO_MIN_WP_VERSION', '5.0');
