@@ -31,7 +31,7 @@ function crawlaco_provider_url_field( $loop, $variation_data, $variation ) {
     }
     woocommerce_wp_text_input(
         array(
-        'id'            => 'text_field[' . $loop . ']',
+        'id'            => 'provider_url[' . $loop . ']',
         'label'         => 'لینک ارائه دهنده محصول (کرالاکو)',
         'wrapper_class' => 'form-row',
         'placeholder'   => 'لینک ارائه دهنده محصول ...',
@@ -84,11 +84,11 @@ function crawlaco_save_variation_meta_fields( $variation_id, $loop ) {
     }
 
     // Text Field - Sanitize array access and value
-    $text_field = '';
-    if (isset($_POST['text_field']) && is_array($_POST['text_field']) && isset($_POST['text_field'][$loop])) {
-        $text_field = sanitize_text_field(wp_unslash($_POST['text_field'][$loop]));
+    $provider_url = '';
+    if (isset($_POST['provider_url']) && is_array($_POST['provider_url']) && isset($_POST['provider_url'][$loop])) {
+        $provider_url = sanitize_text_field(urldecode($_POST['provider_url'][$loop]));
     }
-    update_post_meta($variation_id, 'provider_url', $text_field);
+    update_post_meta($variation_id, 'provider_url', $provider_url);
     
     // Checkbox Field - Sanitize array access and value
     $checkbox_field = 'no';
@@ -166,7 +166,8 @@ function crawlaco_save_simple_product_fields($post_id) {
 
     // Save provider URL
     if (isset($_POST['provider_url'])) {
-        update_post_meta($post_id, 'provider_url', sanitize_text_field(wp_unslash($_POST['provider_url'])));
+        $decoded_url = urldecode($_POST['provider_url']);
+        update_post_meta($post_id, 'provider_url', sanitize_text_field($decoded_url));
     }
 
     // Save is_archived
