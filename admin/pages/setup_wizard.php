@@ -84,6 +84,8 @@ function crawlaco_render_step_one() {
             </table>
 
             <div class="crawlaco-submit-wrapper">
+                <div class="crawlaco-error-message" 
+                style="display: none; margin-bottom: 10px; padding: 10px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; color: #721c24;"></div>
                 <div class="crawlaco-message"></div>
                 <button type="submit" 
                         class="button button-primary" 
