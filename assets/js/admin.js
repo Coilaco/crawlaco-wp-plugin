@@ -148,7 +148,7 @@ jQuery(document).ready(function ($) {
     let taskId = null;
     let pollInterval = null;
     let pollAttempts = 0;
-    const MAX_POLL_ATTEMPTS = 10;
+    const MAX_POLL_ATTEMPTS = 40;
     const POLL_INTERVAL = 3000; // 3 seconds
 
     function startDataSync() {
