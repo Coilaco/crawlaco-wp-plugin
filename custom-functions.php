@@ -164,14 +164,14 @@ function crawlaco_save_simple_product_fields($post_id) {
         return;
     }
 
-    // Save provider URL
-    if (isset($_POST['provider_url'])) {
+    // Save provider URL (only if it's a string, not an array from variable products)
+    if (isset($_POST['provider_url']) && is_string($_POST['provider_url'])) {
         $decoded_url = urldecode($_POST['provider_url']);
         update_post_meta($post_id, 'provider_url', sanitize_text_field($decoded_url));
     }
 
-    // Save is_archived
-    $is_archived = isset($_POST['is_archived']) ? 'yes' : 'no';
+    // Save is_archived (only if it's a string, not an array from variable products)
+    $is_archived = (isset($_POST['is_archived']) && is_string($_POST['is_archived'])) ? 'yes' : 'no';
     update_post_meta($post_id, 'is_archived', $is_archived);
 }
 add_action('woocommerce_process_product_meta', 'crawlaco_save_simple_product_fields');
